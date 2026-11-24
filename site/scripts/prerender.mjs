@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url'
 import path from 'node:path'
 
 const root = path.resolve(import.meta.dirname, '..')
-const { render, ABOUT, faqs, projects, services, steps } = await import(pathToFileURL(path.join(root, 'dist-server/entry-server.js')).href)
+const { render, faqs, projects, services, steps } = await import(pathToFileURL(path.join(root, 'dist-server/entry-server.js')).href)
 const htmlPath = path.join(root, 'dist/index.html')
 const template = readFileSync(htmlPath, 'utf8')
 if (!template.includes('<div id="root"></div>')) throw new Error('root placeholder not found')
@@ -14,7 +14,6 @@ const md = [
   '',
   '> תטמיעו סוכני AI ואוטומציות בעסק שלכם: תחסכו אדמיניסטרציה ועבודה ידנית ותתמקדו במה שאתם באמת טובים.',
   '',
-  '## מי אנחנו', ABOUT, '',
   '## מה אנחנו בונים', ...services.map((x) => `- **${x.t}**: ${x.d}`), '',
   '## מה כבר בנינו', ...projects.map((x) => `- **${x.title}**: ${x.desc}`), '',
   '## איך זה עובד', ...steps.map((x, i) => `${i + 1}. **${x.t}**: ${x.d}`), '',
