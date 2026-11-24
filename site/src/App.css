@@ -81,16 +81,20 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 @keyframes av-chip { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes av-line { 0%, 10% { stroke-dashoffset: 100; } 55%, 100% { stroke-dashoffset: 0; } }
 @keyframes av-gear { to { transform: rotate(360deg); } }
+@keyframes av-look { 0%, 35% { transform: translateX(0); } 45%, 62% { transform: translateX(1.6px); } 72%, 88% { transform: translateX(-1.4px); } 100% { transform: translateX(0); } }
+@keyframes av-lock { 0%, 100% { transform: rotate(-1.800deg); } 50% { transform: rotate(2.200deg); } }
 @keyframes av-ring { to { transform: rotate(360deg); } }
 .av-float { animation: av-float 4.4s ease-in-out infinite; }
-.av-breathe { transform-origin: 180px 292px; animation: av-breathe 3.6s ease-in-out infinite; }
-.av-head { transform-origin: 181px 150px; animation: av-head 5s ease-in-out infinite; }
+.av-breathe { transform-origin: 180px 300px; animation: av-breathe 3.6s ease-in-out infinite; }
+.av-head { transform-origin: 180px 150px; animation: av-head 5s ease-in-out infinite; }
 .av-hair { transform-origin: 181px 60px; animation: av-hair 4.2s ease-in-out infinite; }
-.av-wave { transform-origin: 262px 160px; animation: av-wave 6s ease-in-out infinite; }
+.av-wave { transform-origin: 242px 210px; animation: av-wave 6s ease-in-out infinite; }
 .av-chip { animation: av-chip 3.8s ease-in-out infinite; }
 .av-line { stroke-dasharray: 100; animation: av-line 4s ease-in-out infinite; }
-.av-gear { transform-origin: 304px 262px; animation: av-gear 9s linear infinite; }
-.av-ring { transform-origin: 180px 230px; animation: av-ring 60s linear infinite; }
+.av-gear { transform-origin: 306px 292px; animation: av-gear 9s linear infinite; }
+.av-look { animation: av-look 7s ease-in-out infinite; }
+.av-lock { transform-origin: 180px 100px; animation: av-lock 4.600s ease-in-out infinite; }
+.av-ring { transform-origin: 180px 236px; animation: av-ring 60s linear infinite; }
 .av-blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
 
 /* Strength scene + DJ contract signature */
@@ -111,7 +115,7 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
   .js .step { opacity: 1; transform: none; transition: none; }
   .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink, .art-a, .art-b, .art-pop, .art-pop2, .art-row, .art-bar, .art-fade-dots { animation: none; }
   .art-b { opacity: 0; }
-  .av-float, .av-breathe, .av-head, .av-hair, .av-wave, .av-chip, .av-line, .av-gear, .av-ring, .av-blink { animation: none; }
+  .av-float, .av-breathe, .av-head, .av-hair, .av-wave, .av-chip, .av-line, .av-gear, .av-ring, .av-blink, .av-look, .av-lock { animation: none; }
   .av-line { stroke-dashoffset: 0; }
   .lift, .sig { animation: none; }
   .sig { stroke-dashoffset: 0; }

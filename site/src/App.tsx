@@ -382,38 +382,51 @@ function Spark({ x, y, d }: { x: number; y: number; d: string }) {
 
 function Woman() {
   return (
-    <svg viewBox="0 0 360 470" role="img" aria-label="יועצת AI מחייכת ומנופפת, מוקפת בכרטיסי צ׳אט, גרף ואוטומציה" className="mx-auto h-[390px] w-auto md:h-[480px]">
+    <svg viewBox="0 -24 360 494" role="img" aria-label="יועצת AI מחייכת ומנופפת, מוקפת בכרטיסי צ׳אט, גרף ואוטומציה" className="mx-auto h-[390px] w-auto md:h-[480px]">
       <defs>
         <linearGradient id="av-hair" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#9a4a28" />
-          <stop offset="1" stopColor="#5a2414" />
+          <stop offset="0" stopColor="#8e4424" />
+          <stop offset=".6" stopColor="#6a2f17" />
+          <stop offset="1" stopColor="#47190d" />
         </linearGradient>
         <linearGradient id="av-blazer" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#f3e3d8" />
+          <stop offset="1" stopColor="#efddd0" />
+        </linearGradient>
+        <linearGradient id="av-pants" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#1d2442" />
+          <stop offset="1" stopColor="#2e3a63" />
+        </linearGradient>
+        <linearGradient id="av-skin" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#f8d2b6" />
+          <stop offset="1" stopColor="#eeb897" />
         </linearGradient>
         <linearGradient id="av-screen" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#2b4bff" />
           <stop offset="1" stopColor="#7c3aed" />
         </linearGradient>
+        <linearGradient id="av-rim" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="1" stopColor="#fff" stopOpacity=".5" />
+        </linearGradient>
         <radialGradient id="av-halo" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor="#ffffff" stopOpacity=".28" />
+          <stop offset="0" stopColor="#ffffff" stopOpacity=".3" />
           <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
       </defs>
 
-      {/* halo + slow dashed ring */}
-      <circle cx="180" cy="230" r="170" fill="url(#av-halo)" />
-      <circle className="av-ring" cx="180" cy="230" r="150" fill="none" stroke="#fff" strokeOpacity=".35" strokeWidth="1.5" strokeDasharray="3 9" />
-      <ellipse cx="180" cy="448" rx="92" ry="9" fill="rgba(0,0,0,.28)" />
+      {/* halo, ring, ground shadow */}
+      <circle cx="180" cy="236" r="172" fill="url(#av-halo)" />
+      <circle className="av-ring" cx="180" cy="236" r="152" fill="none" stroke="#fff" strokeOpacity=".35" strokeWidth="1.500" strokeDasharray="3 9" />
+      <ellipse cx="181" cy="450" rx="90" ry="8" fill="rgba(0,0,0,.28)" />
 
       {/* floating UI chips */}
       <g className="av-chip" style={{ animationDelay: '0s' }}>
-        <rect x="8" y="78" width="92" height="46" rx="14" fill="#fff" />
-        <rect x="18" y="90" width="48" height="6" rx="3" fill="#d6e2ff" />
-        <rect x="18" y="102" width="34" height="6" rx="3" fill="#d6e2ff" />
-        <circle cx="82" cy="96" r="9" fill="#25d366" />
-        <path d="M77.500 96l3 3 5-6" stroke="#fff" strokeWidth="2.200" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="8" y="84" width="92" height="46" rx="14" fill="#fff" />
+        <rect x="18" y="96" width="48" height="6" rx="3" fill="#d6e2ff" />
+        <rect x="18" y="108" width="34" height="6" rx="3" fill="#d6e2ff" />
+        <circle cx="82" cy="102" r="9" fill="#25d366" />
+        <path d="M77.500 102l3 3 5-6" stroke="#fff" strokeWidth="2.200" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g transform="translate(8 -12)"><g className="av-chip" style={{ animationDelay: '-1.4s' }}>
         <rect x="258" y="14" width="84" height="54" rx="14" fill="#fff" />
@@ -423,86 +436,127 @@ function Woman() {
         <rect x="315" y="22" width="10" height="36" rx="2" fill="#fa8c7b" />
       </g></g>
       <g className="av-chip" style={{ animationDelay: '-2.6s' }}>
-        <circle cx="304" cy="262" r="30" fill="#fff" />
+        <circle cx="306" cy="292" r="30" fill="#fff" />
         <g className="av-gear">
-          <circle cx="304" cy="262" r="11" fill="none" stroke="#fa8c7b" strokeWidth="5" />
+          <circle cx="306" cy="292" r="11" fill="none" stroke="#fa8c7b" strokeWidth="5" />
           {[0, 45, 90, 135].map((a) => (
-            <rect key={a} x="301" y="241" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 304 262)`} />
+            <rect key={a} x="303" y="271" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 306 292)`} />
           ))}
           {[0, 45, 90, 135].map((a) => (
-            <rect key={a + 180} x="301" y="274" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 304 262)`} />
+            <rect key={a + 180} x="303" y="304" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 306 292)`} />
           ))}
         </g>
       </g>
-      <Spark x={46} y={190} d="0s" />
-      <Spark x={322} y={150} d=".9s" />
-      <Spark x={200} y={14} d="1.8s" />
+      <Spark x={46} y={196} d="0s" />
+      <Spark x={326} y={170} d=".9s" />
+      <Spark x={206} y={16} d="1.8s" />
 
       <g className="av-float">
-        {/* hair behind */}
+        {/* hair behind the shoulders */}
         <g className="av-hair">
-          <path d="M143 108C136 62 160 42 183 42C208 42 228 62 220 108C226 142 224 176 236 206C214 220 148 220 126 206C138 176 136 142 143 108Z" fill="url(#av-hair)" />
+          <path d="M150 100C142 68 162 50 182 50C204 50 222 68 212 100C218 132 214 162 226 198C232 216 214 228 198 220C190 216 186 208 180 208C174 208 170 216 162 220C146 228 128 216 134 198C146 162 142 132 150 100Z" fill="url(#av-hair)" />
+          <path d="M160 70C150 110 150 150 146 196M200 66C212 108 208 150 214 196M180 60C176 120 178 170 176 206" stroke="#c9703f" strokeOpacity=".28" strokeWidth="2" fill="none" strokeLinecap="round" />
         </g>
 
-        {/* legs + shoes */}
-        <path d="M128 288Q180 302 232 288L224 428H192L182 336L172 428H140Z" fill="#262b45" />
-        <ellipse cx="156" cy="431" rx="21" ry="7.500" fill="#fa8c7b" />
-        <ellipse cx="208" cy="431" rx="21" ry="7.500" fill="#fa8c7b" />
+        {/* trousers + sneakers */}
+        <path d="M138 296Q180 312 222 296L215 432H188L181 346L174 432H147Z" fill="url(#av-pants)" />
+        <path d="M181 330L181 346" stroke="#fff" strokeOpacity=".08" strokeWidth="1.500" />
+        <path d="M145 426h29q6 3 5 12h-39q-1-9 5-12zM187 426h29q6 3 5 12h-39q-1-9 5-12z" fill="#fff" />
+        <path d="M141 439.500h37M183 439.500h37" stroke="#fa8c7b" strokeWidth="3.500" strokeLinecap="round" />
 
         <g className="av-breathe">
           {/* left arm (down, holding a tablet) */}
-          <path d="M134 182Q108 226 114 268" stroke="url(#av-blazer)" strokeWidth="24" strokeLinecap="round" fill="none" />
-          <path d="M134 182Q108 226 114 268" stroke="#000" strokeOpacity=".06" strokeWidth="24" strokeLinecap="round" fill="none" />
-          {/* torso / blazer */}
-          <path d="M132 176Q180 160 228 176L240 292Q180 308 120 292Z" fill="url(#av-blazer)" />
-          <path d="M132 176Q140 240 120 292Q150 304 166 300Q150 240 160 170Z" fill="#000" fillOpacity=".05" />
-          <path d="M163 166L180 214L197 166L216 172L190 232L180 292L170 232L144 172Z" fill="#f0dccf" />
-          <path d="M166 166L180 206L194 166Z" fill="#fa8c7b" />
-          <circle cx="180" cy="248" r="2.800" fill="#d9bfae" /><circle cx="180" cy="268" r="2.800" fill="#d9bfae" />
-          {/* tablet in left hand */}
-          <g transform="rotate(-10 112 276)">
-            <rect x="84" y="258" width="58" height="38" rx="7" fill="#151b33" />
-            <rect x="88" y="262" width="50" height="30" rx="4" fill="url(#av-screen)" />
-            <polyline className="av-line" pathLength="100" points="92,286 102,278 110,282 120,270 132,266" fill="none" stroke="#fff" strokeWidth="2.200" strokeLinecap="round" strokeLinejoin="round" />
-            <circle cx="132" cy="266" r="2.600" fill="#ffd166" />
-          </g>
-          <circle cx="116" cy="284" r="8" fill="#f1c1a1" />
+
+          <path d="M143 186Q121 226 118 274" stroke="url(#av-blazer)" strokeWidth="21" strokeLinecap="round" fill="none" />
+          <path d="M143 186Q121 226 118 274" stroke="#000" strokeOpacity=".06" strokeWidth="21" strokeLinecap="round" fill="none" />
+          <path d="M108 268h20" stroke="#d9bfae" strokeWidth="2" strokeLinecap="round" />
           {/* right arm: upper arm + waving forearm */}
-          <path d="M226 182Q250 196 262 160" stroke="url(#av-blazer)" strokeWidth="24" strokeLinecap="round" fill="none" />
+          <path d="M217 186Q238 196 242 210" stroke="url(#av-blazer)" strokeWidth="21" strokeLinecap="round" fill="none" />
           <g className="av-wave">
-            <path d="M262 160Q272 130 280 108" stroke="url(#av-blazer)" strokeWidth="22" strokeLinecap="round" fill="none" />
-            <path d="M262 160Q272 130 280 108" stroke="#000" strokeOpacity=".05" strokeWidth="22" strokeLinecap="round" fill="none" />
-            <ellipse cx="282" cy="96" rx="11" ry="13" fill="#f1c1a1" />
-            <ellipse cx="271" cy="100" rx="4" ry="7" fill="#f1c1a1" transform="rotate(-25 271 100)" />
-            <path d="M277 86v-8M283 84v-9M289 87v-8" stroke="#f1c1a1" strokeWidth="4" strokeLinecap="round" />
+            <path d="M242 210Q254 176 258 140" stroke="url(#av-blazer)" strokeWidth="19" strokeLinecap="round" fill="none" />
+            <path d="M242 210Q254 176 258 140" stroke="#000" strokeOpacity=".05" strokeWidth="19" strokeLinecap="round" fill="none" />
+            <path d="M248 142h20" stroke="#d9bfae" strokeWidth="2" strokeLinecap="round" transform="rotate(8 258 142)" />
+            <ellipse cx="259" cy="128" rx="9.500" ry="11" fill="url(#av-skin)" />
+            <g stroke="url(#av-skin)" strokeWidth="4.600" strokeLinecap="round" fill="none">
+              <path d="M253 121L250 106M258 119L258 102M263 120L266 104M267 125L274 113" />
+              <path d="M251 130L243 123" />
+            </g>
           </g>
+
+          {/* blazer torso, cinched waist */}
+          <path d="M140 182Q158 170 172 168L188 168Q202 170 220 182L224 238Q216 262 214 272Q224 288 224 300Q180 312 136 300Q136 288 146 272Q144 262 136 238Z" fill="url(#av-blazer)" />
+          <path d="M140 182L136 238Q144 262 146 272Q136 288 136 300Q150 306 160 307Q150 262 156 206Z" fill="#000" fillOpacity=".05" />
+          <path d="M188 168Q202 170 220 182L224 238Q216 262 214 272Q224 288 224 300Q214 303 204 305Q218 262 212 214Z" fill="url(#av-rim)" />
+          {/* inner top, lapels, buttons, necklace */}
+          <path d="M172 168L180 218L188 168Z" fill="#24305e" />
+          <path d="M172 168L156 178L177 236L180 218Z" fill="#f2e0d3" />
+          <path d="M188 168L204 178L183 236L180 218Z" fill="#f7e9de" />
+          <path d="M180 218V298" stroke="#d9bfae" strokeWidth="1.600" />
+          <circle cx="180" cy="246" r="2.600" fill="#c9ac98" /><circle cx="180" cy="266" r="2.600" fill="#c9ac98" />
+          <path d="M172 169Q180 190 188 169" stroke="#ffd166" strokeWidth="1.400" fill="none" />
+          <circle cx="180" cy="187" r="2.600" fill="#ffd166" />
+
+          {/* tablet in the left hand: fingers behind, thumb in front */}
+          <ellipse cx="120" cy="286" rx="9" ry="8" fill="url(#av-skin)" />
+          <g transform="rotate(-10 112 278)">
+            <rect x="84" y="260" width="58" height="38" rx="7" fill="#151b33" />
+            <rect x="88" y="264" width="50" height="30" rx="4" fill="url(#av-screen)" />
+            <polyline className="av-line" pathLength="100" points="92,288 102,280 110,284 120,272 132,268" fill="none" stroke="#fff" strokeWidth="2.200" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="132" cy="268" r="2.600" fill="#ffd166" />
+          </g>
+          <ellipse cx="86" cy="290" rx="4" ry="7" fill="url(#av-skin)" transform="rotate(-12 86 290)" />
+
         </g>
 
         {/* neck */}
-        <path d="M171 140h20v28q-10 7-20 0z" fill="#e4aa8a" />
+        <path d="M172 136H188L190 172Q180 180 170 172Z" fill="#e6b090" />
+        <ellipse cx="180" cy="145" rx="10" ry="4" fill="#cf8f70" fillOpacity=".25" />
 
         {/* head */}
         <g className="av-head">
-          <ellipse cx="181" cy="108" rx="29" ry="34" fill="#f4c7a8" />
-          <path d="M152 112Q153 138 176 142Q164 132 160 112Z" fill="#e9b394" fillOpacity=".5" />
-          {/* fringe */}
-          <path d="M149 104C150 72 176 62 196 70C210 77 213 92 212 106C202 88 178 82 149 104Z" fill="url(#av-hair)" />
-          <path d="M160 82Q178 70 200 78" stroke="#c46a3e" strokeOpacity=".7" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <ellipse cx="155" cy="114" rx="4.200" ry="7" fill="#eeb897" />
+          <ellipse cx="205" cy="114" rx="4.200" ry="7" fill="#eeb897" />
+          <circle cx="155" cy="124" r="2.600" fill="#ffd166" /><circle cx="205" cy="124" r="2.600" fill="#ffd166" />
+          <path d="M156 100C156 80 166 70 180 70C194 70 204 80 204 100C204 114 202 126 196 134C192 140 186 144 180 144C174 144 168 140 164 134C158 126 156 114 156 100Z" fill="url(#av-skin)" />
+          <path d="M196 134C192 140 186 144 180 144C186 134 198 120 200 102C203 114 202 126 196 134Z" fill="#fff" fillOpacity=".12" />
+          <path d="M156 104Q158 126 170 138Q162 126 160 104Z" fill="#d9946f" fillOpacity=".35" />
           {/* brows */}
-          <path d="M162 100Q170 95 178 99M185 99Q193 95 201 100" stroke="#6b2f17" strokeWidth="2.200" fill="none" strokeLinecap="round" />
+          <path d="M164 96Q170 91.500 177 94.500M183 94.500Q190 91.500 196 96" stroke="#55230f" strokeWidth="2.200" fill="none" strokeLinecap="round" />
           {/* eyes */}
           <g className="av-blink">
-            <ellipse cx="170" cy="111" rx="3.800" ry="5" fill="#2b2230" />
-            <ellipse cx="193" cy="111" rx="3.800" ry="5" fill="#2b2230" />
-            <circle cx="171.500" cy="109" r="1.400" fill="#fff" /><circle cx="194.500" cy="109" r="1.400" fill="#fff" />
+            {[0, 1].map((k) => {
+              const cx = k === 0 ? 168.500 : 191.500
+              const sgn = k === 0 ? -1 : 1
+              return (
+                <g key={k}>
+                  <path d={`M${cx - 7} 105Q${cx} 98.500 ${cx + 7} 105Q${cx} 110.500 ${cx - 7} 105Z`} fill="#fff" />
+                  <g className="av-look">
+                    <circle cx={cx} cy="104.500" r="3.800" fill="#5b3a28" />
+                    <circle cx={cx} cy="104.500" r="1.900" fill="#17101f" />
+                    <circle cx={cx + 1.300} cy="103.200" r="1.100" fill="#fff" />
+                  </g>
+                  <path d={`M${cx - 7.500} 105Q${cx} 97.500 ${cx + 7.500} 105`} stroke="#2b1a22" strokeWidth="2" fill="none" strokeLinecap="round" />
+                  <path d={`M${cx + sgn * 7} 104.500l${sgn * 3.500} -2.500`} stroke="#2b1a22" strokeWidth="1.600" strokeLinecap="round" />
+                </g>
+              )
+            })}
           </g>
-          {/* nose, cheeks, smile */}
-          <path d="M181 114Q178 123 182 124" stroke="#d99a7c" strokeWidth="1.800" fill="none" strokeLinecap="round" />
-          <circle cx="161" cy="122" r="6" fill="#f08a78" fillOpacity=".35" /><circle cx="201" cy="122" r="6" fill="#f08a78" fillOpacity=".35" />
-          <path d="M170 128Q181 141 192 128Q181 133 170 128Z" fill="#d2584e" />
-          <path d="M173 131Q181 136 189 131" stroke="#fff" strokeOpacity=".75" strokeWidth="1.600" fill="none" strokeLinecap="round" />
-          {/* earring */}
-          <circle cx="152" cy="122" r="2.600" fill="#ffd166" />
+          {/* nose, cheeks, lips */}
+          <path d="M180 108Q177 119 181.500 120.500" stroke="#d6957a" strokeWidth="1.700" fill="none" strokeLinecap="round" />
+          <circle cx="164" cy="121" r="5.500" fill="#f08a78" fillOpacity=".32" /><circle cx="196" cy="121" r="5.500" fill="#f08a78" fillOpacity=".32" />
+          <path d="M170 128Q175 124.500 180 126.500Q185 124.500 190 128Q185 138.500 180 138.500Q175 138.500 170 128Z" fill="#d2584e" />
+          <path d="M173.500 130.500Q180 135 186.500 130.500" stroke="#fff" strokeOpacity=".7" strokeWidth="1.500" fill="none" strokeLinecap="round" />
+        </g>
+
+        {/* hair in front: crown + side-swept fringe + locks over the shoulders */}
+        <g className="av-head">
+          <path d="M151 100C149 74 166 60 184 60C202 61 211 78 209 100C201 82 180 74 151 100Z" fill="url(#av-hair)" />
+          <path d="M158 80Q178 64 202 76" stroke="#d98150" strokeOpacity=".7" strokeWidth="2.200" fill="none" strokeLinecap="round" />
+        </g>
+        <g className="av-lock">
+          <path d="M155 96C146 120 146 146 154 172C161 160 160 130 164 108Z" fill="url(#av-hair)" />
+          <path d="M205 96C214 120 214 148 207 176C198 162 199 130 196 108Z" fill="url(#av-hair)" />
+          <path d="M152 124C150 142 153 158 156 168" stroke="#d98150" strokeOpacity=".5" strokeWidth="1.600" fill="none" strokeLinecap="round" />
         </g>
       </g>
     </svg>
