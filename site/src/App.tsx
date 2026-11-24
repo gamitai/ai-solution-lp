@@ -13,8 +13,8 @@ const CORAL = '#fa8c7b'
 type Art = 'studio' | 'feed' | 'team'
 type Project = { title: string; desc: string; art?: Art; src?: string; poster?: string; color: string }
 const projects: Project[] = [
-  { title: 'ניהול סטודיו לאימון', art: 'studio', color: '#6b4f7a', desc: 'מתאמנות משבצות את עצמן לאימון, עוקבות אחרי הכרטיסיה, מקבלות תזכורת בוואטסאפ לפני האימון, רואות דרכי הגעה וממלאות הצהרת בריאות. כולל מעקב אחרי ההתקדמות במשקלים בכל תרגיל ותרגיל, רכישת כרטיסיה, ניהול תשלומים ובוט AI.' },
-  { title: 'Competitor Feed + Slack', art: 'feed', color: '#14161f', desc: 'מעקב אוטומטי אחרי מתחרים: המערכת אוספת עדכונים, מסכמת אותם עם AI ושולחת אותם בזמן אמת לערוץ Slack.' },
+  { title: 'ניהול סטודיו לאימון', art: 'studio', color: '#6b4f7a', desc: 'מתאמנות משבצות את עצמן לאימון, עוקבות אחרי הכרטיסיה, מקבלות תזכורת בוואטסאפ לפני האימון, רואות דרכי הגעה וממלאות הצהרת בריאות. כולל מעקב אחרי ההתקדמות במשקלים בכל תרגיל ותרגיל עם שיאים אישיים, רכישת כרטיסיה, ניהול תשלומים ובוט AI.' },
+  { title: 'Competitor Feed + Slack', art: 'feed', color: '#14161f', desc: 'מעקב אוטומטי אחרי מתחרים: פיד אחד עם עדכונים ממקורות שונים, עם סינון לפי סוג, סיכום "למה זה חשוב" מבוסס AI והתראות בזמן אמת לערוץ Slack.' },
   { title: 'שיבוץ צוותי מילואים', art: 'team', color: '#12306b', desc: 'שיבוץ לפי תנאים, צרכים ומגבלות. הכול דרך אייג׳נט בוואטסאפ, עם מערכת רישום ודשבורד BI לניתוח נתונים.' },
 ]
 
@@ -92,50 +92,78 @@ function useReveal() {
 }
 
 function StudioArt() {
+  const rows = [['לחיצות חזה', '12', '14'], ['דדליפט', '40', '40'], ['סקוואט', '30', '30']]
   return (
-    <div aria-hidden="true" className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#3b2a4a] to-[#8a5d7a] p-3 text-white">
-      <div className="flex h-full gap-2">
-        <div className="w-[42%] rounded-xl bg-white p-2 text-right text-[#2b2b2b]">
-          <div className="text-[9px] text-black/50">הכרטיסיה שלי</div>
-          <div className="relative h-9">
-            <span className="art-a absolute right-0 text-3xl font-extrabold leading-9 text-[#6b4f7a]">8</span>
-            <span className="art-b absolute right-0 text-3xl font-extrabold leading-9 text-[#6b4f7a]">7</span>
-          </div>
-          <div className="text-[9px]">אימונים נותרו</div>
-        </div>
-        <div className="flex-1 rounded-xl bg-white/15 p-2 text-right">
-          <div className="text-[11px] font-bold">Tabata Power</div>
-          <div className="text-[9px] text-white/70">08:30</div>
-          <div className="relative mt-2 h-6">
-            <span className="art-a absolute inset-0 grid place-items-center rounded-full bg-white text-[10px] font-bold text-[#3b2a4a]">הרשמה לאימון</span>
-            <span className="art-b absolute inset-0 grid place-items-center rounded-full bg-[#25d366] text-[10px] font-bold">נרשמת ✓</span>
+    <div aria-hidden="true" className="relative h-full w-full overflow-hidden bg-[#0e0c13] text-white">
+      {/* class card */}
+      <div className="absolute bottom-3 right-3 top-3 w-[52%] overflow-hidden rounded-xl bg-gradient-to-br from-[#c9a58f] via-[#a67c7c] to-[#4f3b5c]">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        <span className="absolute left-2 top-2 rounded-full bg-white/25 px-1.5 py-0.5 text-[8px]">19:00</span>
+        <span className="absolute right-2 top-2 rounded-lg bg-white/25 px-1.5 py-0.5 text-center text-[8px] leading-tight">שלישי<br /><b className="text-[11px]">26</b></span>
+        <span className="absolute right-2 top-[44px] rounded-full bg-[#d9344f] px-1.5 py-0.5 text-[7px] font-bold">מקומות אחרונים</span>
+        <div className="absolute inset-x-2 bottom-2 text-right">
+          <div className="text-[12px] font-extrabold leading-tight">Strength</div>
+          <div className="mb-1.5 text-[8px] text-white/70">עם המאמנת</div>
+          <div className="relative h-5">
+            <span className="art-a absolute inset-0 grid place-items-center rounded-full bg-white text-[9px] font-bold text-[#2b2233]">הרשמה לאימון</span>
+            <span className="art-b absolute inset-0 grid place-items-center rounded-full bg-[#25d366] text-[9px] font-bold">נרשמת ✓</span>
           </div>
         </div>
       </div>
-      <div className="art-pop absolute bottom-3 left-3 rounded-xl rounded-bl-sm bg-[#d9fdd3] px-2.5 py-1.5 text-[10px] text-[#1f2c34] shadow">תזכורת: אימון מחר ב-08:30</div>
+      {/* weights tracking */}
+      <div className="absolute bottom-3 left-3 top-3 w-[40%] rounded-xl border border-white/10 bg-white/[.06] p-2 text-right">
+        <div className="mb-1.5 text-[9px] font-bold text-white/80">מעקב הרמות</div>
+        {rows.map(([name, a, b], i) => (
+          <div key={name} className="relative flex items-center justify-between border-b border-white/10 py-[3px] text-[8px]">
+            <span className="text-white/70">{name}</span>
+            <span className="relative h-3 w-8 text-left font-bold text-[#a78bfa]">
+              <span className={i === 0 ? 'art-a absolute left-0' : 'absolute left-0'}>{a} ק״ג</span>
+              {i === 0 && <span className="art-b absolute left-0">{b} ק״ג</span>}
+            </span>
+          </div>
+        ))}
+        <div className="art-pop2 mt-1.5 rounded-md bg-[#8b6cf0] px-1.5 py-1 text-center text-[8px] font-bold">שיא חדש!</div>
+        <div className="art-pop absolute inset-x-2 bottom-2 rounded-lg rounded-bl-sm bg-[#d9fdd3] px-1.5 py-1 text-[7.5px] leading-snug text-[#1f2c34]">תזכורת: אימון מחר ב-19:00</div>
+      </div>
     </div>
   )
 }
 
 function FeedArt() {
-  const rows = ['מחיר חדש אצל מתחרה', 'קמפיין חדש', 'פוסט חדש ברשת']
   return (
-    <div aria-hidden="true" className="relative flex h-full w-full gap-3 overflow-hidden bg-[#14161f] p-3 text-white">
-      <div className="flex-1 space-y-2">
-        {rows.map((r, i) => (
-          <div key={r} className="art-row flex items-center gap-2 rounded-lg bg-white/10 px-2 py-2 text-[10px]" style={{ animationDelay: `${i * 0.8}s` }}>
-            <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: ['#fa8c7b', '#4d8dff', '#3ddc55'][i] }} />
-            {r}
+    <div aria-hidden="true" dir="ltr" className="relative h-full w-full overflow-hidden text-left bg-gradient-to-br from-[#d9f2fa] via-[#eceeff] to-[#f1e6ff] text-[#1d2433]">
+      {/* sidebar */}
+      <div className="absolute bottom-2.5 left-2.5 top-2.5 w-[31%] rounded-xl bg-white/85 p-2 shadow-sm">
+        <div className="flex items-center gap-1 text-[8px] font-extrabold"><i className="h-3 w-3 rounded-full bg-gradient-to-br from-[#4d8dff] to-[#8b5cf6]" />Competitor Feed</div>
+        <div className="mt-2 rounded-lg bg-white px-1.5 py-1 text-[8px] font-bold shadow-sm">Feed</div>
+        <div className="mt-2 text-[6px] font-bold tracking-wider text-black/40">COMPETITORS</div>
+        {['Acme', 'Bolt', 'Corex'].map((n, i) => (
+          <div key={n} className="mt-1 flex items-center gap-1 text-[8px]">
+            <i className="grid h-3 w-3 place-items-center rounded-full text-[6px] font-bold text-white" style={{ background: ['#4d8dff', '#fa8c7b', '#8b5cf6'][i] }}>{n[0]}</i>{n}
           </div>
         ))}
       </div>
-      <div className="relative w-[48%] rounded-xl bg-white p-2 text-right text-[#1d1c1d]">
-        <div className="text-[10px] font-bold"># מתחרים</div>
-        <div className="art-pop mt-2 flex gap-1.5">
-          <span className="h-5 w-5 shrink-0 rounded bg-[#1b71ff]" />
-          <div className="text-[9px] leading-snug"><b>סיכום AI</b><br />המתחרה הוריד מחיר ב-10%</div>
+      {/* feed */}
+      <div className="absolute bottom-2.5 left-[36%] right-2.5 top-2.5">
+        <div className="flex items-center gap-1 text-[8px]">
+          <b className="mr-1 text-[10px]">Feed</b>
+          <span className="rounded-full bg-[#1d2433] px-1.5 py-0.5 text-white">All</span>
+          <span className="rounded-full bg-white/80 px-1.5 py-0.5">Sales</span>
+          <span className="rounded-full bg-white/80 px-1.5 py-0.5">Product</span>
         </div>
-        <div className="art-fade-dots mt-2 flex gap-1"><i className="h-1.5 w-1.5 rounded-full bg-black/30" /><i className="h-1.5 w-1.5 rounded-full bg-black/30" /><i className="h-1.5 w-1.5 rounded-full bg-black/30" /></div>
+        {[['Acme', 'Acme ships a new pricing page', '#4d8dff'], ['Bolt', 'Bolt launches an integration', '#fa8c7b']].map(([n, t, c], i) => (
+          <div key={n} className="art-row mt-1.5 rounded-lg bg-white p-1.5 shadow-sm" style={{ animationDelay: `${i * 1.1}s` }}>
+            <div className="flex items-center gap-1 text-[7px]"><i className="h-2.5 w-2.5 rounded-full" style={{ background: c }} /><b>{n}</b><span className="text-black/40">1d</span><span className="rounded bg-[#ece8ff] px-1 text-[6px] font-bold text-[#6d4fd1]">Release</span></div>
+            <div className="mt-0.5 text-[8px] font-bold leading-tight">{t}</div>
+            <div className="mt-0.5 border-l-2 border-[#4d8dff] pl-1 text-[6.5px] text-black/55">Why it matters: pricing pressure</div>
+          </div>
+        ))}
+      </div>
+      {/* Slack notification */}
+      <div className="art-pop2 absolute bottom-2 right-2 w-[48%] rounded-lg bg-[#2b0f2e] p-1.5 text-white shadow-lg">
+        <div className="flex items-center gap-1 text-[7px] text-white/60"><i className="grid h-3 w-3 place-items-center rounded bg-white/90 text-[6px] font-extrabold text-[#4a154b]">#</i>competitors</div>
+        <div className="mt-0.5 text-[7.5px] font-bold text-[#7cc4ff]">Acme ships a new pricing page</div>
+        <div className="mt-1 flex gap-1 text-[6.5px]"><span className="rounded border border-white/30 px-1.5 py-0.5">Read</span><span className="rounded border border-white/30 px-1.5 py-0.5">Open in app</span></div>
       </div>
     </div>
   )
