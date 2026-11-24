@@ -345,9 +345,7 @@ export default function App() {
       <section id="contact" className="px-4 py-20 text-white" style={{ background: BLUE }}>
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">רוצים לבדוק מה AI יכול לחסוך אצלכם?</h2>
-          <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} mt-8 bg-black text-white hover:bg-white hover:text-black`}>בואו נדבר ←</a>
-          <p className="mt-10 text-lg text-white/85">או מלאו כמה פרטים (כל השדות אופציונליים) ותקבלו הודעה מוכנה בוואטסאפ:</p>
-          <form onSubmit={submit} className="mt-4 space-y-4 text-right">
+          <form onSubmit={submit} className="mt-8 space-y-4 text-right">
             <label className="block text-sm font-medium">
               שם
               <input name="name" autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={`${input} mt-1.5`} />
