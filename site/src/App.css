@@ -55,6 +55,23 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .art-bar { transform-origin: bottom; animation: art-bar 2.4s ease-in-out infinite alternate; }
 .art-fade-dots { animation: art-dots 6s infinite; }
 
+/* WhatsApp bot illustration: a 9s typing conversation */
+@keyframes typed { 0% { max-width: 0; opacity: 1; } 13% { max-width: 12em; opacity: 1; } 15%, 100% { max-width: 12em; opacity: 0; } }
+@keyframes cb1 { 0%, 15% { opacity: 0; transform: translateY(8px); } 19%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes cbd1 { 0%, 22% { opacity: 0; } 25%, 33% { opacity: 1; } 36%, 100% { opacity: 0; } }
+@keyframes cb2 { 0%, 35% { opacity: 0; transform: translateY(8px); } 39%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes cb3 { 0%, 55% { opacity: 0; transform: translateY(8px); } 59%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes cbd2 { 0%, 62% { opacity: 0; } 65%, 71% { opacity: 1; } 74%, 100% { opacity: 0; } }
+@keyframes cb4 { 0%, 73% { opacity: 0; transform: translateY(8px); } 77%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes dot { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.typed { display: inline-block; overflow: hidden; vertical-align: top; animation: typed 9s steps(16, end) infinite; }
+.cb1 { animation: cb1 9s infinite; } .cbd1 { animation: cbd1 9s infinite; } .cb2 { animation: cb2 9s infinite; }
+.cb3 { animation: cb3 9s infinite; } .cbd2 { animation: cbd2 9s infinite; } .cb4 { animation: cb4 9s infinite; }
+.dot { display: block; width: 4px; height: 4px; border-radius: 9999px; background: #667781; animation: dot 1s infinite; }
+.dot:nth-child(2) { animation-delay: .2s; } .dot:nth-child(3) { animation-delay: .4s; }
+.art-spin { animation: spin 2.4s linear infinite; }
+
 /* Process timeline: steps light up as the page is scrolled (only when JS is on) */
 .step-dot { background: #fff; border-color: rgba(0,0,0,.15); color: rgba(0,0,0,.4); transition: all .5s ease; }
 .step-card { background: #fff; border-color: rgba(0,0,0,.08); transition: all .5s ease; }
@@ -67,6 +84,9 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
   .js .step { opacity: 1; transform: none; transition: none; }
   .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink, .art-a, .art-b, .art-pop, .art-pop2, .art-row, .art-bar, .art-fade-dots { animation: none; }
   .art-b { opacity: 0; }
+  .typed, .cb1, .cbd1, .cb2, .cb3, .cbd2, .cb4, .dot, .art-spin { animation: none; }
+  .cbd1, .cbd2 { display: none; }
+  .typed { opacity: 0; }
   .gcard { transition: none; }
   .twinkle { opacity: 1; transform: none; }
   .marquee-track, .wa-pulse { animation: none; }

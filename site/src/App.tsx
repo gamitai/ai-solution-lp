@@ -10,12 +10,21 @@ const BLUE = '#1b71ff'
 const CORAL = '#fa8c7b'
 
 // להחלפת איור בסרטון אמיתי: מלאו src (קובץ mp4 בתיקיית public או קישור) והוא יוצג במקום האיור
-type Art = 'studio' | 'feed' | 'team'
+type Art = 'studio' | 'feed' | 'team' | 'battle' | 'bot'
 type Project = { title: string; desc: string; art?: Art; src?: string; poster?: string; color: string }
 const projects: Project[] = [
   { title: 'ניהול סטודיו לאימון', art: 'studio', color: '#6b4f7a', desc: 'מתאמנות משבצות את עצמן לאימון, עוקבות אחרי הכרטיסיה, מקבלות תזכורת בוואטסאפ לפני האימון, רואות דרכי הגעה וממלאות הצהרת בריאות. כולל מעקב אחרי ההתקדמות במשקלים בכל תרגיל ותרגיל עם שיאים אישיים, רכישת כרטיסיה, ניהול תשלומים ובוט AI.' },
   { title: 'Competitor Feed + Slack', art: 'feed', color: '#14161f', desc: 'מעקב אוטומטי אחרי מתחרים: פיד אחד עם עדכונים ממקורות שונים, עם סינון לפי סוג, סיכום "למה זה חשוב" מבוסס AI והתראות בזמן אמת לערוץ Slack.' },
   { title: 'שיבוץ צוותי מילואים', art: 'team', color: '#12306b', desc: 'שיבוץ לפי תנאים, צרכים ומגבלות. הכול דרך אייג׳נט בוואטסאפ, עם מערכת רישום ודשבורד BI לניתוח נתונים.' },
+  { title: 'Automated Battlecards', art: 'battle', color: '#2b3a67', desc: 'מציג לאנשי מכירות PDF מעודכן תמיד שמשווה בין החברה שלהם למתחרות, ויודע להציג רק את המקומות שבהם החברה שלהם טובה יותר. כך מגדילים את אחוזי המכירה של צוותי המכירות.' },
+  { title: 'בוט וואטסאפ לשירות לקוחות', art: 'bot', color: '#0b6b5c', desc: 'חוסך עובד ייעודי שיושב כל הזמן ליד הטלפון. הבוט מכיר את החברה, עונה מתוך הידע שצבר עליה, זמין תמיד ותמיד יש לו תשובה. במקרה קיצון הוא מפנה לעובד אנושי.' },
+]
+
+const serviceIcons = [
+  <><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /><path d="M8 9h8M8 13h5" /></>,
+  <><path d="M21 12a9 9 0 0 0-15-6.7L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 15 6.7L21 16" /><path d="M16 16h5v5" /></>,
+  <><path d="M3 3v18h18" /><path d="M8 17v-5M13 17V8M18 17v-3" /></>,
+  <><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></>,
 ]
 
 const services = [
@@ -40,7 +49,7 @@ const BRAND = 'SochenAI'
 const faqs = [
   { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
   { q: 'אילו תהליכים אפשר לאוטמט בעסק?', a: 'אפשר לאוטמט כמעט כל תהליך חוזר: הזמנות וקביעת תורים, תזכורות ותשלומים, איסוף ומיון פניות, שליחת עדכונים לצוות ב-Slack, ושיבוץ אנשים לפי תנאים ומגבלות. נתחיל מהתהליך שגוזל לכם הכי הרבה זמן.' },
-  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI.' },
+  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI. בנוסף נבנו Automated Battlecards לאנשי מכירות, ובוט וואטסאפ לשירות לקוחות שמפנה לעובד אנושי במקרה קיצון.' },
   { q: 'כמה עולה שיחת ההיכרות?', a: 'שיחת ההיכרות ללא עלות. בה מבינים את העסק, בודקים אם הפתרון אפשרי, ואתם מחליטים אם להמשיך.' },
   { q: 'איך מתחילים לעבוד?', a: 'מתחילים בשיחת היכרות. אחר כך באים אפיון ומחקר, עיצוב ממשק, פיתוח ואימון, אב-טיפוס שאתם בודקים ומאשרים, ולבסוף עלייה לאוויר.' },
   { q: 'האם אפשר לחבר את הפתרון למערכות שכבר יש לי?', a: 'כן. אפשר לחבר וואטסאפ, Slack, מערכות תשלום, CRM וגיליונות נתונים. אם הכלי שלכם חושף API או אפשרות ייצוא, אפשר לשלב אותו בפתרון.' },
@@ -185,6 +194,61 @@ function TeamArt() {
   )
 }
 
+function BattleArt() {
+  const rows = [['מחיר', 'משתלם יותר'], ['זמן הטמעה', 'מהיר יותר'], ['תמיכה', 'זמינה תמיד']]
+  return (
+    <div aria-hidden="true" className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#dfe8ff] via-[#eef0ff] to-[#fbe9e4] p-3 text-[#1d2433]">
+      <div className="mx-auto h-full w-[78%] rounded-lg bg-white p-2 text-right shadow-lg">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1">
+            <b className="text-[10px]">Battlecard</b>
+            <span className="rounded bg-[#e5484d] px-1 text-[6px] font-bold text-white">PDF</span>
+          </div>
+          <span className="flex items-center gap-0.5 rounded-full bg-[#e8f8ee] px-1.5 py-0.5 text-[6.5px] font-bold text-[#1a8f4c]">
+            <svg className="art-spin" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><path d="M21 12a9 9 0 1 1-3-6.7" /><path d="M21 3v6h-6" /></svg>
+            עודכן עכשיו
+          </span>
+        </div>
+        <div className="mt-1.5 flex justify-between text-[6.5px] font-bold text-black/45"><span>אנחנו מול המתחרה</span></div>
+        {rows.map(([k, v], i) => (
+          <div key={k} className="art-row mt-1 flex items-center justify-between rounded-md bg-[#f4f7ff] px-1.5 py-1 text-[8px]" style={{ animationDelay: `${i * 0.7}s` }}>
+            <span className="font-bold">{k}</span>
+            <span className="flex items-center gap-1 text-[#1a8f4c]"><i className="grid h-3 w-3 place-items-center rounded-full bg-[#1a8f4c] text-[7px] text-white not-italic">✓</i>{v}</span>
+          </div>
+        ))}
+        <div className="mt-1.5 flex items-end gap-1">
+          <span className="text-[6.5px] text-black/50">אחוזי מכירה</span>
+          {[40, 55, 72, 90].map((h, i) => (
+            <span key={i} className="art-bar w-2 rounded-t bg-[#4d8dff]" style={{ height: `${h * 0.22}px`, animationDelay: `${i * 0.3}s` }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BotArt() {
+  return (
+    <div aria-hidden="true" className="relative flex h-full w-full flex-col overflow-hidden bg-[#efeae2] text-[#1f2c34]">
+      <div className="flex items-center gap-1.5 bg-[#075e54] px-2 py-1.5 text-white">
+        <i className="grid h-4 w-4 place-items-center rounded-full bg-white/90 text-[7px] font-extrabold text-[#075e54] not-italic">S</i>
+        <div className="text-right leading-tight"><div className="text-[8.5px] font-bold">שירות לקוחות</div><div className="text-[6.5px] text-white/75">מחובר</div></div>
+      </div>
+      <div className="relative flex-1 px-2 pt-1.5 text-[8px]">
+        <div className="cb1 absolute right-2 top-1.5 max-w-[70%] rounded-lg rounded-tr-sm bg-[#d9fdd3] px-2 py-1 shadow-sm">מה שעות הפעילות?</div>
+        <div className="cbd1 absolute left-2 top-[34px] flex gap-0.5 rounded-lg bg-white px-2 py-1.5 shadow-sm"><i className="dot" /><i className="dot" /><i className="dot" /></div>
+        <div className="cb2 absolute left-2 top-[34px] max-w-[72%] rounded-lg rounded-tl-sm bg-white px-2 py-1 shadow-sm">אנחנו פתוחים א׳-ה׳ 9:00-18:00</div>
+        <div className="cb3 absolute right-2 top-[62px] max-w-[70%] rounded-lg rounded-tr-sm bg-[#d9fdd3] px-2 py-1 shadow-sm">אפשר לדבר עם נציג?</div>
+        <div className="cbd2 absolute left-2 top-[88px] flex gap-0.5 rounded-lg bg-white px-2 py-1.5 shadow-sm"><i className="dot" /><i className="dot" /><i className="dot" /></div>
+        <div className="cb4 absolute left-2 top-[88px] max-w-[78%] rounded-lg rounded-tl-sm bg-white px-2 py-1 shadow-sm">מעביר אותך לנציג אנושי ✓</div>
+      </div>
+      <div className="mx-2 mb-1.5 flex items-center rounded-full bg-white px-2 py-1 text-[8px] shadow-sm">
+        <span className="typed whitespace-nowrap text-black/70">מה שעות הפעילות?</span>
+      </div>
+    </div>
+  )
+}
+
 function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   if (p.src) {
     return <video src={p.src} poster={p.poster} muted loop playsInline autoPlay={!big} controls={big} className="h-full w-full object-cover" />
@@ -192,6 +256,8 @@ function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   if (p.art === 'studio') return <StudioArt />
   if (p.art === 'feed') return <FeedArt />
   if (p.art === 'team') return <TeamArt />
+  if (p.art === 'battle') return <BattleArt />
+  if (p.art === 'bot') return <BotArt />
   return <div className="h-full w-full" style={{ background: p.color }} />
 }
 
@@ -330,7 +396,7 @@ function buildMessage({ name, business, help }: { name: string; business: string
   return parts.join(' ')
 }
 
-const SETS = 6 // the card set is repeated so the row can loop endlessly
+const SETS = 5 // the card set is repeated so the row can loop endlessly
 
 function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
   const rowRef = useRef<HTMLDivElement>(null)
@@ -355,7 +421,7 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
     if (!row || sets !== SETS) return
     const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const period = () => row.scrollWidth / SETS
-    row.scrollLeft = period() * 2
+    row.scrollLeft = period()
     let pos = row.scrollLeft, lastSet = pos, last = performance.now(), raf = 0
     const tick = (now: number) => {
       const dt = Math.min(now - last, 64)
@@ -365,8 +431,8 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
       if (Math.abs(cur - lastSet) > 1.5) pos = cur // visitor (or a smooth scroll) moved it
       let changed = false
       if (!calm && !hovering.current && !drag.current && !tipOpen.current && now > holdUntil.current) { pos += dt * 0.04; changed = true }
-      if (pos >= p * 4) { pos -= p * 2; changed = true }
-      else if (pos < p * 2) { pos += p * 2; changed = true }
+      if (pos >= p * 3) { pos -= p * 2; changed = true }
+      else if (pos < p) { pos += p * 2; changed = true }
       if (changed) { row.scrollLeft = pos; lastSet = row.scrollLeft } // only write when we move it, so smooth scrolls and drags are not overridden
       else { pos = cur; lastSet = cur }
       raf = requestAnimationFrame(tick)
@@ -506,7 +572,7 @@ export default function App() {
           <a href="#top" className="flex items-center gap-2 font-bold"><Logo className="h-8 w-8" />SochenAI</a>
           <div className="hidden gap-7 text-sm md:flex">
             <a href="#services">מה אנחנו בונים</a>
-            <a href="#portfolio">תיק עבודות</a>
+            <a href="#portfolio">מה כבר בנינו</a>
             <a href="#process">איך זה עובד</a>
             <a href="#faq">שאלות נפוצות</a>
           </div>
@@ -533,9 +599,14 @@ export default function App() {
         <div className="mx-auto max-w-5xl rounded-[2.5rem] bg-black p-8 text-white md:p-14">
           <h2 className="reveal text-3xl font-bold md:text-4xl">מה אנחנו בונים?</h2>
           <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
-            {services.map((s) => (
+            {services.map((s, i) => (
               <div key={s.t} className="reveal">
-                <h3 className="mb-2 text-xl font-bold" style={{ color: CORAL }}>{s.t}</h3>
+                <div className="mb-2 flex items-center gap-3">
+                  <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl" style={{ background: 'rgba(250,140,123,.16)', color: CORAL }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{serviceIcons[i]}</svg>
+                  </span>
+                  <h3 className="text-xl font-bold" style={{ color: CORAL }}>{s.t}</h3>
+                </div>
                 <p className="text-white/70">{s.d}</p>
               </div>
             ))}
@@ -546,7 +617,7 @@ export default function App() {
       {/* Portfolio */}
       <section id="portfolio" className="pb-12">
         <div className="mx-auto mb-2 max-w-5xl px-4 text-center">
-          <h2 className="reveal text-3xl font-bold md:text-4xl">תיק עבודות</h2>
+          <h2 className="reveal text-3xl font-bold md:text-4xl">מה כבר בנינו</h2>
           <p className="reveal mt-2 text-lg text-black/60">עברו עם העכבר על פרויקט כדי להגדיל ולקרוא מה נעשה בו. אפשר לגרור ולגלול.</p>
         </div>
         <Gallery onOpen={setOpen} />
@@ -609,7 +680,7 @@ export default function App() {
         target="_blank"
         rel="noreferrer"
         aria-label="שלחו הודעה בוואטסאפ"
-        className="wa-pulse fixed bottom-5 left-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition hover:scale-110"
+        className="wa-pulse fixed bottom-9 left-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition hover:scale-110"
       >
         <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.1-3.4-8.3zM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.800 9.800 0 0 1-1.500-5.200c0-5.400 4.400-9.800 9.900-9.800 2.600 0 5.100 1 6.900 2.900a9.700 9.700 0 0 1 2.900 6.900c0 5.400-4.400 9.900-9.800 9.900zm5.400-7.400c-.3-.1-1.800-.9-2-1s-.5-.1-.7.1-.8 1-1 1.200-.4.200-.7.100a8 8 0 0 1-4-3.500c-.3-.5.300-.5.900-1.600.1-.2 0-.4 0-.5l-.9-2.200c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400s-1 1-1 2.500 1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500 1.900.8 2.600.9 3.500.7.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400s-.3-.2-.6-.3z" /></svg>
       </a>
