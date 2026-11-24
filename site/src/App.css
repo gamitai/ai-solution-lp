@@ -72,6 +72,12 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .dot:nth-child(2) { animation-delay: .2s; } .dot:nth-child(3) { animation-delay: .4s; }
 .art-spin { animation: spin 2.4s linear infinite; }
 
+/* Strength scene + DJ contract signature */
+@keyframes lift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes sig { 0%, 8% { stroke-dashoffset: 100; } 38%, 92% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.lift { animation: lift 2.6s ease-in-out infinite; }
+.sig { stroke-dasharray: 100; animation: sig 6s infinite; }
+
 /* Process timeline: steps light up as the page is scrolled (only when JS is on) */
 .step-dot { background: #fff; border-color: rgba(0,0,0,.15); color: rgba(0,0,0,.4); transition: all .5s ease; }
 .step-card { background: #fff; border-color: rgba(0,0,0,.08); transition: all .5s ease; }
@@ -84,6 +90,8 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
   .js .step { opacity: 1; transform: none; transition: none; }
   .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink, .art-a, .art-b, .art-pop, .art-pop2, .art-row, .art-bar, .art-fade-dots { animation: none; }
   .art-b { opacity: 0; }
+  .lift, .sig { animation: none; }
+  .sig { stroke-dashoffset: 0; }
   .typed, .cb1, .cbd1, .cb2, .cb3, .cbd2, .cb4, .dot, .art-spin { animation: none; }
   .cbd1, .cbd2 { display: none; }
   .typed { opacity: 0; }

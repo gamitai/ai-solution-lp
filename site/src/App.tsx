@@ -10,7 +10,7 @@ const BLUE = '#1b71ff'
 const CORAL = '#fa8c7b'
 
 // להחלפת איור בסרטון אמיתי: מלאו src (קובץ mp4 בתיקיית public או קישור) והוא יוצג במקום האיור
-type Art = 'studio' | 'feed' | 'team' | 'battle' | 'bot'
+type Art = 'studio' | 'feed' | 'team' | 'battle' | 'bot' | 'dj'
 type Project = { title: string; desc: string; art?: Art; src?: string; poster?: string; color: string }
 const projects: Project[] = [
   { title: 'ניהול סטודיו לאימון', art: 'studio', color: '#6b4f7a', desc: 'מתאמנות משבצות את עצמן לאימון, עוקבות אחרי הכרטיסיה, מקבלות תזכורת בוואטסאפ לפני האימון, רואות דרכי הגעה וממלאות הצהרת בריאות. כולל מעקב אחרי ההתקדמות במשקלים בכל תרגיל ותרגיל עם שיאים אישיים, רכישת כרטיסיה, ניהול תשלומים ובוט AI.' },
@@ -18,6 +18,7 @@ const projects: Project[] = [
   { title: 'שיבוץ צוותי מילואים', art: 'team', color: '#12306b', desc: 'שיבוץ לפי תנאים, צרכים ומגבלות. הכול דרך אייג׳נט בוואטסאפ, עם מערכת רישום ודשבורד BI לניתוח נתונים.' },
   { title: 'Automated Battlecards', art: 'battle', color: '#2b3a67', desc: 'מציג לאנשי מכירות PDF מעודכן תמיד שמשווה בין החברה שלהם למתחרות, ויודע להציג רק את המקומות שבהם החברה שלהם טובה יותר. כך מגדילים את אחוזי המכירה של צוותי המכירות.' },
   { title: 'בוט וואטסאפ לשירות לקוחות', art: 'bot', color: '#0b6b5c', desc: 'חוסך עובד ייעודי שיושב כל הזמן ליד הטלפון. הבוט מכיר את החברה, עונה מתוך הידע שצבר עליה, זמין תמיד ותמיד יש לו תשובה. במקרה קיצון הוא מפנה לעובד אנושי.' },
+  { title: 'מערכת ניהול לדי ג׳יי', art: 'dj', color: '#0f1424', desc: 'CRM קטן ופשוט לדי ג׳יי: חתימה על חוזים דיגיטליים ושליחתם לשני הצדדים, תזכורת לפני פגישות, ותזכורות לשלם אחרי האירוע ולכתוב ביקורות באתרים שנבחרו.' },
 ]
 
 const serviceIcons = [
@@ -49,7 +50,7 @@ const BRAND = 'SochenAI'
 const faqs = [
   { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
   { q: 'אילו תהליכים אפשר לאוטמט בעסק?', a: 'אפשר לאוטמט כמעט כל תהליך חוזר: הזמנות וקביעת תורים, תזכורות ותשלומים, איסוף ומיון פניות, שליחת עדכונים לצוות ב-Slack, ושיבוץ אנשים לפי תנאים ומגבלות. נתחיל מהתהליך שגוזל לכם הכי הרבה זמן.' },
-  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI. בנוסף נבנו Automated Battlecards לאנשי מכירות, ובוט וואטסאפ לשירות לקוחות שמפנה לעובד אנושי במקרה קיצון.' },
+  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI. בנוסף נבנו Automated Battlecards לאנשי מכירות, ובוט וואטסאפ לשירות לקוחות שמפנה לעובד אנושי במקרה קיצון, וגם מערכת CRM לדי ג׳יי עם חוזים דיגיטליים ותזכורות.' },
   { q: 'כמה עולה שיחת ההיכרות?', a: 'שיחת ההיכרות ללא עלות. בה מבינים את העסק, בודקים אם הפתרון אפשרי, ואתם מחליטים אם להמשיך.' },
   { q: 'איך מתחילים לעבוד?', a: 'מתחילים בשיחת היכרות. אחר כך באים אפיון ומחקר, עיצוב ממשק, פיתוח ואימון, אב-טיפוס שאתם בודקים ומאשרים, ולבסוף עלייה לאוויר.' },
   { q: 'האם אפשר לחבר את הפתרון למערכות שכבר יש לי?', a: 'כן. אפשר לחבר וואטסאפ, Slack, מערכות תשלום, CRM וגיליונות נתונים. אם הכלי שלכם חושף API או אפשרות ייצוא, אפשר לשלב אותו בפתרון.' },
@@ -100,19 +101,60 @@ function useReveal() {
   }, [])
 }
 
+function StrengthScene() {
+  return (
+    <svg viewBox="0 0 150 138" preserveAspectRatio="xMidYMid slice" aria-hidden="true" className="absolute inset-0 h-full w-full">
+      <defs>
+        <linearGradient id="st-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ecd3be" />
+          <stop offset=".62" stopColor="#c79f98" />
+          <stop offset="1" stopColor="#7d5f78" />
+        </linearGradient>
+      </defs>
+      <rect width="150" height="138" fill="url(#st-bg)" />
+      {/* window light */}
+      <rect x="92" y="0" width="14" height="86" fill="#fff" opacity=".28" />
+      <rect x="110" y="0" width="14" height="86" fill="#fff" opacity=".2" />
+      <rect x="128" y="0" width="14" height="86" fill="#fff" opacity=".14" />
+      {/* floor, mat, plant */}
+      <rect y="112" width="150" height="26" fill="#6c4f67" opacity=".55" />
+      <ellipse cx="75" cy="114" rx="46" ry="5" fill="#3b2a4a" opacity=".55" />
+      <rect x="14" y="98" width="12" height="15" rx="2" fill="#a86e55" />
+      <path d="M20 98C10 90 8 78 14 70C18 80 20 88 20 98ZM20 98C22 86 28 78 36 76C34 86 28 94 20 98Z" fill="#6d8f68" />
+      {/* lifter + barbell */}
+      <g className="lift">
+        <path d="M66 82h7l-1 30h-7zM77 82h7l2 30h-7z" fill="#3b2a4a" />
+        <ellipse cx="68" cy="113" rx="7" ry="2.6" fill="#fff" /><ellipse cx="83" cy="113" rx="7" ry="2.6" fill="#fff" />
+        <rect x="64" y="52" width="22" height="34" rx="7" fill="#f6ede7" />
+        <rect x="64" y="80" width="22" height="5" fill="#3b2a4a" />
+        <path d="M67 58L58 26M83 58L92 26" stroke="#f0c4a8" strokeWidth="5" strokeLinecap="round" />
+        <rect x="71" y="52" width="8" height="8" rx="3" fill="#e9b394" />
+        <circle cx="75" cy="31" r="5.5" fill="#8a4b2d" />
+        <ellipse cx="75" cy="42" rx="8.5" ry="9.5" fill="#f0c4a8" />
+        <path d="M66.500 42C65 31 85 31 83.500 42C81 36 70 36 66.500 42Z" fill="#8a4b2d" />
+        <rect x="32" y="21" width="86" height="3" rx="1.500" fill="#d3d6dd" />
+        <rect x="30" y="11" width="5" height="23" rx="2" fill="#2a2a33" /><rect x="36" y="14" width="4" height="17" rx="1.500" fill="#3a3a46" />
+        <rect x="115" y="11" width="5" height="23" rx="2" fill="#2a2a33" /><rect x="110" y="14" width="4" height="17" rx="1.500" fill="#3a3a46" />
+        <circle cx="58" cy="24" r="3.500" fill="#f0c4a8" /><circle cx="92" cy="24" r="3.500" fill="#f0c4a8" />
+      </g>
+    </svg>
+  )
+}
+
 function StudioArt() {
   const rows = [['לחיצות חזה', '12', '14'], ['דדליפט', '40', '40'], ['סקוואט', '30', '30']]
   return (
     <div aria-hidden="true" className="relative h-full w-full overflow-hidden bg-[#0e0c13] text-white">
       {/* class card */}
       <div className="absolute bottom-3 right-3 top-3 w-[52%] overflow-hidden rounded-xl bg-gradient-to-br from-[#c9a58f] via-[#a67c7c] to-[#4f3b5c]">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        <StrengthScene />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
         <span className="absolute left-2 top-2 rounded-full bg-white/25 px-1.5 py-0.5 text-[8px]">19:00</span>
         <span className="absolute right-2 top-2 rounded-lg bg-white/25 px-1.5 py-0.5 text-center text-[8px] leading-tight">שלישי<br /><b className="text-[11px]">26</b></span>
         <span className="absolute right-2 top-[44px] rounded-full bg-[#d9344f] px-1.5 py-0.5 text-[7px] font-bold">מקומות אחרונים</span>
         <div className="absolute inset-x-2 bottom-2 text-right">
           <div className="text-[12px] font-extrabold leading-tight">Strength</div>
-          <div className="mb-1.5 text-[8px] text-white/70">עם המאמנת</div>
+          <div className="mb-1.5 text-[8px] text-white/70">עם יובל כהן</div>
           <div className="relative h-5">
             <span className="art-a absolute inset-0 grid place-items-center rounded-full bg-white text-[9px] font-bold text-[#2b2233]">הרשמה לאימון</span>
             <span className="art-b absolute inset-0 grid place-items-center rounded-full bg-[#25d366] text-[9px] font-bold">נרשמת ✓</span>
@@ -249,6 +291,56 @@ function BotArt() {
   )
 }
 
+function DjArt() {
+  const rows = [['דנה ויוני', 'חתונה'], ['חברת Nova', 'אירוע עסקי'], ['מיכל', 'בת מצווה']]
+  return (
+    <div aria-hidden="true" className="relative flex h-full w-full gap-2 overflow-hidden bg-[#0f1424] p-2.5 text-white">
+      {/* clients list */}
+      <div className="w-[38%] rounded-xl bg-white/[.07] p-1.5 text-right">
+        <div className="mb-1 text-[8px] font-bold text-white/70">לקוחות</div>
+        {rows.map(([n, t], i) => (
+          <div key={n} className="mb-1 rounded-lg bg-white/10 px-1.5 py-1">
+            <div className="flex items-center justify-between text-[8px] font-bold">
+              {n}
+              <span className="relative h-3 w-10 text-[6px] font-bold">
+                {i === 0 ? (
+                  <>
+                    <span className="art-a absolute inset-0 grid place-items-center rounded-full bg-[#f5a524] text-black">ממתין לחתימה</span>
+                    <span className="art-b absolute inset-0 grid place-items-center rounded-full bg-[#25d366]">נחתם ✓</span>
+                  </>
+                ) : i === 1 ? (
+                  <span className="absolute inset-0 grid place-items-center rounded-full bg-[#4d8dff]">שולם ✓</span>
+                ) : (
+                  <span className="absolute inset-0 grid place-items-center rounded-full bg-[#e5484d]">ממתין לתשלום</span>
+                )}
+              </span>
+            </div>
+            <div className="text-[6.5px] text-white/50">{t}</div>
+          </div>
+        ))}
+      </div>
+      {/* contract */}
+      <div className="relative flex-1 rounded-xl bg-white p-2 text-right text-[#1d2433]">
+        <div className="flex items-center justify-between"><b className="text-[9px]">חוזה הופעה</b><span className="text-[6.5px] text-black/40">דיגיטלי</span></div>
+        <div className="mt-1 space-y-1"><i className="block h-[3px] rounded bg-black/10" /><i className="block h-[3px] w-4/5 rounded bg-black/10" /><i className="block h-[3px] w-3/5 rounded bg-black/10" /></div>
+        <div className="mt-1.5 flex items-end justify-between border-t border-dashed border-black/20 pt-1">
+          <svg width="58" height="22" viewBox="0 0 90 30" fill="none" stroke="#1b3a8f" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path className="sig" pathLength="100" d="M4 22C10 4 18 2 16 16S26 28 34 10 46 6 48 20 60 26 68 12 78 8 86 20" />
+          </svg>
+          <div className="flex gap-1 text-[6px] font-bold">
+            <span className="rounded-full bg-[#e8f8ee] px-1 text-[#1a8f4c]">לקוח ✓</span>
+            <span className="rounded-full bg-[#e8f8ee] px-1 text-[#1a8f4c]">די ג׳יי ✓</span>
+          </div>
+        </div>
+        <div className="art-pop2 mt-1.5 rounded-md bg-[#1b3a8f] py-1 text-center text-[7px] font-bold text-white">נשלח לשני הצדדים ✓</div>
+        <div className="art-pop absolute inset-x-1.5 bottom-1.5 rounded-lg bg-[#1f2937] px-2 py-1 text-[7px] leading-snug text-white shadow-lg">
+          <b className="text-[#f5a524]">תזכורת:</b> פגישה מחר ב-18:00. אחרי האירוע: תשלום וביקורת
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   if (p.src) {
     return <video src={p.src} poster={p.poster} muted loop playsInline autoPlay={!big} controls={big} className="h-full w-full object-cover" />
@@ -258,6 +350,7 @@ function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   if (p.art === 'team') return <TeamArt />
   if (p.art === 'battle') return <BattleArt />
   if (p.art === 'bot') return <BotArt />
+  if (p.art === 'dj') return <DjArt />
   return <div className="h-full w-full" style={{ background: p.color }} />
 }
 
