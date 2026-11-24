@@ -207,19 +207,31 @@ function Process() {
   )
 }
 
+// Builds the WhatsApp message from whatever the visitor filled in; empty fields are simply left out.
+function buildMessage({ name, business, help }: { name: string; business: string; help: string }) {
+  const n = name.trim(), b = business.trim(), h = help.trim()
+  let intro = 'היי'
+  if (n && b) intro += `, אני ${n} ויש לי עסק בשם ${b}`
+  else if (n) intro += `, אני ${n}`
+  else if (b) intro += `, יש לי עסק בשם ${b}`
+  const parts = [n || b ? `${intro}.` : 'היי,', 'הגעתי מהאתר של SochenAI.']
+  parts.push(h ? `אשמח לעזרה ב: ${h}` : 'אשמח לשמוע איך AI יכול לחסוך לי זמן וכסף בעסק.')
+  return parts.join(' ')
+}
+
 const pill = 'inline-flex items-center justify-center rounded-full px-8 py-3 text-lg font-medium transition'
-const input = 'w-full text-right rounded-full border border-white/70 bg-transparent px-5 py-3 text-white placeholder-white/70 outline-none focus:border-white'
+const input = 'block w-full text-right rounded-full border border-white/70 bg-transparent px-5 py-3 text-base font-normal text-white outline-none focus:border-white'
 
 export default function App() {
   useReveal()
   const [open, setOpen] = useState<Project | null>(null)
-  const [form, setForm] = useState({ name: '', phone: '', msg: '' })
+  const [form, setForm] = useState({ name: '', business: '', help: '' })
   const loop = [...projects, ...projects]
+  const href = wa(buildMessage(form))
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
-    const who = [form.name, form.phone].filter(Boolean).join(', ')
-    window.open(wa(`היי${who ? `, כאן ${who}` : ''}.\n${form.msg || OPENING}`), '_blank')
+    window.open(href, '_blank', 'noopener')
   }
 
   return (
@@ -313,12 +325,22 @@ export default function App() {
         <div className="mx-auto max-w-xl text-center">
           <h2 className="text-3xl font-bold md:text-4xl">רוצים לבדוק מה AI יכול לחסוך אצלכם?</h2>
           <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} mt-8 bg-black text-white hover:bg-white hover:text-black`}>בואו נדבר ←</a>
-          <p className="mt-10 text-lg text-white/85">או השאירו פרטים ונחזור אליכם בוואטסאפ:</p>
-          <form onSubmit={submit} className="mt-4 space-y-3 text-right">
-            <input aria-label="שם מלא" placeholder="שם מלא" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} />
-            <input aria-label="טלפון" placeholder="טלפון" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} />
-            <input aria-label="במה נוכל לעזור" placeholder="במה נוכל לעזור?" value={form.msg} onChange={(e) => setForm({ ...form, msg: e.target.value })} className={input} />
-            <button type="submit" className={`${pill} w-full border border-white hover:bg-white hover:text-black`}>שלחו בוואטסאפ</button>
+          <p className="mt-10 text-lg text-white/85">או מלאו כמה פרטים (כל השדות אופציונליים) ותקבלו הודעה מוכנה בוואטסאפ:</p>
+          <form onSubmit={submit} className="mt-4 space-y-4 text-right">
+            <label className="block text-sm font-medium">
+              שם
+              <input name="name" autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={`${input} mt-1.5`} />
+            </label>
+            <label className="block text-sm font-medium">
+              שם העסק
+              <input name="business" autoComplete="organization" value={form.business} onChange={(e) => setForm({ ...form, business: e.target.value })} className={`${input} mt-1.5`} />
+            </label>
+            <label className="block text-sm font-medium">
+              במה נוכל לעזור?
+              <input name="help" autoComplete="off" value={form.help} onChange={(e) => setForm({ ...form, help: e.target.value })} className={`${input} mt-1.5`} />
+            </label>
+            <button type="submit" tabIndex={-1} aria-hidden="true" className="sr-only">שליחה</button>
+            <a href={href} target="_blank" rel="noopener noreferrer" className={`${pill} w-full bg-black text-white hover:bg-white hover:text-black`}>שליחה בוואטסאפ</a>
           </form>
         </div>
       </section>
