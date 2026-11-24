@@ -835,7 +835,8 @@ export default function App() {
             תטמיעו סוכני AI ואוטומציות בעסק שלכם
           </h1>
           <p className="mt-6 text-xl leading-relaxed md:text-2xl">
-            תחסכו אדמיניסטרציה ועבודה ידנית – ותתמקדו במה שאתם באמת טובים.
+            תחסכו אדמיניסטרציה ועבודה ידנית<br />
+            ותתמקדו במה שאתם טובים <strong className="font-extrabold" style={{ color: CORAL }}>באמת</strong>.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-black hover:bg-white hover:text-black`}>לשיחת היכרות ללא עלות ←</a>
