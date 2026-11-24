@@ -832,11 +832,11 @@ export default function App() {
         <div className="mx-auto grid max-w-5xl items-center gap-8 pt-14 md:grid-cols-[1.2fr_1fr] md:pt-16">
          <div className="text-center md:text-right">
           <h1 className="text-balance text-4xl font-extrabold leading-tight md:text-5xl" style={{ color: CORAL }}>
-            תטמיעו סוכני AI ואוטומציות בעסק שלכם
+            העבודה החוזרת בעסק שלכם? שתעשה את עצמה.
           </h1>
           <p className="mt-6 text-xl leading-relaxed md:text-2xl">
-            תחסכו אדמיניסטרציה ועבודה ידנית<br />
-            ותתמקדו במה שאתם טובים <strong className="font-extrabold" style={{ color: CORAL }}>באמת</strong>.
+            אנחנו בונים סוכני AI ואוטומציות שעונים ללקוחות, קובעים תורים, מוציאים קבלות ועוקבים אחרי הוצאות<br />
+            ואתם תעשו את מה שאתם טובים בו <strong className="font-extrabold" style={{ color: CORAL }}>באמת</strong>.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-black hover:bg-white hover:text-black`}>לשיחת היכרות ללא עלות ←</a>
