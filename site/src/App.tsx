@@ -9,14 +9,13 @@ const OPENING = 'היי, הגעתי מדף הנחיתה ונשמח לשמוע ע
 const BLUE = '#1b71ff'
 const CORAL = '#fa8c7b'
 
-// תיק העבודות ריק כרגע. להוספת פרויקט: מלאו title, desc ו-src (קובץ mp4 בתיקיית public או קישור)
-type Project = { title: string; desc: string; src?: string; poster?: string; color: string }
+// להחלפת איור בסרטון אמיתי: מלאו src (קובץ mp4 בתיקיית public או קישור) והוא יוצג במקום האיור
+type Art = 'studio' | 'feed' | 'team'
+type Project = { title: string; desc: string; art?: Art; src?: string; poster?: string; color: string }
 const projects: Project[] = [
-  { title: '', desc: '', color: '#1b71ff' },
-  { title: '', desc: '', color: '#fa8c7b' },
-  { title: '', desc: '', color: '#252525' },
-  { title: '', desc: '', color: '#4d8dff' },
-  { title: '', desc: '', color: '#e9705e' },
+  { title: 'ניהול סטודיו לאימון', art: 'studio', color: '#6b4f7a', desc: 'מתאמנות משבצות את עצמן לאימון, עוקבות אחרי הכרטיסיה, מקבלות תזכורת בוואטסאפ לפני האימון, רואות דרכי הגעה וממלאות הצהרת בריאות. כולל מעקב אחרי ההתקדמות במשקלים בכל תרגיל ותרגיל, רכישת כרטיסיה, ניהול תשלומים ובוט AI.' },
+  { title: 'Competitor Feed + Slack', art: 'feed', color: '#14161f', desc: 'מעקב אוטומטי אחרי מתחרים: המערכת אוספת עדכונים, מסכמת אותם עם AI ושולחת אותם בזמן אמת לערוץ Slack.' },
+  { title: 'שיבוץ צוותי מילואים', art: 'team', color: '#12306b', desc: 'שיבוץ לפי תנאים, צרכים ומגבלות. הכול דרך אייג׳נט בוואטסאפ, עם מערכת רישום ודשבורד BI לניתוח נתונים.' },
 ]
 
 const services = [
@@ -41,6 +40,7 @@ const BRAND = 'SochenAI'
 const faqs = [
   { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
   { q: 'אילו תהליכים אפשר לאוטמט בעסק?', a: 'אפשר לאוטמט כמעט כל תהליך חוזר: הזמנות וקביעת תורים, תזכורות ותשלומים, איסוף ומיון פניות, שליחת עדכונים לצוות ב-Slack, ושיבוץ אנשים לפי תנאים ומגבלות. נתחיל מהתהליך שגוזל לכם הכי הרבה זמן.' },
+  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI.' },
   { q: 'כמה עולה שיחת ההיכרות?', a: 'שיחת ההיכרות ללא עלות. בה מבינים את העסק, בודקים אם הפתרון אפשרי, ואתם מחליטים אם להמשיך.' },
   { q: 'איך מתחילים לעבוד?', a: 'מתחילים בשיחת היכרות. אחר כך באים אפיון ומחקר, עיצוב ממשק, פיתוח ואימון, אב-טיפוס שאתם בודקים ומאשרים, ולבסוף עלייה לאוויר.' },
   { q: 'האם אפשר לחבר את הפתרון למערכות שכבר יש לי?', a: 'כן. אפשר לחבר וואטסאפ, Slack, מערכות תשלום, CRM וגיליונות נתונים. אם הכלי שלכם חושף API או אפשרות ייצוא, אפשר לשלב אותו בפתרון.' },
@@ -91,18 +91,80 @@ function useReveal() {
   }, [])
 }
 
+function StudioArt() {
+  return (
+    <div aria-hidden="true" className="relative h-full w-full overflow-hidden bg-gradient-to-br from-[#3b2a4a] to-[#8a5d7a] p-3 text-white">
+      <div className="flex h-full gap-2">
+        <div className="w-[42%] rounded-xl bg-white p-2 text-right text-[#2b2b2b]">
+          <div className="text-[9px] text-black/50">הכרטיסיה שלי</div>
+          <div className="relative h-9">
+            <span className="art-a absolute right-0 text-3xl font-extrabold leading-9 text-[#6b4f7a]">8</span>
+            <span className="art-b absolute right-0 text-3xl font-extrabold leading-9 text-[#6b4f7a]">7</span>
+          </div>
+          <div className="text-[9px]">אימונים נותרו</div>
+        </div>
+        <div className="flex-1 rounded-xl bg-white/15 p-2 text-right">
+          <div className="text-[11px] font-bold">Tabata Power</div>
+          <div className="text-[9px] text-white/70">08:30</div>
+          <div className="relative mt-2 h-6">
+            <span className="art-a absolute inset-0 grid place-items-center rounded-full bg-white text-[10px] font-bold text-[#3b2a4a]">הרשמה לאימון</span>
+            <span className="art-b absolute inset-0 grid place-items-center rounded-full bg-[#25d366] text-[10px] font-bold">נרשמת ✓</span>
+          </div>
+        </div>
+      </div>
+      <div className="art-pop absolute bottom-3 left-3 rounded-xl rounded-bl-sm bg-[#d9fdd3] px-2.5 py-1.5 text-[10px] text-[#1f2c34] shadow">תזכורת: אימון מחר ב-08:30</div>
+    </div>
+  )
+}
+
+function FeedArt() {
+  const rows = ['מחיר חדש אצל מתחרה', 'קמפיין חדש', 'פוסט חדש ברשת']
+  return (
+    <div aria-hidden="true" className="relative flex h-full w-full gap-3 overflow-hidden bg-[#14161f] p-3 text-white">
+      <div className="flex-1 space-y-2">
+        {rows.map((r, i) => (
+          <div key={r} className="art-row flex items-center gap-2 rounded-lg bg-white/10 px-2 py-2 text-[10px]" style={{ animationDelay: `${i * 0.8}s` }}>
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: ['#fa8c7b', '#4d8dff', '#3ddc55'][i] }} />
+            {r}
+          </div>
+        ))}
+      </div>
+      <div className="relative w-[48%] rounded-xl bg-white p-2 text-right text-[#1d1c1d]">
+        <div className="text-[10px] font-bold"># מתחרים</div>
+        <div className="art-pop mt-2 flex gap-1.5">
+          <span className="h-5 w-5 shrink-0 rounded bg-[#1b71ff]" />
+          <div className="text-[9px] leading-snug"><b>סיכום AI</b><br />המתחרה הוריד מחיר ב-10%</div>
+        </div>
+        <div className="art-fade-dots mt-2 flex gap-1"><i className="h-1.5 w-1.5 rounded-full bg-black/30" /><i className="h-1.5 w-1.5 rounded-full bg-black/30" /><i className="h-1.5 w-1.5 rounded-full bg-black/30" /></div>
+      </div>
+    </div>
+  )
+}
+
+function TeamArt() {
+  return (
+    <div aria-hidden="true" className="relative flex h-full w-full gap-3 overflow-hidden bg-gradient-to-br from-[#0b1f4a] to-[#1b4fb8] p-3 text-white">
+      <div className="flex flex-1 flex-col justify-center gap-2 text-[10px]">
+        <div className="art-pop self-start rounded-xl rounded-br-sm bg-white px-2.5 py-1.5 text-[#1f2c34]">מי פנוי ביום שלישי?</div>
+        <div className="art-pop2 self-end rounded-xl rounded-bl-sm bg-[#d9fdd3] px-2.5 py-1.5 text-[#1f2c34]">שובצו 5 לוחמים ✓</div>
+      </div>
+      <div className="flex w-[40%] items-end gap-1.5 rounded-xl bg-white/10 p-2">
+        {[55, 80, 45, 95].map((h, i) => (
+          <span key={i} className="art-bar flex-1 rounded-t bg-[#fa8c7b]" style={{ height: `${h}%`, animationDelay: `${i * 0.35}s` }} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   if (p.src) {
     return <video src={p.src} poster={p.poster} muted loop playsInline autoPlay={!big} controls={big} className="h-full w-full object-cover" />
   }
-  return (
-    <div className="relative flex h-full w-full items-center justify-center" style={{ background: p.color }}>
-      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="#252525"><path d="M8 5v14l11-7z" /></svg>
-      </div>
-      <span className="absolute bottom-3 right-4 text-sm text-white/80">בקרוב</span>
-    </div>
-  )
+  if (p.art === 'studio') return <StudioArt />
+  if (p.art === 'feed') return <FeedArt />
+  if (p.art === 'team') return <TeamArt />
+  return <div className="h-full w-full" style={{ background: p.color }} />
 }
 
 function Logo({ className = '' }: { className?: string }) {
@@ -246,8 +308,9 @@ const input = 'block w-full text-right rounded-full border border-white/70 bg-tr
 export default function App() {
   useReveal()
   const [open, setOpen] = useState<Project | null>(null)
+  const [active, setActive] = useState<number | null>(null) // tapped card on touch screens
   const [form, setForm] = useState({ name: '', business: '', help: '' })
-  const loop = [...projects, ...projects]
+  const loop = [...projects, ...projects, ...projects, ...projects]
   const href = wa(buildMessage(form))
 
   const submit = (e: React.FormEvent) => {
@@ -303,16 +366,28 @@ export default function App() {
 
       {/* Portfolio */}
       <section id="portfolio" className="pb-20">
-        <div className="mx-auto mb-8 max-w-5xl px-4 text-center">
+        <div className="mx-auto mb-2 max-w-5xl px-4 text-center">
           <h2 className="reveal text-3xl font-bold md:text-4xl">תיק עבודות</h2>
+          <p className="reveal mt-2 text-lg text-black/60">עברו עם העכבר על פרויקט כדי להגדיל ולקרוא מה נעשה בו</p>
         </div>
-        <div dir="ltr" className="marquee overflow-hidden" aria-hidden="true">
+        <ul className="sr-only">
+          {projects.map((p) => (
+            <li key={p.title}><strong>{p.title}</strong>: {p.desc}</li>
+          ))}
+        </ul>
+        <div dir="ltr" className={`marquee -mb-24 overflow-hidden pb-52 pt-10 ${active !== null ? 'paused' : ''}`} aria-hidden="true">
           <div className="marquee-track flex gap-5 px-2.5">
             {loop.map((p, i) => (
-              <button key={i} dir="rtl" onClick={() => p.src && setOpen(p)} className="w-72 shrink-0 text-right md:w-80" tabIndex={p.src ? 0 : -1}>
-                <div className="aspect-video overflow-hidden rounded-3xl"><Thumb p={p} /></div>
-                {p.title && <div className="mt-3 px-1 font-bold">{p.title}</div>}
-              </button>
+              <div key={i} className={`gcard relative w-72 shrink-0 md:w-80 ${active === i ? 'active' : ''}`}>
+                <button dir="rtl" tabIndex={-1} onClick={() => (p.src ? setOpen(p) : setActive(active === i ? null : i))} className="block w-full text-right">
+                  <div className="aspect-video overflow-hidden rounded-3xl shadow-md"><Thumb p={p} /></div>
+                  <div className="mt-3 px-1 font-bold">{p.title}</div>
+                </button>
+                <div role="tooltip" dir="rtl" className="gtip">
+                  <strong>{p.title}</strong>
+                  {p.desc}
+                </div>
+              </div>
             ))}
           </div>
         </div>

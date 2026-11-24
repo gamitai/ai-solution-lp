@@ -2,8 +2,8 @@ html { scroll-behavior: smooth; }
 body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: #252525; }
 
 @keyframes marquee { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-.marquee-track { animation: marquee 50s linear infinite; width: max-content; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-track { animation: marquee 40s linear infinite; width: max-content; }
+.marquee:hover .marquee-track, .marquee.paused .marquee-track { animation-play-state: paused; }
 
 @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.55); } 70% { box-shadow: 0 0 0 16px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
 .wa-pulse { animation: pulse-ring 2.2s infinite; }
@@ -27,6 +27,29 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .twinkle { animation: twinkle 2.8s ease-in-out infinite; }
 .blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
 
+/* Portfolio cards: grow on hover and show a tooltip */
+.gcard { transition: transform .35s cubic-bezier(.2,.8,.2,1); z-index: 1; }
+.gcard:hover, .gcard.active { transform: scale(1.12) translateY(-6px); z-index: 30; }
+.gtip { position: absolute; top: 100%; left: 50%; width: min(20rem, 88vw); margin-top: .6rem; padding: .9rem 1rem; border-radius: 1rem; background: #fff; color: #252525; text-align: right; font-size: .9rem; line-height: 1.55; box-shadow: 0 18px 40px -12px rgba(0,0,0,.35); opacity: 0; pointer-events: none; transform: translate(-50%, 8px); transition: opacity .25s ease, transform .25s ease; }
+.gtip::before { content: ''; position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; background: #fff; transform: translateX(-50%) rotate(45deg); }
+.gtip strong { display: block; margin-bottom: .25rem; color: #1b71ff; }
+.gcard:hover .gtip, .gcard.active .gtip { opacity: 1; transform: translate(-50%, 0); }
+
+/* Animated mini-UI illustrations inside the cards (6s loop) */
+@keyframes swap-a { 0%,42% { opacity: 1; } 50%,92% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes swap-b { 0%,42% { opacity: 0; } 50%,92% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes art-pop { 0%,38% { opacity: 0; transform: translateY(12px); } 50%,88% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-6px); } }
+@keyframes art-row { 0%,10% { opacity: 0; transform: translateX(-16px); } 25%,85% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes art-bar { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+@keyframes art-dots { 0%,30% { opacity: 1; } 40%,100% { opacity: 0; } }
+.art-a { animation: swap-a 6s infinite; }
+.art-b { animation: swap-b 6s infinite; }
+.art-pop { animation: art-pop 6s infinite; }
+.art-pop2 { animation: art-pop 6s infinite; animation-delay: 1.2s; }
+.art-row { animation: art-row 6s infinite; }
+.art-bar { transform-origin: bottom; animation: art-bar 2.4s ease-in-out infinite alternate; }
+.art-fade-dots { animation: art-dots 6s infinite; }
+
 /* Process timeline: steps light up as the page is scrolled (only when JS is on) */
 .step-dot { background: #fff; border-color: rgba(0,0,0,.15); color: rgba(0,0,0,.4); transition: all .5s ease; }
 .step-card { background: #fff; border-color: rgba(0,0,0,.08); transition: all .5s ease; }
@@ -37,7 +60,9 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 
 @media (prefers-reduced-motion: reduce) {
   .js .step { opacity: 1; transform: none; transition: none; }
-  .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink { animation: none; }
+  .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink, .art-a, .art-b, .art-pop, .art-pop2, .art-row, .art-bar, .art-fade-dots { animation: none; }
+  .art-b { opacity: 0; }
+  .gcard { transition: none; }
   .twinkle { opacity: 1; transform: none; }
   .marquee-track, .wa-pulse { animation: none; }
   .js .reveal { opacity: 1; }
