@@ -14,7 +14,22 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 
 .hero-bg { background: radial-gradient(60% 60% at 20% 100%, #fa8c7b 0%, transparent 70%), radial-gradient(50% 60% at 90% 0%, #4d8dff 0%, transparent 70%), #1b71ff; }
 
+@keyframes woman-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes arm-sway { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(5deg); } }
+@keyframes head-tilt { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
+@keyframes orb-pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.12); opacity: .85; } }
+@keyframes twinkle { 0%,100% { transform: scale(.3); opacity: 0; } 50% { transform: scale(1); opacity: 1; } }
+@keyframes blink { 0%,92%,100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+.woman-float { animation: woman-float 4s ease-in-out infinite; }
+.woman-arm { transform-origin: 180px 152px; animation: arm-sway 3.2s ease-in-out infinite; }
+.woman-head { transform-origin: 150px 130px; animation: head-tilt 5s ease-in-out infinite; }
+.orb { transform-origin: 226px 44px; animation: orb-pulse 2s ease-in-out infinite; }
+.twinkle { animation: twinkle 2.8s ease-in-out infinite; }
+.blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+
 @media (prefers-reduced-motion: reduce) {
+  .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink { animation: none; }
+  .twinkle { opacity: 1; transform: none; }
   .marquee-track, .wa-pulse { animation: none; }
   .reveal { opacity: 1; }
   html { scroll-behavior: auto; }

@@ -52,6 +52,65 @@ function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
   )
 }
 
+function Spark({ x, y, d }: { x: number; y: number; d: string }) {
+  return (
+    <path className="twinkle" style={{ animationDelay: d, transformOrigin: `${x}px ${y}px` }} fill="#fff"
+      d={`M${x} ${y - 9}Q${x} ${y} ${x + 9} ${y}Q${x} ${y} ${x} ${y + 9}Q${x} ${y} ${x - 9} ${y}Q${x} ${y} ${x} ${y - 9}Z`} />
+  )
+}
+
+function Woman() {
+  return (
+    <svg viewBox="0 -40 300 460" role="img" aria-label="דמות אישה מחזיקה כדור אור" className="mx-auto h-[380px] w-auto md:h-[460px]">
+      <defs>
+        <radialGradient id="orb" cx="40%" cy="35%" r="70%">
+          <stop offset="0" stopColor="#fff" />
+          <stop offset=".45" stopColor="#ffc2ae" />
+          <stop offset="1" stopColor="#fa6a4e" />
+        </radialGradient>
+      </defs>
+      <ellipse cx="150" cy="400" rx="75" ry="8" fill="rgba(0,0,0,.25)" />
+      <g className="woman-float">
+        {/* legs + shoes */}
+        <path d="M120 245h60l6 140h-26l-10-100-10 100h-26z" fill="#f3b093" />
+        <ellipse cx="127" cy="388" rx="17" ry="6" fill="#fff" />
+        <ellipse cx="173" cy="388" rx="17" ry="6" fill="#fff" />
+        {/* arm down */}
+        <path d="M121 152Q98 200 108 238" stroke="#fff" strokeWidth="20" strokeLinecap="round" fill="none" />
+        <circle cx="108" cy="246" r="9" fill="#f2c4a8" />
+        {/* torso */}
+        <path d="M116 142Q150 126 184 142L190 256Q150 266 110 256Z" fill="#fff" />
+        <rect x="110" y="244" width="80" height="9" rx="3" fill="#e08a6e" />
+        {/* neck + head */}
+        <rect x="142" y="118" width="16" height="28" rx="6" fill="#e9b394" />
+        <g className="woman-head">
+          <circle cx="150" cy="54" r="15" fill="#d1622f" />
+          <ellipse cx="150" cy="100" rx="28" ry="32" fill="#f2c4a8" />
+          <path d="M120 102Q116 60 150 62Q184 60 180 102Q172 80 150 80Q128 80 120 102Z" fill="#d1622f" />
+          <circle className="blink" cx="140" cy="103" r="2.6" fill="#252525" />
+          <circle className="blink" cx="160" cy="103" r="2.6" fill="#252525" />
+          <circle cx="132" cy="113" r="5" fill="#f5a38c" opacity=".5" />
+          <circle cx="168" cy="113" r="5" fill="#f5a38c" opacity=".5" />
+          <path d="M143 115Q150 122 157 115" stroke="#b5503a" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+        </g>
+        {/* raised arm + orb */}
+        <g className="woman-arm">
+          <path d="M180 152Q216 134 226 84" stroke="#fff" strokeWidth="20" strokeLinecap="round" fill="none" />
+          <circle cx="226" cy="76" r="10" fill="#f2c4a8" />
+          <g className="orb">
+            <circle cx="226" cy="42" r="42" fill="#fa8c7b" opacity=".35" />
+            <circle cx="226" cy="46" r="23" fill="url(#orb)" />
+          </g>
+          <Spark x={186} y={14} d="0s" />
+          <Spark x={270} y={30} d=".7s" />
+          <Spark x={262} y={92} d="1.4s" />
+          <Spark x={196} y={64} d="2.1s" />
+        </g>
+      </g>
+    </svg>
+  )
+}
+
 const pill = 'inline-flex items-center justify-center rounded-full px-8 py-3 text-lg font-medium transition'
 const input = 'w-full text-right rounded-full border border-white/70 bg-transparent px-5 py-3 text-white placeholder-white/70 outline-none focus:border-white'
 
@@ -80,17 +139,20 @@ export default function App() {
           </div>
           <a href="#contact" className="rounded-full border border-white px-5 py-1.5 text-sm">צור קשר</a>
         </nav>
-        <div className="mx-auto max-w-3xl pt-20 text-center md:pt-28">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 pt-14 md:grid-cols-[1.2fr_1fr] md:pt-16">
+         <div className="text-center md:text-right">
           <h1 className="text-5xl font-extrabold leading-tight md:text-7xl" style={{ color: CORAL }}>
             פתרונות AI לעסקים
           </h1>
           <p className="mt-6 text-xl leading-relaxed md:text-2xl">
             אני בונה אוטומציות, סוכנים בוואטסאפ ומערכות ניהול שחוסכות לכם שעות עבודה כל שבוע.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href="#portfolio" className={`${pill} border border-white`}>תיק עבודות</a>
             <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-black hover:bg-white hover:text-black`}>בואו נדבר ←</a>
           </div>
+         </div>
+         <Woman />
         </div>
       </section>
 
