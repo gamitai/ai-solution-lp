@@ -54,7 +54,9 @@ function JsonLd() {
       name: BRAND,
       alternateName: 'SochenAI - פתרונות עסקיים עם סוכני AI',
       url: SITE,
-      description: 'מערכות AI ואוטומציה שחוסכות לעסקים זמן וכסף: סוכן AI לשירות ולמכירות, אוטומציה, ניתוח נתונים ב-BI וקליטת מסמכים.',
+      logo: `${SITE}logo.png`,
+      image: `${SITE}logo.png`,
+      description: 'AI ואוטומציה שחוסכים זמן וכסף: סוכן AI לשירות ולמכירות, אוטומציה, ניתוח נתונים ב-BI וקליטת מסמכים.',
       inLanguage: 'he',
       areaServed: { '@type': 'Country', name: 'ישראל' },
       telephone: '+972525353259',
@@ -100,6 +102,25 @@ function Thumb({ p, big = false }: { p: Project; big?: boolean }) {
       </div>
       <span className="absolute bottom-3 right-4 text-sm text-white/80">בקרוב</span>
     </div>
+  )
+}
+
+function Logo({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 512 512" aria-hidden="true" className={className}>
+      <defs>
+        <linearGradient id="logo-g" gradientUnits="userSpaceOnUse" x1="330" y1="120" x2="180" y2="410">
+          <stop offset="0" stopColor="#ff1f1f" />
+          <stop offset=".25" stopColor="#ff9d00" />
+          <stop offset=".45" stopColor="#ff4fd8" />
+          <stop offset=".7" stopColor="#8f6bff" />
+          <stop offset=".85" stopColor="#1a9bff" />
+          <stop offset="1" stopColor="#3ddc55" />
+        </linearGradient>
+      </defs>
+      <rect width="512" height="512" rx="116" fill="#020a1a" />
+      <path d="M336 184C336 150 302 128 256 128C206 128 172 152 172 190C172 232 210 246 256 256C304 267 344 282 344 328C344 368 308 392 256 392C206 392 170 368 168 330" fill="none" stroke="url(#logo-g)" strokeWidth="58" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   )
 }
 
@@ -240,7 +261,7 @@ export default function App() {
       {/* Hero */}
       <section id="top" className="hero-bg px-4 pb-24 text-white">
         <nav className="mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-full bg-black px-6 py-3">
-          <a href="#top" className="font-bold">SochenAI</a>
+          <a href="#top" className="flex items-center gap-2 font-bold"><Logo className="h-8 w-8" />SochenAI</a>
           <div className="hidden gap-7 text-sm md:flex">
             <a href="#services">מה אנחנו בונים</a>
             <a href="#portfolio">תיק עבודות</a>
@@ -252,10 +273,10 @@ export default function App() {
         <div className="mx-auto grid max-w-5xl items-center gap-8 pt-14 md:grid-cols-[1.2fr_1fr] md:pt-16">
          <div className="text-center md:text-right">
           <h1 className="text-4xl font-extrabold leading-tight md:text-6xl" style={{ color: CORAL }}>
-            מערכות AI ואוטומציה שחוסכות לעסק שלכם זמן וכסף
+            AI ואוטומציה שחוסכים זמן וכסף
           </h1>
           <p className="mt-6 text-xl leading-relaxed md:text-2xl">
-            אנחנו בונים ומטמיעים פתרונות חכמים שעובדים בשבילכם 24/7 – משירות לקוחות ועד ניתוח נתונים והצעות מחיר.
+            פתרונות חכמים שעובדים בשבילכם 24/7.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-black hover:bg-white hover:text-black`}>לשיחת היכרות ללא עלות ←</a>
