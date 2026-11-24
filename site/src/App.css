@@ -9,7 +9,7 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .wa-pulse { animation: pulse-ring 2.2s infinite; }
 
 @keyframes float-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
-.reveal { opacity: 0; }
+.js .reveal { opacity: 0; }
 .reveal.in { animation: float-up .6s ease forwards; }
 
 .hero-bg { background: radial-gradient(60% 60% at 20% 100%, #fa8c7b 0%, transparent 70%), radial-gradient(50% 60% at 90% 0%, #4d8dff 0%, transparent 70%), #1b71ff; }
@@ -31,6 +31,6 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
   .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink { animation: none; }
   .twinkle { opacity: 1; transform: none; }
   .marquee-track, .wa-pulse { animation: none; }
-  .reveal { opacity: 1; }
+  .js .reveal { opacity: 1; }
   html { scroll-behavior: auto; }
 }

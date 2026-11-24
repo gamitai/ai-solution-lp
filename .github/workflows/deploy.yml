@@ -29,7 +29,7 @@ jobs:
           cache-dependency-path: site/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: site
-      - run: npx vite build
+      - run: pnpm run build:static
         working-directory: site
       - uses: actions/upload-pages-artifact@v3
         with:

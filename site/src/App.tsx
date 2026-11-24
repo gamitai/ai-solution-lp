@@ -28,6 +28,48 @@ const services = [
 
 const steps = ['שיחת היכרות וגיבוש הצורך', 'הצעה ותכנון', 'בנייה והטמעה', 'ליווי ושיפור']
 
+const SITE = 'https://sochen.co/'
+const BRAND = 'AI לעסקים'
+
+const faqs = [
+  { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
+  { q: 'אילו תהליכים אפשר לאוטמט בעסק?', a: 'אפשר לאוטמט כמעט כל תהליך חוזר: הזמנות וקביעת תורים, תזכורות ותשלומים, איסוף ומיון פניות, שליחת עדכונים לצוות ב-Slack, ושיבוץ אנשים לפי תנאים ומגבלות. נתחיל מהתהליך שגוזל לכם הכי הרבה זמן.' },
+  { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת למעקב אחרי מתחרים עם סיכום AI והתראות ל-Slack, מערכת ניהול סטודיו לאימון עם הזמנות, כרטיסיות, תשלומים, תזכורות ובוט וואטסאפ, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם מערכת רישום ודשבורד BI.' },
+  { q: 'איך מתחילים לעבוד?', a: 'מתחילים בשיחת היכרות קצרה בוואטסאפ, שבה מבינים את העסק ואת הצורך. אחר כך מקבלים הצעה ותכנון ברורים, בונים ומטמיעים, ולבסוף מקבלים ליווי ושיפור לפי שימוש אמיתי.' },
+  { q: 'האם אפשר לחבר את הפתרון למערכות שכבר יש לי?', a: 'כן. אפשר לחבר וואטסאפ, Slack, מערכות תשלום, CRM וגיליונות נתונים. אם הכלי שלכם חושף API או אפשרות ייצוא, אפשר לשלב אותו בפתרון.' },
+]
+
+function JsonLd() {
+  const data = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: BRAND,
+      url: SITE,
+      description: 'פתרונות AI לעסקים: סוכני וואטסאפ, אוטומציות ואינטגרציות, מערכות ניהול מותאמות וניתוח נתונים (BI).',
+      inLanguage: 'he',
+      areaServed: { '@type': 'Country', name: 'ישראל' },
+      telephone: '+972525353259',
+      knowsAbout: ['בינה מלאכותית', 'סוכני AI', 'אוטומציה עסקית', 'וואטסאפ עסקי', 'BI'],
+      makesOffer: services.map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.t, description: x.d } })),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: BRAND,
+      url: SITE,
+      inLanguage: 'he',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      inLanguage: 'he',
+      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ]
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
+}
+
 function useReveal() {
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -128,6 +170,7 @@ export default function App() {
 
   return (
     <div>
+      <main>
       {/* Hero */}
       <section id="top" className="hero-bg px-4 pb-24 text-white">
         <nav className="mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-full bg-black px-6 py-3">
@@ -136,6 +179,7 @@ export default function App() {
             <a href="#services">שירותים</a>
             <a href="#portfolio">תיק עבודות</a>
             <a href="#process">איך עובדים</a>
+            <a href="#faq">שאלות נפוצות</a>
           </div>
           <a href="#contact" className="rounded-full border border-white px-5 py-1.5 text-sm">צור קשר</a>
         </nav>
@@ -145,7 +189,7 @@ export default function App() {
             פתרונות AI לעסקים
           </h1>
           <p className="mt-6 text-xl leading-relaxed md:text-2xl">
-            אני בונה אוטומציות, סוכנים בוואטסאפ ומערכות ניהול שחוסכות לכם שעות עבודה כל שבוע.
+            אני בונה סוכני AI בוואטסאפ, אוטומציות ומערכות ניהול שחוסכות לכם שעות עבודה כל שבוע.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href="#portfolio" className={`${pill} border border-white`}>תיק עבודות</a>
@@ -177,7 +221,12 @@ export default function App() {
           <h2 className="reveal text-3xl font-bold md:text-4xl">תיק עבודות</h2>
           <p className="reveal mt-2 text-lg text-black/60">לחצו על סרטון כדי להגדיל</p>
         </div>
-        <div dir="ltr" className="marquee overflow-hidden">
+        <ul className="sr-only">
+          {projects.filter((p) => p.title !== 'פרויקט נוסף').map((p) => (
+            <li key={p.title}><strong>{p.title}</strong>: {p.desc}</li>
+          ))}
+        </ul>
+        <div dir="ltr" className="marquee overflow-hidden" aria-hidden="true">
           <div className="marquee-track flex gap-5 px-2.5">
             {loop.map((p, i) => (
               <button key={i} dir="rtl" onClick={() => setOpen(p)} className="w-72 shrink-0 text-right md:w-80">
@@ -204,6 +253,21 @@ export default function App() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section id="faq" className="px-4 pb-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="reveal mb-8 text-center text-3xl font-bold md:text-4xl">שאלות נפוצות</h2>
+          <div className="divide-y divide-black/10 rounded-3xl border border-black/10">
+            {faqs.map((f) => (
+              <details key={f.q} className="group p-5">
+                <summary className="cursor-pointer list-none text-lg font-bold">{f.q}</summary>
+                <p className="mt-3 text-black/70">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact */}
       <section id="contact" className="px-4 py-20 text-white" style={{ background: BLUE }}>
         <div className="mx-auto max-w-xl text-center">
@@ -217,8 +281,11 @@ export default function App() {
           </form>
         </div>
       </section>
+      </main>
 
       <footer className="py-6 text-center text-sm text-black/50">© {new Date().getFullYear()} פתרונות AI לעסקים</footer>
+
+      <JsonLd />
 
       {/* Floating WhatsApp */}
       <a
