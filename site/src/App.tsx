@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
 const PHONE = '972525353259'
 const wa = (text: string) => `https://wa.me/+${PHONE}?text=${encodeURIComponent(text)}`
-const OPENING = 'היי, הגעתי מדף הנחיתה ונשמח לשמוע על פתרונות AI לעסק שלי'
+const OPENING = 'היי, הגעתי מהאתר של SochenAI ואשמח לשמוע על פתרונות AI לעסק שלי'
 
 const BLUE = '#1b71ff'
 const CORAL = '#fa8c7b'
@@ -302,15 +302,166 @@ function buildMessage({ name, business, help }: { name: string; business: string
   return parts.join(' ')
 }
 
+const SETS = 6 // the card set is repeated so the row can loop endlessly
+
+function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
+  const rowRef = useRef<HTMLDivElement>(null)
+  const holdUntil = useRef(0) // auto-scroll stays paused until this timestamp
+  const hovering = useRef(false)
+  const tipOpen = useRef(false)
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null)
+  const swallowClick = useRef(false)
+  const [sets, setSets] = useState(1) // 1 set in the pre-rendered HTML, more once the page runs
+  const [dragging, setDragging] = useState(false)
+  const [tip, setTip] = useState<{ i: number; p: Project; x: number; y: number } | null>(null)
+  tipOpen.current = tip !== null
+
+  const pause = (ms = 5000) => { holdUntil.current = performance.now() + ms }
+  const items = Array.from({ length: sets }, (_, k) => projects.map((p, j) => ({ p, k, key: `${k}-${j}` }))).flat()
+
+  useEffect(() => setSets(SETS), [])
+
+  // endless auto-scroll that pauses while the visitor hovers, drags, taps or has a tooltip open
+  useEffect(() => {
+    const row = rowRef.current
+    if (!row || sets !== SETS) return
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const period = () => row.scrollWidth / SETS
+    row.scrollLeft = period() * 2
+    let pos = row.scrollLeft, lastSet = pos, last = performance.now(), raf = 0
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 64)
+      last = now
+      const p = period()
+      const cur = row.scrollLeft
+      if (Math.abs(cur - lastSet) > 1.5) pos = cur // visitor (or a smooth scroll) moved it
+      let changed = false
+      if (!calm && !hovering.current && !drag.current && !tipOpen.current && now > holdUntil.current) { pos += dt * 0.04; changed = true }
+      if (pos >= p * 4) { pos -= p * 2; changed = true }
+      else if (pos < p * 2) { pos += p * 2; changed = true }
+      if (changed) { row.scrollLeft = pos; lastSet = row.scrollLeft } // only write when we move it, so smooth scrolls and drags are not overridden
+      else { pos = cur; lastSet = cur }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [sets])
+
+  // close the tooltip when the page scrolls or a tap lands outside the cards
+  useEffect(() => {
+    const close = () => setTip(null)
+    const outside = (e: PointerEvent) => { if (!(e.target as Element).closest?.('.gcard')) setTip(null) }
+    window.addEventListener('scroll', close, { passive: true })
+    window.addEventListener('resize', close)
+    document.addEventListener('pointerdown', outside)
+    return () => {
+      window.removeEventListener('scroll', close)
+      window.removeEventListener('resize', close)
+      document.removeEventListener('pointerdown', outside)
+    }
+  }, [])
+
+  const showTip = (i: number, p: Project, el: HTMLElement) => {
+    const r = el.getBoundingClientRect()
+    setTip({ i, p, x: r.left + r.width / 2, y: r.bottom + r.height * 0.06 + 8 }) // allow for the hover growth
+  }
+
+  const step = (dir: 1 | -1) => {
+    const row = rowRef.current
+    const card = row?.querySelector<HTMLElement>('.gcard')
+    if (!row || !card) return
+    pause(7000)
+    setTip(null)
+    row.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: 'smooth' })
+  }
+
+  const canHover = () => window.matchMedia('(hover: hover)').matches
+
+  return (
+    <div className="relative">
+      <div
+        ref={rowRef}
+        dir="ltr"
+        className={`gallery-row flex gap-5 overflow-x-auto px-6 py-10 ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        onPointerEnter={(e) => { if (e.pointerType === 'mouse') hovering.current = true }}
+        onPointerLeave={(e) => { if (e.pointerType === 'mouse') { hovering.current = false; setTip(null) } }}
+        onTouchStart={() => pause(7000)}
+        onPointerDown={(e) => {
+          if (e.pointerType !== 'mouse' || e.button !== 0) return
+          drag.current = { x: e.clientX, left: e.currentTarget.scrollLeft, moved: false }
+        }}
+        onPointerMove={(e) => {
+          const d = drag.current
+          if (!d) return
+          const dx = e.clientX - d.x
+          if (!d.moved && Math.abs(dx) > 4) {
+            d.moved = true
+            e.currentTarget.setPointerCapture(e.pointerId)
+            setDragging(true)
+            setTip(null)
+          }
+          if (d.moved) e.currentTarget.scrollLeft = d.left - dx
+        }}
+        onPointerUp={() => {
+          if (drag.current?.moved) { swallowClick.current = true; setTimeout(() => { swallowClick.current = false }, 0) }
+          drag.current = null
+          setDragging(false)
+          pause(4000)
+        }}
+        onPointerCancel={() => { drag.current = null; setDragging(false) }}
+      >
+        {items.map(({ p, k, key }, idx) => {
+          const first = k === 0
+          const i = idx % projects.length
+          return (
+            <div key={key} className="gcard relative w-72 shrink-0 md:w-80" aria-hidden={first ? undefined : true}>
+              <button
+                dir="rtl"
+                tabIndex={first ? 0 : -1}
+                className="block w-full select-none text-right"
+                onPointerEnter={(e) => { if (e.pointerType === 'mouse' && !drag.current) showTip(i, p, e.currentTarget) }}
+                onPointerLeave={(e) => { if (e.pointerType === 'mouse') setTip(null) }}
+                onFocus={(e) => { if (first && e.currentTarget.matches(':focus-visible')) { pause(8000); showTip(i, p, e.currentTarget) } }}
+                onBlur={() => setTip(null)}
+                onClick={(e) => {
+                  if (swallowClick.current) return
+                  if (p.src) return onOpen(p)
+                  if (!canHover()) { if (tip?.i === i) setTip(null); else showTip(i, p, e.currentTarget) }
+                }}
+              >
+                <div className="aspect-video overflow-hidden rounded-3xl shadow-md"><Thumb p={p} /></div>
+                <div className="mt-3 px-1 font-bold">{p.title}</div>
+                {first && <span className="sr-only">{p.desc}</span>}
+              </button>
+            </div>
+          )
+        })}
+      </div>
+
+      <button type="button" aria-label="הקודם" onClick={() => step(-1)} className="gal-arrow left-3 hidden md:grid">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+      </button>
+      <button type="button" aria-label="הבא" onClick={() => step(1)} className="gal-arrow right-3 hidden md:grid">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+      </button>
+
+      {tip && (
+        <div role="tooltip" dir="rtl" className="gtip" style={{ left: Math.min(Math.max(tip.x, 172), window.innerWidth - 172), top: tip.y }}>
+          <strong>{tip.p.title}</strong>
+          {tip.p.desc}
+        </div>
+      )}
+    </div>
+  )
+}
+
 const pill = 'inline-flex items-center justify-center rounded-full px-8 py-3 text-lg font-medium transition'
 const input = 'block w-full text-right rounded-full border border-white/70 bg-transparent px-5 py-3 text-base font-normal text-white outline-none focus:border-white'
 
 export default function App() {
   useReveal()
   const [open, setOpen] = useState<Project | null>(null)
-  const [active, setActive] = useState<number | null>(null) // tapped card on touch screens
   const [form, setForm] = useState({ name: '', business: '', help: '' })
-  const loop = [...projects, ...projects, ...projects, ...projects]
   const href = wa(buildMessage(form))
 
   const submit = (e: React.FormEvent) => {
@@ -365,32 +516,12 @@ export default function App() {
       </section>
 
       {/* Portfolio */}
-      <section id="portfolio" className="pb-20">
+      <section id="portfolio" className="pb-12">
         <div className="mx-auto mb-2 max-w-5xl px-4 text-center">
           <h2 className="reveal text-3xl font-bold md:text-4xl">תיק עבודות</h2>
-          <p className="reveal mt-2 text-lg text-black/60">עברו עם העכבר על פרויקט כדי להגדיל ולקרוא מה נעשה בו</p>
+          <p className="reveal mt-2 text-lg text-black/60">עברו עם העכבר על פרויקט כדי להגדיל ולקרוא מה נעשה בו. אפשר לגרור ולגלול.</p>
         </div>
-        <ul className="sr-only">
-          {projects.map((p) => (
-            <li key={p.title}><strong>{p.title}</strong>: {p.desc}</li>
-          ))}
-        </ul>
-        <div dir="ltr" className={`marquee -mb-24 overflow-hidden pb-52 pt-10 ${active !== null ? 'paused' : ''}`} aria-hidden="true">
-          <div className="marquee-track flex gap-5 px-2.5">
-            {loop.map((p, i) => (
-              <div key={i} className={`gcard relative w-72 shrink-0 md:w-80 ${active === i ? 'active' : ''}`}>
-                <button dir="rtl" tabIndex={-1} onClick={() => (p.src ? setOpen(p) : setActive(active === i ? null : i))} className="block w-full text-right">
-                  <div className="aspect-video overflow-hidden rounded-3xl shadow-md"><Thumb p={p} /></div>
-                  <div className="mt-3 px-1 font-bold">{p.title}</div>
-                </button>
-                <div role="tooltip" dir="rtl" className="gtip">
-                  <strong>{p.title}</strong>
-                  {p.desc}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Gallery onOpen={setOpen} />
       </section>
 
       {/* Process */}
@@ -463,7 +594,7 @@ export default function App() {
               <DialogTitle className="mb-3 text-xl font-bold">{open.title}</DialogTitle>
               <div className="aspect-video overflow-hidden rounded-2xl"><Thumb p={open} big /></div>
               <p className="mt-3 text-black/70">{open.desc}</p>
-              <a href={wa(`היי, ראיתי את הפרויקט "${open.title}" ונשמח לפתרון דומה`)} target="_blank" rel="noreferrer" className={`${pill} mt-4 bg-black text-white`}>
+              <a href={wa(`היי, ראיתי את הפרויקט "${open.title}" ואשמח לפתרון דומה`)} target="_blank" rel="noreferrer" className={`${pill} mt-4 bg-black text-white`}>
                 רוצה משהו כזה? דברו איתי
               </a>
             </div>

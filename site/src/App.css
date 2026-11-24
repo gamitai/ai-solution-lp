@@ -27,13 +27,18 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .twinkle { animation: twinkle 2.8s ease-in-out infinite; }
 .blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
 
-/* Portfolio cards: grow on hover and show a tooltip */
+/* Portfolio gallery: draggable row, cards grow on hover, tooltip floats above everything */
+.gallery-row { scrollbar-width: none; overscroll-behavior-x: contain; }
+.gallery-row::-webkit-scrollbar { display: none; }
 .gcard { transition: transform .35s cubic-bezier(.2,.8,.2,1); z-index: 1; }
-.gcard:hover, .gcard.active { transform: scale(1.12) translateY(-6px); z-index: 30; }
-.gtip { position: absolute; top: 100%; left: 50%; width: min(20rem, 88vw); margin-top: .6rem; padding: .9rem 1rem; border-radius: 1rem; background: #fff; color: #252525; text-align: right; font-size: .9rem; line-height: 1.55; box-shadow: 0 18px 40px -12px rgba(0,0,0,.35); opacity: 0; pointer-events: none; transform: translate(-50%, 8px); transition: opacity .25s ease, transform .25s ease; }
+.gcard:hover, .gcard:focus-within { transform: scale(1.12) translateY(-6px); z-index: 30; }
+.gcard button:focus-visible { outline: 3px solid #1b71ff; outline-offset: 4px; border-radius: 1.5rem; }
+@keyframes tip-in { from { opacity: 0; margin-top: 8px; } to { opacity: 1; margin-top: 0; } }
+.gtip { position: fixed; z-index: 60; width: 20rem; max-width: calc(100vw - 24px); transform: translateX(-50%); padding: .9rem 1rem; border-radius: 1rem; background: #fff; color: #252525; text-align: right; font-size: .9rem; line-height: 1.55; box-shadow: 0 18px 40px -12px rgba(0,0,0,.35); pointer-events: none; animation: tip-in .2s ease; }
 .gtip::before { content: ''; position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; background: #fff; transform: translateX(-50%) rotate(45deg); }
 .gtip strong { display: block; margin-bottom: .25rem; color: #1b71ff; }
-.gcard:hover .gtip, .gcard.active .gtip { opacity: 1; transform: translate(-50%, 0); }
+.gal-arrow { position: absolute; top: 50%; z-index: 40; width: 44px; height: 44px; margin-top: -22px; place-items: center; border-radius: 9999px; background: #fff; color: #252525; box-shadow: 0 6px 20px -6px rgba(0,0,0,.35); transition: transform .2s; }
+.gal-arrow:hover { transform: scale(1.08); }
 
 /* Animated mini-UI illustrations inside the cards (6s loop) */
 @keyframes swap-a { 0%,42% { opacity: 1; } 50%,92% { opacity: 0; } 100% { opacity: 1; } }
