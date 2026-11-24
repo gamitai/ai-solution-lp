@@ -29,7 +29,7 @@ const services = [
 const steps = ['שיחת היכרות וגיבוש הצורך', 'הצעה ותכנון', 'בנייה והטמעה', 'ליווי ושיפור']
 
 const SITE = 'https://sochen.co/'
-const BRAND = 'AI לעסקים'
+const BRAND = 'SochenAI'
 
 const faqs = [
   { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
@@ -45,6 +45,7 @@ function JsonLd() {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
       name: BRAND,
+      alternateName: 'SochenAI - פתרונות עסקיים עם סוכני AI',
       url: SITE,
       description: 'פתרונות AI לעסקים: סוכני וואטסאפ, אוטומציות ואינטגרציות, מערכות ניהול מותאמות וניתוח נתונים (BI).',
       inLanguage: 'he',
@@ -174,7 +175,7 @@ export default function App() {
       {/* Hero */}
       <section id="top" className="hero-bg px-4 pb-24 text-white">
         <nav className="mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-full bg-black px-6 py-3">
-          <a href="#top" className="font-bold">AI לעסקים</a>
+          <a href="#top" className="font-bold">SochenAI</a>
           <div className="hidden gap-8 text-sm md:flex">
             <a href="#services">שירותים</a>
             <a href="#portfolio">תיק עבודות</a>
@@ -283,7 +284,7 @@ export default function App() {
       </section>
       </main>
 
-      <footer className="py-6 text-center text-sm text-black/50">© {new Date().getFullYear()} פתרונות AI לעסקים</footer>
+      <footer className="py-6 text-center text-sm text-black/50">© {new Date().getFullYear()} SochenAI | פתרונות עסקיים עם סוכני AI</footer>
 
       <JsonLd />
 
