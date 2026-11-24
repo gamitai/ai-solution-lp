@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
@@ -20,19 +20,10 @@ const projects: Project[] = [
 ]
 
 const services = [
-  { t: 'סוכן AI לשירות ולמכירות', d: 'צ׳אטבוט שמדבר עם הלקוחות, עונה מתוך המידע של העסק ומזהה שאלות שחוזרות על עצמן. עובד באתר, בוואטסאפ ובפייסבוק וחוסך שעות של מענה ידני.' },
-  { t: 'אוטומציה של תהליכים עסקיים', d: 'במקום להעתיק, להקליד ולעקוב ידנית, המערכת עושה את זה בשבילכם: פחות טעויות ותהליכים שרצים מהר יותר.' },
-  { t: 'AI בשירות לקוחות', d: 'בוטים, המלצות מותאמות וזיהוי מצב רוח בשיחה, כדי שכל לקוח יקבל תשובה מדויקת בכל שעה ביממה.' },
-  { t: 'דוחות וניתוח נתונים', d: 'מפסיקים לנחש ומתחילים להחליט לפי מספרים: דוחות אוטומטיים, תחזיות ותובנות שקל להבין.' },
-  { t: 'קליטת מסמכים וניתוח תוכן', d: 'המערכת קוראת, ממיינת ומבינה מסמכים, תמונות וסרטונים, וחוסכת הקלדה ידנית ובקרה חוזרת.' },
-  { t: 'מנועי המלצות', d: 'המערכת לומדת מה הלקוחות מחפשים ומציעה להם את המוצר או השירות שהכי מתאים להם.' },
-]
-
-const solutions = [
-  { t: 'דשבורד משימות', d: 'ניהול משימות ושליטה בתמונה כולה, במקום אחד.' },
-  { t: 'מערכת רב-ערוצית', d: 'פניות מוואטסאפ, פייסבוק, האתר והמייל מגיעות למסך אחד.' },
-  { t: 'מנוע תיאום פגישות', d: 'הלקוח בוחר זמן והפגישה נכנסת ישר ליומן.' },
-  { t: 'ניתוח מכרזים והצעות מחיר', d: 'המערכת סורקת מכרזים ומכינה טיוטת הצעת מחיר.' },
+  { t: 'סוכן AI לשירות ולמכירות', d: 'צ׳אטבוט שמדבר עם הלקוחות, עונה מתוך המידע של העסק ומזהה שאלות שחוזרות על עצמן.' },
+  { t: 'אוטומציה', d: 'המערכת עושה בשבילכם את העבודה הידנית: פחות טעויות ותהליכים שרצים מהר יותר.' },
+  { t: 'דוחות וניתוח נתונים', d: 'מחליטים לפי מספרים: מערכת BI שמנתחת את העסק כמו אנליסט בכיר.' },
+  { t: 'קליטת מסמכים וניתוח תוכן', d: 'המערכת קוראת, ממיינת ומבינה מסמכים, תמונות וסרטונים, וחוסכת הקלדה ידנית.' },
 ]
 
 const steps = [
@@ -63,11 +54,11 @@ function JsonLd() {
       name: BRAND,
       alternateName: 'SochenAI - פתרונות עסקיים עם סוכני AI',
       url: SITE,
-      description: 'מערכות AI ואוטומציה שחוסכות לעסקים זמן וכסף: סוכן AI לשירות ולמכירות, אוטומציה של תהליכים, ניתוח נתונים, קליטת מסמכים ומנועי המלצות.',
+      description: 'מערכות AI ואוטומציה שחוסכות לעסקים זמן וכסף: סוכן AI לשירות ולמכירות, אוטומציה, ניתוח נתונים ב-BI וקליטת מסמכים.',
       inLanguage: 'he',
       areaServed: { '@type': 'Country', name: 'ישראל' },
       telephone: '+972525353259',
-      knowsAbout: ['בינה מלאכותית', 'סוכני AI', 'אוטומציה עסקית', 'צ׳אטבוט', 'ניתוח נתונים'],
+      knowsAbout: ['בינה מלאכותית', 'סוכני AI', 'אוטומציה עסקית', 'צ׳אטבוט', 'BI', 'ניתוח נתונים'],
       makesOffer: services.map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.t, description: x.d } })),
     },
     {
@@ -171,6 +162,51 @@ function Woman() {
   )
 }
 
+function Process() {
+  const ref = useRef<HTMLOListElement>(null)
+  const [p, setP] = useState(-1) // raw progress; <0 means the line has not reached the list yet
+
+  useEffect(() => {
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const update = () => {
+      const el = ref.current
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      setP(calm ? 2 : (window.innerHeight * 0.62 - r.top) / r.height)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  const n = steps.length
+  const fill = Math.min(1, Math.max(0, p))
+  return (
+    <ol ref={ref} className="relative mx-auto max-w-2xl space-y-5">
+      <span aria-hidden="true" className="absolute right-6 top-6 bottom-6 w-0.5 translate-x-1/2 bg-black/10" />
+      <span aria-hidden="true" className="absolute right-6 top-6 w-0.5 translate-x-1/2 rounded-full" style={{ height: `calc((100% - 3rem) * ${fill})`, background: BLUE, transition: 'height .15s linear' }} />
+      {steps.map((s, i) => {
+        const on = p >= i / (n - 1) - 0.01
+        return (
+          <li key={s.t} className={`step relative flex items-start gap-5 ${on ? 'on' : ''}`}>
+            <div className="step-dot relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 text-lg font-bold">
+              {String(i + 1).padStart(2, '0')}
+            </div>
+            <div className="step-card flex-1 rounded-3xl border p-5">
+              <h3 className="text-xl font-bold">{s.t}</h3>
+              <p className="mt-1 text-black/65">{s.d}</p>
+            </div>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
 const pill = 'inline-flex items-center justify-center rounded-full px-8 py-3 text-lg font-medium transition'
 const input = 'w-full text-right rounded-full border border-white/70 bg-transparent px-5 py-3 text-white placeholder-white/70 outline-none focus:border-white'
 
@@ -195,7 +231,6 @@ export default function App() {
           <a href="#top" className="font-bold">SochenAI</a>
           <div className="hidden gap-7 text-sm md:flex">
             <a href="#services">מה אנחנו בונים</a>
-            <a href="#solutions">פתרונות מוכנים</a>
             <a href="#portfolio">תיק עבודות</a>
             <a href="#process">איך זה עובד</a>
             <a href="#faq">שאלות נפוצות</a>
@@ -220,28 +255,13 @@ export default function App() {
 
       {/* Services */}
       <section id="services" className="px-4 py-20">
-        <div className="mx-auto max-w-6xl rounded-[2.5rem] bg-black p-8 text-white md:p-14">
+        <div className="mx-auto max-w-5xl rounded-[2.5rem] bg-black p-8 text-white md:p-14">
           <h2 className="reveal text-3xl font-bold md:text-4xl">מה אנחנו בונים?</h2>
-          <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-3">
+          <div className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
             {services.map((s) => (
               <div key={s.t} className="reveal">
                 <h3 className="mb-2 text-xl font-bold" style={{ color: CORAL }}>{s.t}</h3>
                 <p className="text-white/70">{s.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Ready solutions */}
-      <section id="solutions" className="px-4 pb-20">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="reveal mb-10 text-center text-3xl font-bold md:text-4xl">פתרונות מוכנים להטמעה מיידית</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {solutions.map((x) => (
-              <div key={x.t} className="reveal rounded-3xl border border-black/10 p-6">
-                <h3 className="mb-2 text-lg font-bold" style={{ color: BLUE }}>{x.t}</h3>
-                <p className="text-black/70">{x.d}</p>
               </div>
             ))}
           </div>
@@ -266,18 +286,10 @@ export default function App() {
       </section>
 
       {/* Process */}
-      <section id="process" className="px-4 pb-20">
+      <section id="process" className="overflow-x-clip px-4 pb-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="reveal mb-10 text-center text-3xl font-bold md:text-4xl">איך זה עובד?</h2>
-          <ol className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-            {steps.map((s, i) => (
-              <li key={s.t} className="reveal text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full text-xl font-bold text-white" style={{ background: BLUE }}>{String(i + 1).padStart(2, '0')}</div>
-                <div className="text-lg font-bold">{s.t}</div>
-                <p className="mt-1 text-black/65">{s.d}</p>
-              </li>
-            ))}
-          </ol>
+          <Process />
         </div>
       </section>
 

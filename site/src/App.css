@@ -27,7 +27,16 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
 .twinkle { animation: twinkle 2.8s ease-in-out infinite; }
 .blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
 
+/* Process timeline: steps light up as the page is scrolled (only when JS is on) */
+.step-dot { background: #fff; border-color: rgba(0,0,0,.15); color: rgba(0,0,0,.4); transition: all .5s ease; }
+.step-card { background: #fff; border-color: rgba(0,0,0,.08); transition: all .5s ease; }
+.js .step { opacity: .35; transform: translateX(-28px); transition: opacity .5s ease, transform .5s ease; }
+.js .step.on { opacity: 1; transform: none; }
+.step.on .step-dot { background: #1b71ff; border-color: #1b71ff; color: #fff; box-shadow: 0 0 0 6px rgba(27,113,255,.15); }
+.step.on .step-card { border-color: rgba(27,113,255,.35); box-shadow: 0 10px 30px -12px rgba(27,113,255,.35); }
+
 @media (prefers-reduced-motion: reduce) {
+  .js .step { opacity: 1; transform: none; transition: none; }
   .woman-float, .woman-arm, .woman-head, .orb, .twinkle, .blink { animation: none; }
   .twinkle { opacity: 1; transform: none; }
   .marquee-track, .wa-pulse { animation: none; }
