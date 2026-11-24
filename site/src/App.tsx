@@ -382,50 +382,127 @@ function Spark({ x, y, d }: { x: number; y: number; d: string }) {
 
 function Woman() {
   return (
-    <svg viewBox="0 -40 300 460" role="img" aria-label="דמות אישה מחזיקה כדור אור" className="mx-auto h-[380px] w-auto md:h-[460px]">
+    <svg viewBox="0 0 360 470" role="img" aria-label="יועצת AI מחייכת ומנופפת, מוקפת בכרטיסי צ׳אט, גרף ואוטומציה" className="mx-auto h-[390px] w-auto md:h-[480px]">
       <defs>
-        <radialGradient id="orb" cx="40%" cy="35%" r="70%">
-          <stop offset="0" stopColor="#fff" />
-          <stop offset=".45" stopColor="#ffc2ae" />
-          <stop offset="1" stopColor="#fa6a4e" />
+        <linearGradient id="av-hair" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#9a4a28" />
+          <stop offset="1" stopColor="#5a2414" />
+        </linearGradient>
+        <linearGradient id="av-blazer" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#ffffff" />
+          <stop offset="1" stopColor="#f3e3d8" />
+        </linearGradient>
+        <linearGradient id="av-screen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#2b4bff" />
+          <stop offset="1" stopColor="#7c3aed" />
+        </linearGradient>
+        <radialGradient id="av-halo" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stopColor="#ffffff" stopOpacity=".28" />
+          <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <ellipse cx="150" cy="400" rx="75" ry="8" fill="rgba(0,0,0,.25)" />
-      <g className="woman-float">
-        {/* legs + shoes */}
-        <path d="M120 245h60l6 140h-26l-10-100-10 100h-26z" fill="#f3b093" />
-        <ellipse cx="127" cy="388" rx="17" ry="6" fill="#fff" />
-        <ellipse cx="173" cy="388" rx="17" ry="6" fill="#fff" />
-        {/* arm down */}
-        <path d="M121 152Q98 200 108 238" stroke="#fff" strokeWidth="20" strokeLinecap="round" fill="none" />
-        <circle cx="108" cy="246" r="9" fill="#f2c4a8" />
-        {/* torso */}
-        <path d="M116 142Q150 126 184 142L190 256Q150 266 110 256Z" fill="#fff" />
-        <rect x="110" y="244" width="80" height="9" rx="3" fill="#e08a6e" />
-        {/* neck + head */}
-        <rect x="142" y="118" width="16" height="28" rx="6" fill="#e9b394" />
-        <g className="woman-head">
-          <circle cx="150" cy="54" r="15" fill="#d1622f" />
-          <ellipse cx="150" cy="100" rx="28" ry="32" fill="#f2c4a8" />
-          <path d="M120 102Q116 60 150 62Q184 60 180 102Q172 80 150 80Q128 80 120 102Z" fill="#d1622f" />
-          <circle className="blink" cx="140" cy="103" r="2.6" fill="#252525" />
-          <circle className="blink" cx="160" cy="103" r="2.6" fill="#252525" />
-          <circle cx="132" cy="113" r="5" fill="#f5a38c" opacity=".5" />
-          <circle cx="168" cy="113" r="5" fill="#f5a38c" opacity=".5" />
-          <path d="M143 115Q150 122 157 115" stroke="#b5503a" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+
+      {/* halo + slow dashed ring */}
+      <circle cx="180" cy="230" r="170" fill="url(#av-halo)" />
+      <circle className="av-ring" cx="180" cy="230" r="150" fill="none" stroke="#fff" strokeOpacity=".35" strokeWidth="1.5" strokeDasharray="3 9" />
+      <ellipse cx="180" cy="448" rx="92" ry="9" fill="rgba(0,0,0,.28)" />
+
+      {/* floating UI chips */}
+      <g className="av-chip" style={{ animationDelay: '0s' }}>
+        <rect x="8" y="78" width="92" height="46" rx="14" fill="#fff" />
+        <rect x="18" y="90" width="48" height="6" rx="3" fill="#d6e2ff" />
+        <rect x="18" y="102" width="34" height="6" rx="3" fill="#d6e2ff" />
+        <circle cx="82" cy="96" r="9" fill="#25d366" />
+        <path d="M77.500 96l3 3 5-6" stroke="#fff" strokeWidth="2.200" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <g transform="translate(8 -12)"><g className="av-chip" style={{ animationDelay: '-1.4s' }}>
+        <rect x="258" y="14" width="84" height="54" rx="14" fill="#fff" />
+        <rect x="270" y="44" width="10" height="14" rx="2" fill="#bcd0ff" />
+        <rect x="285" y="36" width="10" height="22" rx="2" fill="#7da2ff" />
+        <rect x="300" y="28" width="10" height="30" rx="2" fill="#1b71ff" />
+        <rect x="315" y="22" width="10" height="36" rx="2" fill="#fa8c7b" />
+      </g></g>
+      <g className="av-chip" style={{ animationDelay: '-2.6s' }}>
+        <circle cx="304" cy="262" r="30" fill="#fff" />
+        <g className="av-gear">
+          <circle cx="304" cy="262" r="11" fill="none" stroke="#fa8c7b" strokeWidth="5" />
+          {[0, 45, 90, 135].map((a) => (
+            <rect key={a} x="301" y="241" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 304 262)`} />
+          ))}
+          {[0, 45, 90, 135].map((a) => (
+            <rect key={a + 180} x="301" y="274" width="6" height="9" rx="2" fill="#fa8c7b" transform={`rotate(${a} 304 262)`} />
+          ))}
         </g>
-        {/* raised arm + orb */}
-        <g className="woman-arm">
-          <path d="M180 152Q216 134 226 84" stroke="#fff" strokeWidth="20" strokeLinecap="round" fill="none" />
-          <circle cx="226" cy="76" r="10" fill="#f2c4a8" />
-          <g className="orb">
-            <circle cx="226" cy="42" r="42" fill="#fa8c7b" opacity=".35" />
-            <circle cx="226" cy="46" r="23" fill="url(#orb)" />
+      </g>
+      <Spark x={46} y={190} d="0s" />
+      <Spark x={322} y={150} d=".9s" />
+      <Spark x={200} y={14} d="1.8s" />
+
+      <g className="av-float">
+        {/* hair behind */}
+        <g className="av-hair">
+          <path d="M143 108C136 62 160 42 183 42C208 42 228 62 220 108C226 142 224 176 236 206C214 220 148 220 126 206C138 176 136 142 143 108Z" fill="url(#av-hair)" />
+        </g>
+
+        {/* legs + shoes */}
+        <path d="M128 288Q180 302 232 288L224 428H192L182 336L172 428H140Z" fill="#262b45" />
+        <ellipse cx="156" cy="431" rx="21" ry="7.500" fill="#fa8c7b" />
+        <ellipse cx="208" cy="431" rx="21" ry="7.500" fill="#fa8c7b" />
+
+        <g className="av-breathe">
+          {/* left arm (down, holding a tablet) */}
+          <path d="M134 182Q108 226 114 268" stroke="url(#av-blazer)" strokeWidth="24" strokeLinecap="round" fill="none" />
+          <path d="M134 182Q108 226 114 268" stroke="#000" strokeOpacity=".06" strokeWidth="24" strokeLinecap="round" fill="none" />
+          {/* torso / blazer */}
+          <path d="M132 176Q180 160 228 176L240 292Q180 308 120 292Z" fill="url(#av-blazer)" />
+          <path d="M132 176Q140 240 120 292Q150 304 166 300Q150 240 160 170Z" fill="#000" fillOpacity=".05" />
+          <path d="M163 166L180 214L197 166L216 172L190 232L180 292L170 232L144 172Z" fill="#f0dccf" />
+          <path d="M166 166L180 206L194 166Z" fill="#fa8c7b" />
+          <circle cx="180" cy="248" r="2.800" fill="#d9bfae" /><circle cx="180" cy="268" r="2.800" fill="#d9bfae" />
+          {/* tablet in left hand */}
+          <g transform="rotate(-10 112 276)">
+            <rect x="84" y="258" width="58" height="38" rx="7" fill="#151b33" />
+            <rect x="88" y="262" width="50" height="30" rx="4" fill="url(#av-screen)" />
+            <polyline className="av-line" pathLength="100" points="92,286 102,278 110,282 120,270 132,266" fill="none" stroke="#fff" strokeWidth="2.200" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="132" cy="266" r="2.600" fill="#ffd166" />
           </g>
-          <Spark x={186} y={14} d="0s" />
-          <Spark x={270} y={30} d=".7s" />
-          <Spark x={262} y={92} d="1.4s" />
-          <Spark x={196} y={64} d="2.1s" />
+          <circle cx="116" cy="284" r="8" fill="#f1c1a1" />
+          {/* right arm: upper arm + waving forearm */}
+          <path d="M226 182Q250 196 262 160" stroke="url(#av-blazer)" strokeWidth="24" strokeLinecap="round" fill="none" />
+          <g className="av-wave">
+            <path d="M262 160Q272 130 280 108" stroke="url(#av-blazer)" strokeWidth="22" strokeLinecap="round" fill="none" />
+            <path d="M262 160Q272 130 280 108" stroke="#000" strokeOpacity=".05" strokeWidth="22" strokeLinecap="round" fill="none" />
+            <ellipse cx="282" cy="96" rx="11" ry="13" fill="#f1c1a1" />
+            <ellipse cx="271" cy="100" rx="4" ry="7" fill="#f1c1a1" transform="rotate(-25 271 100)" />
+            <path d="M277 86v-8M283 84v-9M289 87v-8" stroke="#f1c1a1" strokeWidth="4" strokeLinecap="round" />
+          </g>
+        </g>
+
+        {/* neck */}
+        <path d="M171 140h20v28q-10 7-20 0z" fill="#e4aa8a" />
+
+        {/* head */}
+        <g className="av-head">
+          <ellipse cx="181" cy="108" rx="29" ry="34" fill="#f4c7a8" />
+          <path d="M152 112Q153 138 176 142Q164 132 160 112Z" fill="#e9b394" fillOpacity=".5" />
+          {/* fringe */}
+          <path d="M149 104C150 72 176 62 196 70C210 77 213 92 212 106C202 88 178 82 149 104Z" fill="url(#av-hair)" />
+          <path d="M160 82Q178 70 200 78" stroke="#c46a3e" strokeOpacity=".7" strokeWidth="2" fill="none" strokeLinecap="round" />
+          {/* brows */}
+          <path d="M162 100Q170 95 178 99M185 99Q193 95 201 100" stroke="#6b2f17" strokeWidth="2.200" fill="none" strokeLinecap="round" />
+          {/* eyes */}
+          <g className="av-blink">
+            <ellipse cx="170" cy="111" rx="3.800" ry="5" fill="#2b2230" />
+            <ellipse cx="193" cy="111" rx="3.800" ry="5" fill="#2b2230" />
+            <circle cx="171.500" cy="109" r="1.400" fill="#fff" /><circle cx="194.500" cy="109" r="1.400" fill="#fff" />
+          </g>
+          {/* nose, cheeks, smile */}
+          <path d="M181 114Q178 123 182 124" stroke="#d99a7c" strokeWidth="1.800" fill="none" strokeLinecap="round" />
+          <circle cx="161" cy="122" r="6" fill="#f08a78" fillOpacity=".35" /><circle cx="201" cy="122" r="6" fill="#f08a78" fillOpacity=".35" />
+          <path d="M170 128Q181 141 192 128Q181 133 170 128Z" fill="#d2584e" />
+          <path d="M173 131Q181 136 189 131" stroke="#fff" strokeOpacity=".75" strokeWidth="1.600" fill="none" strokeLinecap="round" />
+          {/* earring */}
+          <circle cx="152" cy="122" r="2.600" fill="#ffd166" />
         </g>
       </g>
     </svg>
@@ -550,7 +627,7 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
 
   const showTip = (i: number, p: Project, el: HTMLElement) => {
     const r = el.getBoundingClientRect()
-    setTip({ i, p, x: r.left + r.width / 2, y: r.bottom + r.height * 0.06 + 8 }) // allow for the hover growth
+    setTip({ i, p, x: r.left + r.width / 2, y: r.bottom + r.height * 0.04 + 8 }) // allow for the hover growth
   }
 
   const step = (dir: 1 | -1) => {
@@ -559,7 +636,7 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
     if (!row || !card) return
     pause(7000)
     setTip(null)
-    row.scrollBy({ left: dir * (card.offsetWidth + 20), behavior: 'smooth' })
+    row.scrollBy({ left: dir * (card.offsetWidth + 40), behavior: 'smooth' })
   }
 
   const canHover = () => window.matchMedia('(hover: hover)').matches
@@ -569,7 +646,7 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
       <div
         ref={rowRef}
         dir="ltr"
-        className={`gallery-row flex gap-5 overflow-x-auto px-6 py-10 ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`gallery-row flex gap-10 overflow-x-auto px-8 py-10 ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         onPointerEnter={(e) => { if (e.pointerType === 'mouse') hovering.current = true }}
         onPointerLeave={(e) => { if (e.pointerType === 'mouse') { hovering.current = false; setTip(null) } }}
         onTouchStart={() => pause(7000)}
@@ -711,7 +788,6 @@ export default function App() {
       <section id="portfolio" className="pb-12">
         <div className="mx-auto mb-2 max-w-5xl px-4 text-center">
           <h2 className="reveal text-3xl font-bold md:text-4xl">מה כבר בנינו</h2>
-          <p className="reveal mt-2 text-lg text-black/60">עברו עם העכבר על פרויקט כדי להגדיל ולקרוא מה נעשה בו. אפשר לגרור ולגלול.</p>
         </div>
         <Gallery onOpen={setOpen} />
       </section>
