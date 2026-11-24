@@ -128,3 +128,8 @@ body { font-family: 'Heebo', system-ui, sans-serif; background: #fcfcfc; color: 
   .js .reveal { opacity: 1; }
   html { scroll-behavior: auto; }
 }
+
+/* FAQ: plus/minus indicator, whole row is the tap target */
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: '+'; float: left; margin-right: .75rem; font-size: 1.5rem; line-height: 1; color: #1b71ff; }
+.faq details[open] summary::after { content: '\2212'; }

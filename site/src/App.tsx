@@ -44,6 +44,10 @@ const steps = [
   { t: 'עלייה לאוויר', d: 'המערכת מתחילה לעבוד בשבילכם.' },
 ]
 
+const NAV: [string, string][] = [['#services', 'מה אנחנו בונים'], ['#portfolio', 'מה כבר בנינו'], ['#process', 'איך זה עובד'], ['#about', 'מי אנחנו'], ['#faq', 'שאלות נפוצות']]
+
+const ABOUT = 'SochenAI בונה ומטמיעה מערכות AI ואוטומציה לעסקים: סוכני AI לשירות ולמכירות, בוטים בוואטסאפ, אוטומציה של תהליכים, דוחות וניתוח נתונים ב-BI, וקליטת מסמכים. עבדנו על מערכת לניהול סטודיו לאימון, מעקב אחרי מתחרים עם התראות ל-Slack, שיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ, Battlecards אוטומטיים לאנשי מכירות, בוט שירות לקוחות בוואטסאפ ומערכת CRM לדי ג׳יי. כל פרויקט מתחיל בשיחת היכרות ללא עלות, ממשיך באפיון, פיתוח ואב-טיפוס שאתם מאשרים, ומסתיים בעלייה לאוויר.'
+
 const SITE = 'https://sochen.co/'
 const BRAND = 'SochenAI'
 
@@ -51,6 +55,9 @@ const faqs = [
   { q: 'מה זה סוכן AI בוואטסאפ?', a: 'סוכן AI בוואטסאפ הוא בוט חכם שמקבל הודעות מלקוחות או מעובדים, מבין מה ביקשו ומבצע פעולה אמיתית: קובע תור, מעדכן מערכת, שולח תזכורת או עונה על שאלה. הוא מתחבר למערכות של העסק, ולכן הוא לא רק עונה אלא גם עושה.' },
   { q: 'אילו תהליכים אפשר לאוטמט בעסק?', a: 'אפשר לאוטמט כמעט כל תהליך חוזר: הזמנות וקביעת תורים, תזכורות ותשלומים, איסוף ומיון פניות, שליחת עדכונים לצוות ב-Slack, ושיבוץ אנשים לפי תנאים ומגבלות. נתחיל מהתהליך שגוזל לכם הכי הרבה זמן.' },
   { q: 'אילו פרויקטים כבר נבנו?', a: 'בין הפרויקטים: מערכת לניהול סטודיו לאימון עם שיבוץ עצמי, כרטיסיה, תזכורות בוואטסאפ, מעקב משקלים לכל תרגיל ובוט AI, מערכת למעקב אחרי מתחרים עם התראות ל-Slack, ומערכת לשיבוץ צוותי מילואים דרך אייג׳נט בוואטסאפ עם דשבורד BI. בנוסף נבנו Automated Battlecards לאנשי מכירות, ובוט וואטסאפ לשירות לקוחות שמפנה לעובד אנושי במקרה קיצון, וגם מערכת CRM לדי ג׳יי עם חוזים דיגיטליים ותזכורות.' },
+  { q: 'האם הבוט יכול להעביר שיחה לנציג אנושי?', a: 'כן. בוט וואטסאפ לשירות לקוחות עונה מתוך הידע שנצבר על החברה, זמין תמיד, ובמקרה קיצון מפנה את הפונה לעובד אנושי.' },
+  { q: 'מה זה Automated Battlecards?', a: 'זהו PDF מעודכן תמיד לאנשי מכירות, שמשווה בין החברה שלהם למתחרות ומציג רק את המקומות שבהם החברה שלהם טובה יותר, כדי להגדיל את אחוזי המכירה של צוותי המכירות.' },
+  { q: 'באילו ערוצים אפשר להפעיל סוכן AI?', a: 'סוכן AI לשירות ולמכירות יכול לעבוד באתר, בוואטסאפ ובפייסבוק.' },
   { q: 'כמה עולה שיחת ההיכרות?', a: 'שיחת ההיכרות ללא עלות. בה מבינים את העסק, בודקים אם הפתרון אפשרי, ואתם מחליטים אם להמשיך.' },
   { q: 'איך מתחילים לעבוד?', a: 'מתחילים בשיחת היכרות. אחר כך באים אפיון ומחקר, עיצוב ממשק, פיתוח ואימון, אב-טיפוס שאתם בודקים ומאשרים, ולבסוף עלייה לאוויר.' },
   { q: 'האם אפשר לחבר את הפתרון למערכות שכבר יש לי?', a: 'כן. אפשר לחבר וואטסאפ, Slack, מערכות תשלום, CRM וגיליונות נתונים. אם הכלי שלכם חושף API או אפשרות ייצוא, אפשר לשלב אותו בפתרון.' },
@@ -70,8 +77,15 @@ function JsonLd() {
       inLanguage: 'he',
       areaServed: { '@type': 'Country', name: 'ישראל' },
       telephone: '+972525353259',
+      contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', telephone: '+972525353259', url: 'https://wa.me/972525353259', availableLanguage: ['he'] },
       knowsAbout: ['בינה מלאכותית', 'סוכני AI', 'אוטומציה עסקית', 'צ׳אטבוט', 'BI', 'ניתוח נתונים'],
       makesOffer: services.map((x) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: x.t, description: x.d } })),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'מה כבר בנינו',
+      itemListElement: projects.map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'CreativeWork', name: x.title, description: x.desc, inLanguage: 'he' } })),
     },
     {
       '@context': 'https://schema.org',
@@ -382,24 +396,24 @@ function Spark({ x, y, d }: { x: number; y: number; d: string }) {
 
 function Woman() {
   return (
-    <svg viewBox="0 -24 360 494" role="img" aria-label="יועצת AI מחייכת ומנופפת, מוקפת בכרטיסי צ׳אט, גרף ואוטומציה" className="mx-auto h-[390px] w-auto md:h-[480px]">
+    <svg viewBox="0 -24 360 494" role="img" aria-label="יועצת AI מחייכת עם משקפיים וג׳קט ג׳ינס, מנופפת ומוקפת בכרטיסי צ׳אט, גרף ואוטומציה" className="mx-auto h-[390px] w-auto md:h-[480px]">
       <defs>
-        <linearGradient id="av-hair" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#8e4424" />
-          <stop offset=".6" stopColor="#6a2f17" />
-          <stop offset="1" stopColor="#47190d" />
+        <linearGradient id="av-hair" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#5b3422" />
+          <stop offset=".55" stopColor="#6e4129" />
+          <stop offset="1" stopColor="#8a5a3a" />
         </linearGradient>
-        <linearGradient id="av-blazer" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="1" stopColor="#efddd0" />
+        <linearGradient id="av-denim" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#86a9d6" />
+          <stop offset="1" stopColor="#4d77ad" />
         </linearGradient>
         <linearGradient id="av-pants" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#1d2442" />
           <stop offset="1" stopColor="#2e3a63" />
         </linearGradient>
         <linearGradient id="av-skin" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f8d2b6" />
-          <stop offset="1" stopColor="#eeb897" />
+          <stop offset="0" stopColor="#f9d6bd" />
+          <stop offset="1" stopColor="#efbb9b" />
         </linearGradient>
         <linearGradient id="av-screen" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#2b4bff" />
@@ -407,7 +421,7 @@ function Woman() {
         </linearGradient>
         <linearGradient id="av-rim" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset="1" stopColor="#fff" stopOpacity=".5" />
+          <stop offset="1" stopColor="#fff" stopOpacity=".38" />
         </linearGradient>
         <radialGradient id="av-halo" cx="50%" cy="50%" r="50%">
           <stop offset="0" stopColor="#ffffff" stopOpacity=".3" />
@@ -452,30 +466,25 @@ function Woman() {
       <Spark x={206} y={16} d="1.8s" />
 
       <g className="av-float">
-        {/* hair behind the shoulders */}
+        {/* long straight hair behind the shoulders */}
         <g className="av-hair">
-          <path d="M150 100C142 68 162 50 182 50C204 50 222 68 212 100C218 132 214 162 226 198C232 216 214 228 198 220C190 216 186 208 180 208C174 208 170 216 162 220C146 228 128 216 134 198C146 162 142 132 150 100Z" fill="url(#av-hair)" />
-          <path d="M160 70C150 110 150 150 146 196M200 66C212 108 208 150 214 196M180 60C176 120 178 170 176 206" stroke="#c9703f" strokeOpacity=".28" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path d="M148 100C146 62 164 46 180 46C198 46 216 62 212 100C216 142 222 192 230 240C212 252 192 250 180 238C168 250 148 252 130 240C138 192 144 142 148 100Z" fill="url(#av-hair)" />
         </g>
 
         {/* trousers + sneakers */}
         <path d="M138 296Q180 312 222 296L215 432H188L181 346L174 432H147Z" fill="url(#av-pants)" />
-        <path d="M181 330L181 346" stroke="#fff" strokeOpacity=".08" strokeWidth="1.500" />
         <path d="M145 426h29q6 3 5 12h-39q-1-9 5-12zM187 426h29q6 3 5 12h-39q-1-9 5-12z" fill="#fff" />
         <path d="M141 439.500h37M183 439.500h37" stroke="#fa8c7b" strokeWidth="3.500" strokeLinecap="round" />
 
         <g className="av-breathe">
-          {/* left arm (down, holding a tablet) */}
-
-          <path d="M143 186Q121 226 118 274" stroke="url(#av-blazer)" strokeWidth="21" strokeLinecap="round" fill="none" />
-          <path d="M143 186Q121 226 118 274" stroke="#000" strokeOpacity=".06" strokeWidth="21" strokeLinecap="round" fill="none" />
-          <path d="M108 268h20" stroke="#d9bfae" strokeWidth="2" strokeLinecap="round" />
+          {/* left arm (down, denim sleeve) */}
+          <path d="M143 186Q121 226 118 274" stroke="url(#av-denim)" strokeWidth="22" strokeLinecap="round" fill="none" />
+          <path d="M108 268h20" stroke="#3c5f8f" strokeWidth="2" strokeLinecap="round" />
           {/* right arm: upper arm + waving forearm */}
-          <path d="M217 186Q238 196 242 210" stroke="url(#av-blazer)" strokeWidth="21" strokeLinecap="round" fill="none" />
+          <path d="M217 186Q238 196 242 210" stroke="url(#av-denim)" strokeWidth="22" strokeLinecap="round" fill="none" />
           <g className="av-wave">
-            <path d="M242 210Q254 176 258 140" stroke="url(#av-blazer)" strokeWidth="19" strokeLinecap="round" fill="none" />
-            <path d="M242 210Q254 176 258 140" stroke="#000" strokeOpacity=".05" strokeWidth="19" strokeLinecap="round" fill="none" />
-            <path d="M248 142h20" stroke="#d9bfae" strokeWidth="2" strokeLinecap="round" transform="rotate(8 258 142)" />
+            <path d="M242 210Q254 176 258 140" stroke="url(#av-denim)" strokeWidth="20" strokeLinecap="round" fill="none" />
+            <path d="M248 144h20" stroke="#3c5f8f" strokeWidth="2" strokeLinecap="round" transform="rotate(8 258 144)" />
             <ellipse cx="259" cy="128" rx="9.500" ry="11" fill="url(#av-skin)" />
             <g stroke="url(#av-skin)" strokeWidth="4.600" strokeLinecap="round" fill="none">
               <path d="M253 121L250 106M258 119L258 102M263 120L266 104M267 125L274 113" />
@@ -483,18 +492,19 @@ function Woman() {
             </g>
           </g>
 
-          {/* blazer torso, cinched waist */}
-          <path d="M140 182Q158 170 172 168L188 168Q202 170 220 182L224 238Q216 262 214 272Q224 288 224 300Q180 312 136 300Q136 288 146 272Q144 262 136 238Z" fill="url(#av-blazer)" />
-          <path d="M140 182L136 238Q144 262 146 272Q136 288 136 300Q150 306 160 307Q150 262 156 206Z" fill="#000" fillOpacity=".05" />
-          <path d="M188 168Q202 170 220 182L224 238Q216 262 214 272Q224 288 224 300Q214 303 204 305Q218 262 212 214Z" fill="url(#av-rim)" />
-          {/* inner top, lapels, buttons, necklace */}
-          <path d="M172 168L180 218L188 168Z" fill="#24305e" />
-          <path d="M172 168L156 178L177 236L180 218Z" fill="#f2e0d3" />
-          <path d="M188 168L204 178L183 236L180 218Z" fill="#f7e9de" />
-          <path d="M180 218V298" stroke="#d9bfae" strokeWidth="1.600" />
-          <circle cx="180" cy="246" r="2.600" fill="#c9ac98" /><circle cx="180" cy="266" r="2.600" fill="#c9ac98" />
-          <path d="M172 169Q180 190 188 169" stroke="#ffd166" strokeWidth="1.400" fill="none" />
-          <circle cx="180" cy="187" r="2.600" fill="#ffd166" />
+          {/* black top */}
+          <path d="M166 168Q180 182 194 168L199 290Q180 297 161 290Z" fill="#15151c" />
+          {/* denim jacket, open at the front */}
+          <path d="M140 182Q158 170 170 168L164 232L162 302Q146 306 136 301Q136 288 146 272Q144 262 136 238Z" fill="url(#av-denim)" />
+          <path d="M220 182Q202 170 190 168L196 232L198 302Q214 306 224 301Q224 288 214 272Q216 262 224 238Z" fill="url(#av-denim)" />
+          <path d="M190 168Q202 170 220 182L224 238Q216 262 214 272Q224 288 224 301Q214 304 206 305Q218 262 210 214Z" fill="url(#av-rim)" />
+          <path d="M170 168L155 177L166 198L177 178Z" fill="#9dbbe0" />
+          <path d="M190 168L205 177L194 198L183 178Z" fill="#a7c3e6" />
+          <path d="M165 204L163 296M197 204L199 296" stroke="#3c5f8f" strokeWidth="1.400" strokeDasharray="2.500 2.500" fill="none" />
+          <rect x="146" y="220" width="15" height="15" rx="2.500" fill="none" stroke="#3c5f8f" strokeWidth="1.400" strokeDasharray="2.500 2.500" />
+          <rect x="199" y="220" width="15" height="15" rx="2.500" fill="none" stroke="#3c5f8f" strokeWidth="1.400" strokeDasharray="2.500 2.500" />
+          <circle cx="153.500" cy="227.500" r="1.800" fill="#d6e2f3" /><circle cx="206.500" cy="227.500" r="1.800" fill="#d6e2f3" />
+          <path d="M140 296Q150 300 162 300M198 300Q210 300 220 296" stroke="#3c5f8f" strokeWidth="1.400" fill="none" />
 
           {/* tablet in the left hand: fingers behind, thumb in front */}
           <ellipse cx="120" cy="286" rx="9" ry="8" fill="url(#av-skin)" />
@@ -505,59 +515,63 @@ function Woman() {
             <circle cx="132" cy="268" r="2.600" fill="#ffd166" />
           </g>
           <ellipse cx="86" cy="290" rx="4" ry="7" fill="url(#av-skin)" transform="rotate(-12 86 290)" />
-
         </g>
 
         {/* neck */}
-        <path d="M172 136H188L190 172Q180 180 170 172Z" fill="#e6b090" />
-        <ellipse cx="180" cy="145" rx="10" ry="4" fill="#cf8f70" fillOpacity=".25" />
+        <path d="M172 136H188L191 172Q180 182 169 172Z" fill="#e8b393" />
+        <ellipse cx="180" cy="146" rx="10" ry="4" fill="#cf8f70" fillOpacity=".25" />
 
-        {/* head */}
-        <g className="av-head">
-          <ellipse cx="155" cy="114" rx="4.200" ry="7" fill="#eeb897" />
-          <ellipse cx="205" cy="114" rx="4.200" ry="7" fill="#eeb897" />
-          <circle cx="155" cy="124" r="2.600" fill="#ffd166" /><circle cx="205" cy="124" r="2.600" fill="#ffd166" />
-          <path d="M156 100C156 80 166 70 180 70C194 70 204 80 204 100C204 114 202 126 196 134C192 140 186 144 180 144C174 144 168 140 164 134C158 126 156 114 156 100Z" fill="url(#av-skin)" />
-          <path d="M196 134C192 140 186 144 180 144C186 134 198 120 200 102C203 114 202 126 196 134Z" fill="#fff" fillOpacity=".12" />
-          <path d="M156 104Q158 126 170 138Q162 126 160 104Z" fill="#d9946f" fillOpacity=".35" />
+        {/* head: face, glasses, hair framing the face */}
+        <g transform="translate(180 122) scale(1.1) translate(-180 -122)"><g className="av-head">
+          <path d="M151 102C151 79 164 68 180 68C196 68 209 79 209 102C209 117 206 129 199 137C193 143 187 147 180 147C173 147 167 143 161 137C154 129 151 117 151 102Z" fill="url(#av-skin)" />
+          <path d="M199 137C193 143 187 147 180 147C188 137 204 122 206 104C209 117 206 129 199 137Z" fill="#fff" fillOpacity=".14" />
+          {/* freckles + blush */}
+          <circle cx="162" cy="124" r="5.500" fill="#f08a78" fillOpacity=".28" /><circle cx="198" cy="124" r="5.500" fill="#f08a78" fillOpacity=".28" />
+          <g fill="#c98a63" fillOpacity=".6">
+            <circle cx="173" cy="117" r=".9" /><circle cx="177" cy="120" r=".9" /><circle cx="183" cy="120" r=".9" /><circle cx="187" cy="117" r=".9" />
+            <circle cx="167" cy="120" r=".9" /><circle cx="193" cy="120" r=".9" /><circle cx="170" cy="123" r=".8" /><circle cx="190" cy="123" r=".8" />
+          </g>
           {/* brows */}
-          <path d="M164 96Q170 91.500 177 94.500M183 94.500Q190 91.500 196 96" stroke="#55230f" strokeWidth="2.200" fill="none" strokeLinecap="round" />
+          <path d="M157 95Q166 90 175 93.500M185 93.500Q194 90 203 95" stroke="#4a2a18" strokeWidth="2.300" fill="none" strokeLinecap="round" />
           {/* eyes */}
           <g className="av-blink">
-            {[0, 1].map((k) => {
-              const cx = k === 0 ? 168.500 : 191.500
-              const sgn = k === 0 ? -1 : 1
-              return (
-                <g key={k}>
-                  <path d={`M${cx - 7} 105Q${cx} 98.500 ${cx + 7} 105Q${cx} 110.500 ${cx - 7} 105Z`} fill="#fff" />
-                  <g className="av-look">
-                    <circle cx={cx} cy="104.500" r="3.800" fill="#5b3a28" />
-                    <circle cx={cx} cy="104.500" r="1.900" fill="#17101f" />
-                    <circle cx={cx + 1.300} cy="103.200" r="1.100" fill="#fff" />
-                  </g>
-                  <path d={`M${cx - 7.500} 105Q${cx} 97.500 ${cx + 7.500} 105`} stroke="#2b1a22" strokeWidth="2" fill="none" strokeLinecap="round" />
-                  <path d={`M${cx + sgn * 7} 104.500l${sgn * 3.500} -2.500`} stroke="#2b1a22" strokeWidth="1.600" strokeLinecap="round" />
+            {[165.500, 194.500].map((cx, k) => (
+              <g key={cx}>
+                <path d={`M${cx - 7.500} 106Q${cx} 99.500 ${cx + 7.500} 106Q${cx} 112 ${cx - 7.500} 106Z`} fill="#fff" />
+                <g className="av-look">
+                  <circle cx={cx} cy="105.500" r="4" fill="#7f9fb5" />
+                  <circle cx={cx} cy="105.500" r="4" fill="none" stroke="#4e6a80" strokeWidth=".8" />
+                  <circle cx={cx} cy="105.500" r="1.900" fill="#17101f" />
+                  <circle cx={cx + 1.400} cy="104.200" r="1.100" fill="#fff" />
                 </g>
-              )
-            })}
+                <path d={`M${cx - 8} 106Q${cx} 98.500 ${cx + 8} 106`} stroke="#3a2318" strokeWidth="2" fill="none" strokeLinecap="round" />
+                <path d={`M${cx + (k === 0 ? -8 : 8)} 105.500l${k === 0 ? -3 : 3} -2.500`} stroke="#3a2318" strokeWidth="1.500" strokeLinecap="round" />
+              </g>
+            ))}
           </g>
-          {/* nose, cheeks, lips */}
-          <path d="M180 108Q177 119 181.500 120.500" stroke="#d6957a" strokeWidth="1.700" fill="none" strokeLinecap="round" />
-          <circle cx="164" cy="121" r="5.500" fill="#f08a78" fillOpacity=".32" /><circle cx="196" cy="121" r="5.500" fill="#f08a78" fillOpacity=".32" />
-          <path d="M170 128Q175 124.500 180 126.500Q185 124.500 190 128Q185 138.500 180 138.500Q175 138.500 170 128Z" fill="#d2584e" />
-          <path d="M173.500 130.500Q180 135 186.500 130.500" stroke="#fff" strokeOpacity=".7" strokeWidth="1.500" fill="none" strokeLinecap="round" />
-        </g>
+          {/* glasses */}
+          <g fill="#fff" fillOpacity=".08" stroke="#15121a" strokeWidth="2.200" strokeLinejoin="round">
+            <rect x="153" y="96" width="24" height="19" rx="6" />
+            <rect x="183" y="96" width="24" height="19" rx="6" />
+          </g>
+          <path d="M177 101Q180 98.500 183 101M153.500 100L148 107M206.500 100L212 107" stroke="#15121a" strokeWidth="2.200" fill="none" strokeLinecap="round" />
+          <path d="M157 100Q160 98.500 164 99M187 100Q190 98.500 194 99" stroke="#fff" strokeOpacity=".7" strokeWidth="1.200" fill="none" strokeLinecap="round" />
+          {/* nose + closed smile */}
+          <path d="M180 112Q177.500 121 182 123" stroke="#d6957a" strokeWidth="1.600" fill="none" strokeLinecap="round" />
+          <path d="M171 131Q176 128.500 180 130Q185 128.500 190 131Q186 138.500 180 138.500Q174 138.500 171 131Z" fill="#d98a82" />
+          <path d="M172 132Q180 136 190 130.500" stroke="#b5605a" strokeWidth="1.200" fill="none" strokeLinecap="round" />
+          <path d="M191.500 130.500Q193 131.500 192.500 133" stroke="#d6957a" strokeWidth="1.200" fill="none" strokeLinecap="round" />
 
-        {/* hair in front: crown + side-swept fringe + locks over the shoulders */}
-        <g className="av-head">
-          <path d="M151 100C149 74 166 60 184 60C202 61 211 78 209 100C201 82 180 74 151 100Z" fill="url(#av-hair)" />
-          <path d="M158 80Q178 64 202 76" stroke="#d98150" strokeOpacity=".7" strokeWidth="2.200" fill="none" strokeLinecap="round" />
-        </g>
-        <g className="av-lock">
-          <path d="M155 96C146 120 146 146 154 172C161 160 160 130 164 108Z" fill="url(#av-hair)" />
-          <path d="M205 96C214 120 214 148 207 176C198 162 199 130 196 108Z" fill="url(#av-hair)" />
-          <path d="M152 124C150 142 153 158 156 168" stroke="#d98150" strokeOpacity=".5" strokeWidth="1.600" fill="none" strokeLinecap="round" />
-        </g>
+          {/* hair in front: two long curtains framing the face, centre part */}
+          <g className="av-lock">
+            <path d="M180 56C158 58 146 80 147 106C148 134 142 192 132 240C145 246 159 240 163 228C158 192 155 148 154 120C156 94 168 70 180 56Z" fill="url(#av-hair)" />
+            <path d="M180 56C202 58 214 80 213 106C212 134 218 192 228 240C215 246 201 240 197 228C202 192 205 148 206 120C204 94 192 70 180 56Z" fill="url(#av-hair)" />
+            <path d="M168 72C156 96 152 150 146 214M192 72C204 96 208 150 214 214" stroke="#a8754d" strokeOpacity=".5" strokeWidth="1.800" fill="none" strokeLinecap="round" />
+          </g>
+          {/* pearl studs */}
+          <circle cx="155.500" cy="126" r="2.500" fill="#fff" stroke="#cfd6e0" strokeWidth=".8" />
+          <circle cx="204.500" cy="126" r="2.500" fill="#fff" stroke="#cfd6e0" strokeWidth=".8" />
+        </g></g>
       </g>
     </svg>
   )
@@ -629,6 +643,7 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
   const tipOpen = useRef(false)
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null)
   const swallowClick = useRef(false)
+  const tipAt = useRef({ y: 0, w: 0 }) // page scroll and width when the tooltip opened
   const [sets, setSets] = useState(1) // 1 set in the pre-rendered HTML, more once the page runs
   const [dragging, setDragging] = useState(false)
   const [tip, setTip] = useState<{ i: number; p: Project; x: number; y: number } | null>(null)
@@ -667,20 +682,23 @@ function Gallery({ onOpen }: { onOpen: (p: Project) => void }) {
 
   // close the tooltip when the page scrolls or a tap lands outside the cards
   useEffect(() => {
-    const close = () => setTip(null)
+    // phones fire tiny scroll/resize events (focus, address bar), so only close on real movement
+    const onScroll = () => { if (Math.abs(window.scrollY - tipAt.current.y) > 24) setTip(null) }
+    const onResize = () => { if (window.innerWidth !== tipAt.current.w) setTip(null) }
     const outside = (e: PointerEvent) => { if (!(e.target as Element).closest?.('.gcard')) setTip(null) }
-    window.addEventListener('scroll', close, { passive: true })
-    window.addEventListener('resize', close)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
     document.addEventListener('pointerdown', outside)
     return () => {
-      window.removeEventListener('scroll', close)
-      window.removeEventListener('resize', close)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
       document.removeEventListener('pointerdown', outside)
     }
   }, [])
 
   const showTip = (i: number, p: Project, el: HTMLElement) => {
     const r = el.getBoundingClientRect()
+    tipAt.current = { y: window.scrollY, w: window.innerWidth }
     setTip({ i, p, x: r.left + r.width / 2, y: r.bottom + r.height * 0.04 + 8 }) // allow for the hover growth
   }
 
@@ -779,6 +797,7 @@ const input = 'block w-full text-right rounded-full border border-white/70 bg-tr
 export default function App() {
   useReveal()
   const [open, setOpen] = useState<Project | null>(null)
+  const [menu, setMenu] = useState(false)
   const [form, setForm] = useState({ name: '', business: '', help: '' })
   const href = wa(buildMessage(form))
 
@@ -792,15 +811,24 @@ export default function App() {
       <main>
       {/* Hero */}
       <section id="top" className="hero-bg px-4 pb-24 text-white">
-        <nav className="mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-full bg-black px-6 py-3">
-          <a href="#top" className="flex items-center gap-2 font-bold"><Logo className="h-8 w-8" />SochenAI</a>
+        <nav aria-label="ניווט ראשי" className="relative mx-auto mt-4 flex max-w-5xl items-center justify-between rounded-full bg-black px-4 py-2 md:px-6 md:py-3">
+          <a href="#top" className="flex min-h-11 items-center gap-2 font-bold"><Logo className="h-8 w-8" />SochenAI</a>
           <div className="hidden gap-7 text-sm md:flex">
-            <a href="#services">מה אנחנו בונים</a>
-            <a href="#portfolio">מה כבר בנינו</a>
-            <a href="#process">איך זה עובד</a>
-            <a href="#faq">שאלות נפוצות</a>
+            {NAV.map(([h, t]) => <a key={h} href={h}>{t}</a>)}
           </div>
-          <a href="#contact" className="rounded-full border border-white px-5 py-1.5 text-sm">צור קשר</a>
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="flex min-h-11 items-center rounded-full border border-white px-5 text-sm">צור קשר</a>
+            <button type="button" aria-label="תפריט" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu(!menu)} className="grid h-11 w-11 place-items-center rounded-full md:hidden">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.200" strokeLinecap="round">{menu ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}</svg>
+            </button>
+          </div>
+          {menu && (
+            <div id="mobile-menu" className="absolute inset-x-0 top-full z-50 mt-2 rounded-3xl bg-black p-3 shadow-xl md:hidden">
+              {NAV.map(([h, t]) => (
+                <a key={h} href={h} onClick={() => setMenu(false)} className="flex min-h-12 items-center rounded-2xl px-4 text-lg hover:bg-white/10">{t}</a>
+              ))}
+            </div>
+          )}
         </nav>
         <div className="mx-auto grid max-w-5xl items-center gap-8 pt-14 md:grid-cols-[1.2fr_1fr] md:pt-16">
          <div className="text-center md:text-right">
@@ -854,15 +882,23 @@ export default function App() {
         </div>
       </section>
 
+      {/* About */}
+      <section id="about" className="px-4 pb-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="reveal mb-6 text-3xl font-bold md:text-4xl">מי אנחנו</h2>
+          <p className="reveal text-lg leading-relaxed text-black/70">{ABOUT}</p>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section id="faq" className="px-4 pb-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="reveal mb-8 text-center text-3xl font-bold md:text-4xl">שאלות נפוצות</h2>
-          <div className="divide-y divide-black/10 rounded-3xl border border-black/10">
+          <div className="faq divide-y divide-black/10 rounded-3xl border border-black/10">
             {faqs.map((f) => (
-              <details key={f.q} className="group p-5">
-                <summary className="cursor-pointer list-none text-lg font-bold">{f.q}</summary>
-                <p className="mt-3 text-black/70">{f.a}</p>
+              <details key={f.q} className="group">
+                <summary className="block min-h-12 cursor-pointer list-none p-5 text-lg font-bold">{f.q}</summary>
+                <p className="px-5 pb-5 text-black/70">{f.a}</p>
               </details>
             ))}
           </div>
@@ -903,7 +939,7 @@ export default function App() {
         target="_blank"
         rel="noreferrer"
         aria-label="שלחו הודעה בוואטסאפ"
-        className="wa-pulse fixed bottom-9 left-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition hover:scale-110"
+        className="wa-pulse fixed bottom-[calc(2.25rem+env(safe-area-inset-bottom))] left-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition hover:scale-110"
       >
         <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.8 11.8 0 0 0 12 0C5.4 0 .1 5.3.1 11.9c0 2.1.6 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.6 1.4c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.1-3.4-8.3zM12 21.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.800 9.800 0 0 1-1.500-5.200c0-5.400 4.400-9.800 9.900-9.800 2.600 0 5.100 1 6.900 2.900a9.700 9.700 0 0 1 2.900 6.900c0 5.400-4.400 9.900-9.800 9.900zm5.400-7.400c-.3-.1-1.800-.9-2-1s-.5-.1-.7.1-.8 1-1 1.200-.4.200-.7.100a8 8 0 0 1-4-3.500c-.3-.5.300-.5.900-1.600.1-.2 0-.4 0-.5l-.9-2.200c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400s-1 1-1 2.500 1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500 1.900.8 2.600.9 3.500.7.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400s-.3-.2-.6-.3z" /></svg>
       </a>
@@ -926,3 +962,5 @@ export default function App() {
     </div>
   )
 }
+
+export { ABOUT, faqs, projects, services, steps }
