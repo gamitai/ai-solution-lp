@@ -1,0 +1,18 @@
+.pv { font-family: 'Heebo', sans-serif; color: #fff; background: #1b71ff; }
+.pv canvas.pv-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.pv-content { position: relative; z-index: 1; }
+.pv-shadow { text-shadow: 0 2px 24px rgba(5, 12, 40, 0.45); }
+.pv-r { opacity: 0; transform: translateY(48px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.2,.7,.2,1); }
+.pv-r.in { opacity: 1; transform: none; }
+html:not(.js) .pv-r { opacity: 1; transform: none; }
+.pv-big { font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; }
+.pv-line { position: relative; padding-block: 1.1rem; border-top: 1px solid rgba(255,255,255,.28); }
+.pv-faq summary { cursor: pointer; list-style: none; }
+.pv-faq summary::-webkit-details-marker { display: none; }
+.pv-faq details[open] .pv-plus { transform: rotate(45deg); }
+.pv-plus { transition: transform .25s; }
+.pv-panel { background: rgba(6, 14, 44, 0.42); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.16); border-radius: 1.5rem; }
+@media (prefers-reduced-motion: reduce) { .pv-r { transition: none; opacity: 1; transform: none; } }
+
+.pv-content section { background: linear-gradient(to bottom, transparent, rgba(6,14,44,.5) 14%, rgba(6,14,44,.5) 86%, transparent); }
+.pv-nav { background: rgba(8,18,60,.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }

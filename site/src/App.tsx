@@ -955,4 +955,4 @@ export default function App() {
   )
 }
 
-export { faqs, projects, services, steps }
+export { faqs, projects, services, steps, buildMessage, wa, OPENING }
