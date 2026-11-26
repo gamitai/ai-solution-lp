@@ -257,7 +257,7 @@ function ChatDemo() {
   }, [active])
   useEffect(() => { box.current?.scrollTo({ top: 9999, behavior: 'smooth' }) }, [shown, typing])
   return (
-    <div ref={ref} className="mx-auto w-full max-w-[19rem]" aria-label="דוגמה לשיחת וואטסאפ עם סוכן AI" role="img">
+    <div ref={ref} className="pv-chat mx-auto w-full max-w-[19rem]" aria-label="דוגמה לשיחת וואטסאפ עם סוכן AI" role="img">
       <div className="overflow-hidden rounded-[2.2rem] border-[6px] border-[#0a1238] bg-[#eef1f8] shadow-2xl" dir="ltr">
         <div className="flex items-center gap-3 bg-[#0a1238] px-4 py-3 text-white" dir="rtl">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b71ff] font-extrabold">S</div>
@@ -268,7 +268,7 @@ function ChatDemo() {
             <div key={i} className={`flex ${m.from === 'b' ? 'justify-start' : 'justify-end'}`}>
               <div className="pv-pop max-w-[85%]">
                 <div className={`rounded-2xl px-3.5 py-2 text-[0.92rem] leading-snug text-[#0c1a4d] shadow-sm ${m.from === 'b' ? 'rounded-br-md bg-[#d6e4ff]' : 'rounded-bl-md bg-white'}`}>{m.t}</div>
-                {m.note && <div className="mt-1 text-[0.7rem] font-bold text-[#1b71ff]">⚡ {m.note}</div>}
+                {m.note && <div className="mt-1 text-[0.7rem] font-medium text-[#1b71ff]">⚡ {m.note}</div>}
               </div>
             </div>
           ))}
