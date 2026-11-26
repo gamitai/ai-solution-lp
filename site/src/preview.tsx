@@ -282,22 +282,33 @@ function ChatDemo() {
   )
 }
 
+
+const SHORT: Record<string, string> = {
+  'ניהול סטודיו לאימון': 'הזמנת אימונים, כרטיסיה ותזכורות בוואטסאפ, הכול במקום אחד.',
+  'Competitor Feed + Slack': 'מעקב אוטומטי אחרי מתחרים, עם עדכונים ישר ל-Slack.',
+  'שיבוץ צוותי מילואים': 'שיבוץ לפי תנאים ומגבלות דרך אייג׳נט בוואטסאפ, עם דשבורד.',
+  'Automated Battlecards': 'PDF מעודכן שמשווה את החברה למתחרות, לאנשי מכירות.',
+  'בוט וואטסאפ לשירות לקוחות': 'בוט שמכיר את החברה ועונה ללקוחות במקום עובד ייעודי.',
+  'מערכת ניהול לדי ג׳יי': 'חוזים דיגיטליים, תזכורות ללקוחות ובקשת ביקורות, ב-CRM קטן.',
+}
+
 const DOM = ['פנייה נקלטת', 'נענית אוטומטית', 'תור נקבע', 'תזכורת נשלחת', 'קבלה מוצאת', 'הוצאה נרשמת', 'דוח מוכן']
+const SAVED = ['בלי מענה ידני', 'בלי להמתין ללקוח', 'בלי טלפונים הלוך ושוב', 'בלי לרדוף אחרי לקוחות', 'בלי הקלדת קבלות', 'בלי טבלאות ידניות', 'זמן לצמוח']
 
 function Dominoes() {
   const ref = useRef<HTMLElement>(null)
   const p = useProgress(ref)
   const n = DOM.length
-  const prog = clamp((p - 0.08) / 0.8) * (n + 0.6)
+  const prog = clamp((p - 0.04) / 0.5) * (n + 0.6)
   const current = clamp(Math.floor(prog), 0, n - 1)
-  const done = p > 0.9
+  const done = p > 0.62
   return (
-    <section ref={ref} id="dominoes" aria-label="האימפקט של אוטומציה" className="relative h-[300svh]">
+    <section ref={ref} id="dominoes" aria-label="האימפקט של אוטומציה" className="relative h-[170svh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
         <div className="mx-auto w-full max-w-6xl">
           <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">כל אוטומציה <span style={{ color: CORAL }}>מפילה את הבאה</span></h2>
           <p className="mt-3 h-8 text-xl font-bold md:text-2xl" aria-live="off">
-            {done ? 'והזמן שנחסך? משקיעים אותו בצמיחה.' : <>{current + 1}. {DOM[current]}</>}
+            {done ? 'והזמן שנחסך? משקיעים אותו בצמיחה.' : <>{current + 1}. {DOM[current]} <span style={{ color: CORAL }}>· {SAVED[current]}</span></>}
           </p>
           <div className="mt-6 flex items-end overflow-visible" dir="rtl" style={{ ['--H' as string]: 'min(52svh, 50vw)', height: 'var(--H)', gap: 'clamp(.35rem,1.4vw,1.2rem)' }} aria-hidden="true">
             {DOM.map((_, i) => {
@@ -310,6 +321,7 @@ function Dominoes() {
                   <span className="pv-big mt-[12%] text-[clamp(.9rem,3.2vw,2.6rem)] text-[#0c1a4d]">{i + 1}</span>
                   <span className="my-[10%] h-px w-4/5 bg-[#0c1a4d]/25" />
                   <span className="h-2 w-2 rounded-full" style={{ background: CORAL }} />
+                  {i >= 3 && <span className="mt-[8%] flex-1 overflow-hidden pb-2 text-center text-[clamp(.55rem,1.6vw,.95rem)] font-bold leading-tight text-[#0c1a4d]" style={{ writingMode: 'vertical-rl' }}>{SAVED[i]}</span>}
                 </div>
               )
             })}
@@ -332,11 +344,11 @@ const DAYS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳']
 function Week() {
   const ref = useRef<HTMLElement>(null)
   const p = useProgress(ref)
-  const q = clamp((p - 0.08) / 0.8) * CATS.length
+  const q = clamp((p - 0.05) / 0.55) * CATS.length
   const s = CATS.map((_, i) => clamp(q - i))
   const hours = DAYS.length * CATS.reduce((a, c, i) => a + c.h * (1 - 0.9 * s[i]), 0)
   return (
-    <section ref={ref} id="week" aria-label="לפני ואחרי" className="relative h-[280svh]">
+    <section ref={ref} id="week" aria-label="לפני ואחרי" className="relative h-[160svh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
         <div className="mx-auto w-full max-w-6xl">
           <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">שבוע בעסק: <span style={{ color: CORAL }}>לפני ואחרי</span></h2>
@@ -408,7 +420,7 @@ function Preview() {
               </p>
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-white text-[#0c1a4d] hover:bg-[#fa8c7b] hover:text-white`}>לשיחת היכרות ללא עלות ←</a>
-                <span className="text-sm opacity-80">גללו כדי לראות ↓</span>
+                <span className="pv-shake text-base font-bold">גללו כדי לראות ↓</span>
               </div>
             </div>
           </section>
@@ -417,7 +429,7 @@ function Preview() {
             <div className="mx-auto max-w-6xl">
               <h2 className="pv-r pv-big pt-16 text-[clamp(2rem,5vw,3.5rem)]" style={{ color: CORAL }}>מה אנחנו בונים?</h2>
               {WHAT.map((w, i) => (
-                <div key={w.t} className="flex min-h-[70svh] items-center">
+                <div key={w.t} className="flex min-h-[48svh] items-center">
                   <div className="pv-r max-w-3xl">
                     <div className="text-lg font-bold opacity-70">0{i + 1}</div>
                     <h3 className="pv-big text-[clamp(2.6rem,9vw,7rem)]">{w.t}</h3>
@@ -437,7 +449,7 @@ function Preview() {
           </section>
 
 
-          <section id="demo" className="px-6 py-24 md:px-16">
+          <section id="demo" className="px-6 py-14 md:px-16">
             <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
               <div className="pv-r">
                 <h2 className="pv-big text-[clamp(2.2rem,6vw,4.5rem)]">ככה זה נראה אצל <span style={{ color: CORAL }}>הלקוח שלכם</span></h2>
@@ -454,22 +466,32 @@ function Preview() {
           <Dominoes />
           <Week />
 
-          <section id="portfolio" className="px-6 py-24 md:px-16">
+          <section id="portfolio" className="px-6 py-14 md:px-16">
             <div className="mx-auto max-w-6xl">
-              <h2 className="pv-r pv-big text-[clamp(2.4rem,7vw,5rem)]">מה כבר <span style={{ color: CORAL }}>בנינו</span></h2>
-              <div className="mt-10">
+              <div className="flex items-end justify-between gap-4">
+                <h2 className="pv-r pv-big text-[clamp(2.4rem,7vw,5rem)]">מה כבר <span style={{ color: CORAL }}>בנינו</span></h2>
+                <div className="hidden gap-2 md:flex">
+                  <button type="button" aria-label="הקודם" onClick={() => document.getElementById('pv-row')?.scrollBy({ left: 340, behavior: 'smooth' })} className="h-11 w-11 rounded-full border border-white/60 text-xl transition hover:bg-white hover:text-black">→</button>
+                  <button type="button" aria-label="הבא" onClick={() => document.getElementById('pv-row')?.scrollBy({ left: -340, behavior: 'smooth' })} className="h-11 w-11 rounded-full border border-white/60 text-xl transition hover:bg-white hover:text-black">←</button>
+                </div>
+              </div>
+              <div id="pv-row" className="pv-row mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4" dir="rtl">
                 {projects.map((p) => (
-                  <div key={p.title} className="pv-r pv-line grid gap-2 md:grid-cols-[18rem_1fr] md:gap-10">
-                    <h3 className="text-2xl font-extrabold">{p.title}</h3>
-                    <p className="text-lg opacity-90">{p.desc}</p>
-                  </div>
+                  <details key={p.title} className="pv-card pv-panel group w-[82%] flex-none snap-start p-5 md:w-[21rem]">
+                    <summary className="cursor-pointer list-none">
+                      <h3 className="text-xl font-extrabold">{p.title}</h3>
+                      <p className="mt-2 opacity-90">{SHORT[p.title] ?? ''}</p>
+                      <span className="mt-3 inline-flex items-center gap-2 text-sm font-bold" style={{ color: CORAL }}><span className="pv-plus text-lg leading-none">+</span>עוד פרטים</span>
+                    </summary>
+                    <p className="mt-3 border-t border-white/20 pt-3 text-[0.95rem] leading-relaxed opacity-90">{p.desc}</p>
+                  </details>
                 ))}
               </div>
-              <a href="./" className="pv-r mt-8 inline-block text-lg font-bold underline underline-offset-4">לגלריה המלאה באתר ←</a>
+              <a href="./" className="mt-4 inline-block text-lg font-bold underline underline-offset-4">לגלריה המלאה באתר ←</a>
             </div>
           </section>
 
-          <section id="process" className="px-6 py-24 md:px-16">
+          <section id="process" className="px-6 py-14 md:px-16">
             <div className="mx-auto max-w-6xl">
               <h2 className="pv-r pv-big text-[clamp(2.4rem,7vw,5rem)]">איך זה <span style={{ color: CORAL }}>עובד?</span></h2>
               <ol className="mt-10 grid gap-5 md:grid-cols-3">
@@ -484,7 +506,7 @@ function Preview() {
             </div>
           </section>
 
-          <section id="approach" className="px-6 py-24 md:px-16">
+          <section id="approach" className="px-6 py-14 md:px-16">
             <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
               {[approach, price].map((f) => f && (
                 <div key={f.q} className="pv-r pv-panel p-7 md:p-10">
@@ -495,7 +517,7 @@ function Preview() {
             </div>
           </section>
 
-          <section id="faq" className="px-6 py-24 md:px-16">
+          <section id="faq" className="px-6 py-14 md:px-16">
             <div className="pv-faq mx-auto max-w-3xl">
               <h2 className="pv-r pv-big text-[clamp(2.2rem,6vw,4rem)]">שאלות נפוצות</h2>
               <div className="mt-8">
@@ -509,7 +531,7 @@ function Preview() {
             </div>
           </section>
 
-          <section id="contact" className="flex min-h-[100svh] items-center px-6 py-24 md:px-16">
+          <section id="contact" className="flex min-h-[90svh] items-center px-6 py-14 md:px-16">
             <div className="pv-r mx-auto w-full max-w-xl text-center">
               <h2 className="pv-big text-[clamp(2.2rem,6vw,4rem)]">רוצים לבדוק מה AI יכול <span style={{ color: CORAL }}>לחסוך אצלכם?</span></h2>
               <form className="mt-8 space-y-4 text-right" onSubmit={(e) => { e.preventDefault(); window.open(href, '_blank', 'noopener') }}>
