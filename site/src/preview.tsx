@@ -191,6 +191,192 @@ const WHAT = [
   { t: 'עוקב אחרי הוצאות', d: 'קולט חשבוניות ומסמכים ומסדר אותם במקומכם.' },
 ]
 
+
+const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
+
+function useProgress(ref: React.RefObject<HTMLElement | null>) {
+  const [p, setP] = useState(0)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let raf = 0
+    const calc = () => {
+      const r = el.getBoundingClientRect()
+      const total = r.height - window.innerHeight
+      const v = total > 0 ? clamp(-r.top / total) : 0
+      setP((o) => (Math.abs(o - v) > 0.004 ? v : o))
+    }
+    const on = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(calc) }
+    calc()
+    window.addEventListener('scroll', on, { passive: true })
+    window.addEventListener('resize', on)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', on); window.removeEventListener('resize', on) }
+  }, [ref])
+  return p
+}
+
+const CHAT: { from: 'c' | 'b'; t: string; note?: string }[] = [
+  { from: 'c', t: 'היי, אפשר לקבוע תור למחר?' },
+  { from: 'b', t: 'היי! כמובן 😊 יש לי פנוי מחר ב-10:00 או ב-16:30. מה מתאים לך?', note: 'נענה תוך 3 שניות' },
+  { from: 'c', t: '16:30 מעולה' },
+  { from: 'b', t: 'נקבע ✓ תור למחר ב-16:30. אשלח לך תזכורת שעה לפני.' },
+  { from: 'c', t: 'תודה! אפשר קבלה על התשלום מהשבוע שעבר?' },
+  { from: 'b', t: 'כבר שלחתי לך קבלה #1042 ✓' },
+]
+
+function ChatDemo() {
+  const ref = useRef<HTMLDivElement>(null)
+  const box = useRef<HTMLDivElement>(null)
+  const [shown, setShown] = useState(0)
+  const [typing, setTyping] = useState(false)
+  const [active, setActive] = useState(false)
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.35 })
+    if (ref.current) io.observe(ref.current)
+    return () => io.disconnect()
+  }, [])
+  useEffect(() => {
+    if (!active) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setShown(CHAT.length); return }
+    let alive = true
+    const ids: number[] = []
+    const wait = (ms: number) => new Promise<void>((r) => ids.push(window.setTimeout(r, ms)))
+    ;(async () => {
+      while (alive) {
+        setShown(0); setTyping(false)
+        await wait(700)
+        for (let i = 0; i < CHAT.length && alive; i++) {
+          if (CHAT[i].from === 'b') { setTyping(true); await wait(1300); if (!alive) return; setTyping(false) }
+          else await wait(900)
+          setShown(i + 1)
+        }
+        await wait(4200)
+      }
+    })()
+    return () => { alive = false; ids.forEach(clearTimeout) }
+  }, [active])
+  useEffect(() => { box.current?.scrollTo({ top: 9999, behavior: 'smooth' }) }, [shown, typing])
+  return (
+    <div ref={ref} className="mx-auto w-full max-w-[19rem]" aria-label="דוגמה לשיחת וואטסאפ עם סוכן AI" role="img">
+      <div className="overflow-hidden rounded-[2.2rem] border-[6px] border-[#0a1238] bg-[#eef1f8] shadow-2xl" dir="ltr">
+        <div className="flex items-center gap-3 bg-[#0a1238] px-4 py-3 text-white" dir="rtl">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b71ff] font-extrabold">S</div>
+          <div className="text-right leading-tight"><div className="text-sm font-bold">העסק שלכם</div><div className="text-xs text-[#7be0c3]">סוכן AI · מחובר</div></div>
+        </div>
+        <div ref={box} className="h-[26rem] space-y-2 overflow-hidden px-3 py-4" dir="rtl">
+          {CHAT.slice(0, shown).map((m, i) => (
+            <div key={i} className={`flex ${m.from === 'b' ? 'justify-start' : 'justify-end'}`}>
+              <div className="pv-pop max-w-[85%]">
+                <div className={`rounded-2xl px-3.5 py-2 text-[0.92rem] leading-snug text-[#0c1a4d] shadow-sm ${m.from === 'b' ? 'rounded-br-md bg-[#d6e4ff]' : 'rounded-bl-md bg-white'}`}>{m.t}</div>
+                {m.note && <div className="mt-1 text-[0.7rem] font-bold text-[#1b71ff]">⚡ {m.note}</div>}
+              </div>
+            </div>
+          ))}
+          {typing && (
+            <div className="flex justify-start"><div className="flex gap-1 rounded-2xl rounded-br-md bg-[#d6e4ff] px-4 py-3"><i className="pv-dot" /><i className="pv-dot" style={{ animationDelay: '.15s' }} /><i className="pv-dot" style={{ animationDelay: '.3s' }} /></div></div>
+          )}
+        </div>
+      </div>
+      <p className="mt-3 text-center text-xs opacity-70">דוגמה להמחשה. השיחה והנתונים בדויים.</p>
+    </div>
+  )
+}
+
+const DOM = ['פנייה נקלטת', 'נענית אוטומטית', 'תור נקבע', 'תזכורת נשלחת', 'קבלה מוצאת', 'הוצאה נרשמת', 'דוח מוכן']
+
+function Dominoes() {
+  const ref = useRef<HTMLElement>(null)
+  const p = useProgress(ref)
+  const n = DOM.length
+  const prog = clamp((p - 0.08) / 0.8) * (n + 0.6)
+  const current = clamp(Math.floor(prog), 0, n - 1)
+  const done = p > 0.9
+  return (
+    <section ref={ref} id="dominoes" aria-label="האימפקט של אוטומציה" className="relative h-[300svh]">
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
+        <div className="mx-auto w-full max-w-6xl">
+          <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">כל אוטומציה <span style={{ color: CORAL }}>מפילה את הבאה</span></h2>
+          <p className="mt-3 h-8 text-xl font-bold md:text-2xl" aria-live="off">
+            {done ? 'והזמן שנחסך? משקיעים אותו בצמיחה.' : <>{current + 1}. {DOM[current]}</>}
+          </p>
+          <div className="mt-6 flex items-end overflow-visible" dir="rtl" style={{ ['--H' as string]: 'min(52svh, 50vw)', height: 'var(--H)', gap: 'clamp(.35rem,1.4vw,1.2rem)' }} aria-hidden="true">
+            {DOM.map((_, i) => {
+              const h = 14 * Math.pow(1.38, i)
+              const fall = clamp(prog - i)
+              const ang = Math.pow(fall, 1.6) * 82
+              return (
+                <div key={i} className="flex flex-none flex-col items-center justify-start rounded-md border border-[#c9d6ff] bg-gradient-to-b from-white to-[#dfe8ff] shadow-lg"
+                  style={{ height: `${h}%`, aspectRatio: '1 / 2.3', transformOrigin: '0% 100%', transform: `rotate(${-ang}deg)`, opacity: fall > 0.98 ? 0.55 : 1, zIndex: n - i }}>
+                  <span className="pv-big mt-[12%] text-[clamp(.9rem,3.2vw,2.6rem)] text-[#0c1a4d]">{i + 1}</span>
+                  <span className="my-[10%] h-px w-4/5 bg-[#0c1a4d]/25" />
+                  <span className="h-2 w-2 rounded-full" style={{ background: CORAL }} />
+                </div>
+              )
+            })}
+          </div>
+          <p className="mt-5 max-w-2xl text-lg opacity-90">כל צעד שמפסיקים לעשות ידנית מפנה זמן לצעד הבא. ההשפעה מצטברת, והיא גדלה עם כל תהליך שמוסיפים.</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const CATS = [
+  { t: 'מענה ללקוחות', h: 1.5, c: '#ff8a7a' },
+  { t: 'תורים ותזכורות', h: 1, c: '#ffc46b' },
+  { t: 'קבלות וחשבוניות', h: 0.75, c: '#9fb7ff' },
+  { t: 'הוצאות ומסמכים', h: 0.75, c: '#7be0c3' },
+]
+const DAYS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳']
+
+function Week() {
+  const ref = useRef<HTMLElement>(null)
+  const p = useProgress(ref)
+  const q = clamp((p - 0.08) / 0.8) * CATS.length
+  const s = CATS.map((_, i) => clamp(q - i))
+  const hours = DAYS.length * CATS.reduce((a, c, i) => a + c.h * (1 - 0.9 * s[i]), 0)
+  return (
+    <section ref={ref} id="week" aria-label="לפני ואחרי" className="relative h-[280svh]">
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
+        <div className="mx-auto w-full max-w-6xl">
+          <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">שבוע בעסק: <span style={{ color: CORAL }}>לפני ואחרי</span></h2>
+          <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1">
+            <div className="pv-big text-[clamp(2.4rem,7vw,5rem)] tabular-nums" style={{ color: CORAL }}>{hours.toFixed(0)}</div>
+            <div className="text-lg font-bold md:text-xl">שעות בשבוע על עבודה ידנית וחוזרת</div>
+          </div>
+          <div className="mt-5 grid gap-6 md:grid-cols-[1fr_16rem]">
+            <div className="grid grid-cols-5 gap-2 md:gap-3" style={{ height: 'min(44svh, 78vw)' }} aria-hidden="true">
+              {DAYS.map((d, di) => (
+                <div key={d} className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-white/25 bg-white/10">
+                  <div className="py-1 text-center text-xs font-bold md:text-sm" style={{ background: 'rgba(255,255,255,.14)' }}>{d}</div>
+                  <div className="flex min-h-0 flex-1 flex-col gap-[3px] p-[3px]">
+                    {CATS.map((c, i) => (
+                      <div key={c.t} className="rounded-md" style={{ flex: `0 0 ${(c.h / 8) * 100 * (1 - 0.9 * s[i])}%`, background: c.c, opacity: 0.95 - s[i] * 0.25 + di * 0, transition: 'none' }} />
+                    ))}
+                    <div className="flex min-h-0 flex-1 items-center justify-center rounded-md text-center text-[0.65rem] font-bold leading-tight text-[#0c1a4d] md:text-xs" style={{ background: `linear-gradient(180deg, ${CORAL}, #ffd0c7)`, opacity: 0.25 + 0.75 * clamp(q / CATS.length) }}>
+                      <span className="px-1">{q > 2.2 ? 'זמן לעסק' : ''}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <ul className="space-y-3 self-center text-base">
+              {CATS.map((c, i) => (
+                <li key={c.t} className="flex items-center gap-3">
+                  <span className="h-4 w-4 flex-none rounded" style={{ background: c.c }} />
+                  <span className="flex-1">{c.t}</span>
+                  <span className="font-bold" style={{ color: s[i] >= 1 ? '#7be0c3' : 'rgba(255,255,255,.55)' }}>{s[i] >= 1 ? '✓ AI' : ' '}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="mt-4 text-sm opacity-75">דוגמה להמחשה: עסק קטן עם כ-4 שעות ניהול ביום. המספרים בכל עסק שונים, ובשיחת ההיכרות נבדוק מה מתאים לכם.</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Preview() {
   const host = useRef<HTMLDivElement>(null)
   useScene(host)
@@ -249,6 +435,24 @@ function Preview() {
               </div>
             </div>
           </section>
+
+
+          <section id="demo" className="px-6 py-24 md:px-16">
+            <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+              <div className="pv-r">
+                <h2 className="pv-big text-[clamp(2.2rem,6vw,4.5rem)]">ככה זה נראה אצל <span style={{ color: CORAL }}>הלקוח שלכם</span></h2>
+                <ul className="mt-6 space-y-3 text-xl">
+                  <li>✓ תשובה תוך שניות, גם בשתיים בלילה</li>
+                  <li>✓ קובע תור, שולח תזכורת ומוציא קבלה</li>
+                  <li>✓ ואם צריך, מעביר לנציג אנושי</li>
+                </ul>
+              </div>
+              <div className="pv-r"><ChatDemo /></div>
+            </div>
+          </section>
+
+          <Dominoes />
+          <Week />
 
           <section id="portfolio" className="px-6 py-24 md:px-16">
             <div className="mx-auto max-w-6xl">
