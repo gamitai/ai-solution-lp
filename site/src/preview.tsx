@@ -84,13 +84,13 @@ function useScene(host: React.RefObject<HTMLDivElement | null>) {
     const geo = new THREE.BoxGeometry(2.3, 3.1, 0.07)
     const cards: THREE.Mesh[] = []
     const textures: THREE.Texture[] = []
-    const base = new THREE.MeshStandardMaterial({ color: 0xf4f7ff, roughness: 0.65 })
+    const base = new THREE.MeshStandardMaterial({ color: 0xc9d2ee, roughness: 0.7 })
     LABELS.forEach((label, i) => {
       const tex = labelTexture(label)
       textures.push(tex)
-      const face = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.6 })
+      const face = new THREE.MeshStandardMaterial({ map: tex, color: 0xcfd6ee, roughness: 0.7 })
       const m = new THREE.Mesh(geo, [base, base, base, base, face, base])
-      m.position.set((i % 2 ? 1 : -1) * (2.3 + ((i * 0.37) % 1.5)), Math.cos(i * 1.4) * 1.4, -i * SPACING - 4)
+      m.position.set((i % 2 ? 1 : -1) * (3.5 + ((i * 0.37) % 1.6)), Math.cos(i * 1.4) * 1.4, -i * SPACING - 4)
       m.rotation.set(Math.sin(i) * 0.12, -Math.sin(i * 1.9) * 0.35, Math.cos(i * 2) * 0.16)
       m.userData = { y0: m.position.y, r0: m.rotation.z, i }
       scene.add(m)
@@ -293,17 +293,17 @@ const SHORT: Record<string, string> = {
 }
 
 const DOM = ['פנייה נקלטת', 'נענית אוטומטית', 'תור נקבע', 'תזכורת נשלחת', 'קבלה מוצאת', 'הוצאה נרשמת', 'דוח מוכן']
-const SAVED = ['בלי מענה ידני', 'בלי להמתין ללקוח', 'בלי טלפונים הלוך ושוב', 'בלי לרדוף אחרי לקוחות', 'בלי הקלדת קבלות', 'בלי טבלאות ידניות', 'זמן לצמוח']
+const SAVED = ['בלי מענה ידני', 'בלי המתנה', 'בלי טלפונים', 'בלי רדיפה', 'בלי הקלדה', 'בלי טבלאות', 'זמן לצמוח']
 
 function Dominoes() {
   const ref = useRef<HTMLElement>(null)
   const p = useProgress(ref)
   const n = DOM.length
-  const prog = clamp((p - 0.04) / 0.5) * (n + 0.6)
+  const prog = clamp((p - 0.05) / 0.72) * (n + 0.6)
   const current = clamp(Math.floor(prog), 0, n - 1)
-  const done = p > 0.62
+  const done = p > 0.85
   return (
-    <section ref={ref} id="dominoes" aria-label="האימפקט של אוטומציה" className="relative h-[170svh]">
+    <section ref={ref} id="dominoes" aria-label="האימפקט של אוטומציה" className="relative h-[260svh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
         <div className="mx-auto w-full max-w-6xl">
           <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">כל אוטומציה <span style={{ color: CORAL }}>מפילה את הבאה</span></h2>
@@ -321,7 +321,7 @@ function Dominoes() {
                   <span className="pv-big mt-[12%] text-[clamp(.9rem,3.2vw,2.6rem)] text-[#0c1a4d]">{i + 1}</span>
                   <span className="my-[10%] h-px w-4/5 bg-[#0c1a4d]/25" />
                   <span className="h-2 w-2 rounded-full" style={{ background: CORAL }} />
-                  {i >= 3 && <span className="mt-[8%] flex-1 overflow-hidden pb-2 text-center text-[clamp(.55rem,1.6vw,.95rem)] font-bold leading-tight text-[#0c1a4d]" style={{ writingMode: 'vertical-rl' }}>{SAVED[i]}</span>}
+                  {i >= 3 && <span className="mt-[10%] flex flex-1 items-start justify-center px-1 text-center text-[clamp(.55rem,1.55vw,1rem)] font-extrabold leading-tight text-[#0c1a4d]">{SAVED[i]}</span>}
                 </div>
               )
             })}
