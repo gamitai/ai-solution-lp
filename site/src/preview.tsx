@@ -344,11 +344,11 @@ const DAYS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳']
 function Week() {
   const ref = useRef<HTMLElement>(null)
   const p = useProgress(ref)
-  const q = clamp((p - 0.05) / 0.55) * CATS.length
+  const q = clamp((p - 0.05) / 0.75) * CATS.length
   const s = CATS.map((_, i) => clamp(q - i))
   const hours = DAYS.length * CATS.reduce((a, c, i) => a + c.h * (1 - 0.9 * s[i]), 0)
   return (
-    <section ref={ref} id="week" aria-label="לפני ואחרי" className="relative h-[160svh]">
+    <section ref={ref} id="week" aria-label="לפני ואחרי" className="relative h-[250svh]">
       <div className="sticky top-0 flex h-[100svh] flex-col justify-center px-6 pt-14 md:px-16">
         <div className="mx-auto w-full max-w-6xl">
           <h2 className="pv-big text-[clamp(2rem,6vw,4.5rem)]">שבוע בעסק: <span style={{ color: CORAL }}>לפני ואחרי</span></h2>
