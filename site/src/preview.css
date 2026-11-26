@@ -31,3 +31,31 @@ html:not(.js) .pv-r { opacity: 1; transform: none; }
 .pv-shake { display: inline-block; animation: pvshake 2.4s ease-in-out infinite; }
 @keyframes pvshake { 0%, 55%, 100% { transform: translateY(0); } 60% { transform: translateY(5px); } 65% { transform: translateY(-4px); } 70% { transform: translateY(5px); } 75% { transform: translateY(-4px); } 80% { transform: translateY(3px); } 85% { transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .pv-shake { animation: none; } }
+
+/* avatar (copied from App.css) */
+@keyframes blink { 0%,92%,100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
+@keyframes av-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes av-breathe { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.014); } }
+@keyframes av-head { 0%, 100% { transform: rotate(-2.2deg); } 50% { transform: rotate(2.2deg); } }
+@keyframes av-hair { 0%, 100% { transform: skewX(-1.2deg); } 50% { transform: skewX(1.6deg); } }
+@keyframes av-wave { 0%, 45%, 100% { transform: rotate(0deg); } 8% { transform: rotate(-16deg); } 16% { transform: rotate(10deg); } 24% { transform: rotate(-16deg); } 32% { transform: rotate(10deg); } 40% { transform: rotate(-6deg); } }
+@keyframes av-chip { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes av-line { 0%, 10% { stroke-dashoffset: 100; } 55%, 100% { stroke-dashoffset: 0; } }
+@keyframes av-gear { to { transform: rotate(360deg); } }
+@keyframes av-look { 0%, 35% { transform: translateX(0); } 45%, 62% { transform: translateX(1.6px); } 72%, 88% { transform: translateX(-1.4px); } 100% { transform: translateX(0); } }
+@keyframes av-lock { 0%, 100% { transform: rotate(-1.800deg); } 50% { transform: rotate(2.200deg); } }
+@keyframes av-ring { to { transform: rotate(360deg); } }
+.av-float { animation: av-float 4.4s ease-in-out infinite; }
+.av-breathe { transform-origin: 180px 300px; animation: av-breathe 3.6s ease-in-out infinite; }
+.av-head { transform-origin: 180px 150px; animation: av-head 5s ease-in-out infinite; }
+.av-hair { transform-origin: 181px 60px; animation: av-hair 4.2s ease-in-out infinite; }
+.av-wave { transform-origin: 242px 210px; animation: av-wave 6s ease-in-out infinite; }
+.av-chip { animation: av-chip 3.8s ease-in-out infinite; }
+.av-line { stroke-dasharray: 100; animation: av-line 4s ease-in-out infinite; }
+.av-gear { transform-origin: 306px 292px; animation: av-gear 9s linear infinite; }
+.av-look { animation: av-look 7s ease-in-out infinite; }
+.av-lock { transform-origin: 180px 100px; animation: av-lock 4.600s ease-in-out infinite; }
+.av-ring { transform-origin: 180px 236px; animation: av-ring 60s linear infinite; }
+.av-blink { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+@media (prefers-reduced-motion: reduce) { .av-float, .av-breathe, .av-head, .av-hair, .av-wave, .av-chip, .av-line, .av-gear, .av-ring, .av-blink, .av-look, .av-lock { animation: none; } .av-line { stroke-dashoffset: 0; } }
+.pv-btn { text-shadow: none; }

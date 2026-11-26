@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import * as THREE from 'three'
 import './index.css'
 import './preview.css'
-import { faqs, projects, services, steps, buildMessage, wa, OPENING } from './App'
+import { faqs, projects, services, steps, buildMessage, wa, OPENING, Woman } from './App'
 
 const CORAL = '#fa8c7b'
 const LABELS = [
@@ -181,7 +181,7 @@ function useReveal() {
   }, [])
 }
 
-const pill = 'inline-flex items-center justify-center rounded-full px-8 py-3.5 text-lg font-bold transition'
+const pill = 'pv-btn inline-flex items-center justify-center rounded-full px-8 py-3.5 text-lg font-medium transition'
 const field = 'block w-full text-right rounded-full border border-white/70 bg-white/10 px-5 py-3 text-base font-normal text-white outline-none placeholder:text-white/50 focus:border-white'
 
 const WHAT = [
@@ -409,8 +409,9 @@ function Preview() {
 
         <main>
           <section id="top" className="flex min-h-[100svh] items-center px-6 md:px-16">
-            <div className="mx-auto w-full max-w-6xl">
-              <h1 className="pv-big text-[clamp(2.6rem,8vw,6.5rem)]">
+            <div className="mx-auto grid w-full max-w-6xl items-center gap-6 pt-16 md:grid-cols-[1.25fr_1fr] md:pt-0">
+            <div>
+              <h1 className="pv-big text-[clamp(2.4rem,6vw,5.2rem)]">
                 העבודה החוזרת בעסק שלכם?<br />
                 <span style={{ color: CORAL }}>שתעשה את עצמה</span>
               </h1>
@@ -422,6 +423,8 @@ function Preview() {
                 <a href={wa(OPENING)} target="_blank" rel="noreferrer" className={`${pill} bg-white text-[#0c1a4d] hover:bg-[#fa8c7b] hover:text-white`}>לשיחת היכרות ללא עלות ←</a>
                 <span className="pv-shake text-base font-bold">גללו כדי לראות ↓</span>
               </div>
+            </div>
+              <div className="[&>svg]:h-[270px] md:[&>svg]:h-[480px]" aria-hidden="false"><Woman /></div>
             </div>
           </section>
 
