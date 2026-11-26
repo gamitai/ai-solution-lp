@@ -395,9 +395,6 @@ function Preview() {
   useReveal()
   const [form, setForm] = useState({ name: '', business: '', help: '' })
   const href = wa(buildMessage(form))
-  const approach = faqs.find((f) => f.q.includes('הגישה'))
-  const price = faqs.find((f) => f.q.includes('כמה עולה פרויקט'))
-  const rest = faqs.filter((f) => f !== approach && f !== price)
 
   return (
     <div className="pv" ref={host}>
@@ -509,22 +506,11 @@ function Preview() {
             </div>
           </section>
 
-          <section id="approach" className="px-6 py-14 md:px-16">
-            <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
-              {[approach, price].map((f) => f && (
-                <div key={f.q} className="pv-r pv-panel p-7 md:p-10">
-                  <h2 className="pv-big text-3xl md:text-4xl" style={{ color: CORAL }}>{f.q}</h2>
-                  <p className="mt-4 text-lg leading-relaxed">{f.a}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
           <section id="faq" className="px-6 py-14 md:px-16">
             <div className="pv-faq mx-auto max-w-3xl">
               <h2 className="pv-r pv-big text-[clamp(2.2rem,6vw,4rem)]">שאלות נפוצות</h2>
               <div className="mt-8">
-                {rest.map((f) => (
+                {faqs.map((f) => (
                   <details key={f.q} className="pv-r pv-line">
                     <summary className="flex items-center justify-between gap-4 text-lg font-bold md:text-xl">{f.q}<span className="pv-plus text-3xl leading-none">+</span></summary>
                     <p className="mt-3 text-lg leading-relaxed opacity-90">{f.a}</p>
